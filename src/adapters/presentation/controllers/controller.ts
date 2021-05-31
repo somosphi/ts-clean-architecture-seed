@@ -1,5 +1,8 @@
 import { HttpResponse, HttpRequest } from '../ports/http';
+import { RouteConfig } from './controller.config';
 
-export interface Controller {
-  handle: (req: HttpRequest) => Promise<HttpResponse>;
+export abstract class Controller {
+  abstract handle(req: HttpRequest): Promise<HttpResponse>;
+  path?: string;
+  routeConfigs?: RouteConfig[];
 }

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --watch './src/**/*.ts' --exec 'ts-node' ./src/main/server.ts"
+    "dev": "nodemon --watch './src/**/*.ts' --exec ts-node ./src/main/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "reflect-metadata": "^0.1.13",
     "ts-node-dev": "^1.1.6",
     "tsyringe": "^4.5.0",
+    "typescript": "^4.3.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
