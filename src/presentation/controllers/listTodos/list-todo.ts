@@ -1,11 +1,11 @@
 import { injectable, inject } from 'tsyringe';
 import { Controller } from '../controller';
-import { HttpResponse } from '../../ports/http';
-import { Get } from '../controller.config';
+import { HttpExceptionResponse } from '../../ports/http';
+import { get, httpStatus } from '../controller.config';
 import { ListTodoResponse } from './list-todo.response';
 import { IListTodoUseCase } from '../../../core/useCases/listTodos/list-todos.interface';
 
-@Get('/todos')
+@get('/todos')
 @injectable()
 export class ListTodoController extends Controller {
   constructor(
@@ -14,11 +14,17 @@ export class ListTodoController extends Controller {
     super();
   }
 
-  async handle(): Promise<HttpResponse<ListTodoResponse[]>> {
+  @httpStatus(200)
+  async handle(): Promise<ListTodoResponse[]> {
     const todo = await this.listTodoUseCase.load();
+    return todo as ListTodoResponse[];
+  }
+
+  exception(error: unknown): HttpExceptionResponse {
     return {
-      data: todo as ListTodoResponse[],
-      statusCode: 200,
+      code: 'UNEXPECTED_ERROR',
+      message: 'Internal server error',
+      statusCode: 500,
     };
   }
 }

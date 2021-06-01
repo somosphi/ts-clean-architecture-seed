@@ -22,4 +22,9 @@ export class TodoRepository implements ITodoRepository {
   create(data: SaveTodoDTO): Promise<string> {
     return Promise.resolve('1');
   }
+
+  getByTitle(title: string): Promise<TodoEntity> {
+    const [todo] = todos;
+    return Promise.resolve(todo);
+  }
 }

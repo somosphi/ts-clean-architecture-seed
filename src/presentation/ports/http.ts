@@ -1,6 +1,7 @@
-export type HttpResponse<T = any> = {
+export type HttpExceptionResponse = {
+  message: string;
+  code: string;
   statusCode: number;
-  data: T;
 };
 
 export type HttpRequest = {

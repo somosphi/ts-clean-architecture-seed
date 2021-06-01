@@ -8,7 +8,7 @@ const formatOut = bformat({
   outputMode: process.env.LOGGER_BEAUTIFY ? 'short' : 'bunyan',
 });
 const { Logger, ExpressLogger, AxiosLogger } = init({
-  PROJECT_NAME: 'bff-mobile-iupp',
+  PROJECT_NAME: 'clean-arquitecture-boilerplate',
   // @ts-ignore
   LOG_LEVEL: process.env.LOGGER_LEVEL || 'info',
   STREAMS: [

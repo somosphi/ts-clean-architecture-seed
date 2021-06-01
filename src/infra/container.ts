@@ -1,6 +1,7 @@
-import { container, DependencyContainer, ValueProvider } from 'tsyringe';
+import { container, DependencyContainer } from 'tsyringe';
 import { ListTodoUseCase } from '../core/useCases/listTodos/list-todos';
 import { TodoRepository } from './repositories/todo';
+import { SaveTodoUseCase } from '../core/useCases/saveTodo/save-todo';
 
 class AppContainer {
   constructor(private readonly container: DependencyContainer) {
@@ -10,7 +11,7 @@ class AppContainer {
   }
 
   private loadProviders(): Function[] {
-    return [ListTodoUseCase, TodoRepository];
+    return [ListTodoUseCase, TodoRepository, SaveTodoUseCase];
   }
 
   getContainer(): DependencyContainer {

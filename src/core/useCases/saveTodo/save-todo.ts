@@ -4,6 +4,7 @@ import { ITodoRepository } from '../../ports/todo.repository';
 import { Status } from '../../enum';
 import { TodoEntity } from '../../entities/todo';
 import { ISaveTodoUseCase } from './save-todo.interface';
+import { TodoAlreadyExistsError } from '../../errors';
 
 @injectable()
 export class SaveTodoUseCase implements ISaveTodoUseCase {
@@ -12,6 +13,14 @@ export class SaveTodoUseCase implements ISaveTodoUseCase {
   ) {}
 
   async save(data: SaveTodoDTO): Promise<TodoEntity> {
+    const { title } = data;
+
+    const todo = await this.todoRepository.getByTitle(title);
+
+    if (todo) {
+      throw new TodoAlreadyExistsError();
+    }
+
     const id = await this.todoRepository.create(data);
     return new TodoEntity({ ...data, id, status: Status.Done });
   }

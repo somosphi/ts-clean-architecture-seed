@@ -1,26 +1,44 @@
 import { injectable, inject } from 'tsyringe';
-import { Post } from '../controller.config';
+import { post, httpStatus } from '../controller.config';
 import { Controller } from '../controller';
-import { HttpResponse, HttpRequest } from '../../ports/http';
+import { HttpRequest, HttpExceptionResponse } from '../../ports/http';
 import { SaveTodoDTO } from '../../../core/useCases/saveTodo/save-todo.dto';
 import { SaveTodoResponse } from './save-todo.response';
 import { ISaveTodoUseCase } from '../../../core/useCases/saveTodo/save-todo.interface';
+import { TodoAlreadyExistsError } from '../../../core/errors';
 
-@Post('/todos')
+@post('/todos')
 @injectable()
-export class ListTodoController extends Controller {
+export class SaveTodoController extends Controller {
   constructor(
     @inject('SaveTodoUseCase') private saveTodoUseCase: ISaveTodoUseCase
   ) {
     super();
   }
 
-  async handle(req: HttpRequest): Promise<HttpResponse<SaveTodoResponse>> {
+  @httpStatus(201)
+  async handle(req: HttpRequest): Promise<SaveTodoResponse> {
     const body = req.body as SaveTodoDTO;
     const todo = await this.saveTodoUseCase.save(body);
+
+    return todo;
+  }
+
+  exception(error: unknown): HttpExceptionResponse {
+    if (error instanceof TodoAlreadyExistsError) {
+      const { code, message } = error;
+
+      return {
+        code,
+        message,
+        statusCode: 400,
+      };
+    }
+
     return {
-      data: todo,
-      statusCode: 201,
+      code: 'UNEXPECTED_ERROR',
+      message: 'Internal server error',
+      statusCode: 500,
     };
   }
 }
