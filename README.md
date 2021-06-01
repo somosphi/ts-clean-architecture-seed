@@ -1,5 +1,13 @@
 # clean-architecture-boilerplate
 
-- Node
-- TypeScript
-- Ports and Adapters Pattern
+## Stack 
+- Node 14v
+- TypeScript 4.3
+
+## ToDo
+- [ ] Worker (Cron Job)
+- [ ] Request schema validation using Joi
+- [ ] Refactor repository
+- [ ] RabbitMQ
+- [ ] Unit tests
+- [ ] CI/CD
