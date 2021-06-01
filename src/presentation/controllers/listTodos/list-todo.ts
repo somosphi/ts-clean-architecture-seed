@@ -1,9 +1,9 @@
+import { injectable, inject } from 'tsyringe';
 import { Controller } from '../controller';
 import { HttpResponse } from '../../ports/http';
-import { ListTodoResponse } from './list-todo.response';
-import { IListTodoUseCase } from '../../../../core/useCases/listTodos/list-todos.interface';
-import { injectable, inject } from 'tsyringe';
 import { Get } from '../controller.config';
+import { ListTodoResponse } from './list-todo.response';
+import { IListTodoUseCase } from '../../../core/useCases/listTodos/list-todos.interface';
 
 @Get('/todos')
 @injectable()

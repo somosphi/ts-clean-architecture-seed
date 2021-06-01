@@ -1,10 +1,10 @@
 import { DependencyContainer, InjectionToken } from 'tsyringe';
 import express, { Router, Request, Response, NextFunction } from 'express';
-import { ListTodoController } from '../../adapters/presentation/controllers/listTodos/list-todo';
+import { ListTodoController } from '../../presentation/controllers/listTodos/list-todo';
+import { logger } from '../../logger';
 import { Module } from './modules';
 import { env } from '../env';
-import { Controller } from '../../adapters/presentation/controllers/controller';
-import { RouteConfig } from '../../adapters/presentation/controllers/controller.config';
+import { RouteConfig } from '../../presentation/controllers/controller.config';
 
 export class HttpServer implements Module {
   protected app: express.Application;
@@ -69,7 +69,7 @@ export class HttpServer implements Module {
 
     app.use(buildedRoutes);
     app.listen(env.httpPort, () =>
-      console.log(`Server running on http://localhost:${env.httpPort}`)
+      logger.info(`Server running on http://localhost:${env.httpPort}`)
     );
     this.app = app;
   }

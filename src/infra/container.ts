@@ -1,8 +1,21 @@
-import { container } from 'tsyringe';
+import { container, DependencyContainer, ValueProvider } from 'tsyringe';
 import { ListTodoUseCase } from '../core/useCases/listTodos/list-todos';
 import { TodoRepository } from './repositories/todo';
 
-container.register('ListTodoUseCase', ListTodoUseCase);
-container.register('TodoRepository', TodoRepository);
+class AppContainer {
+  constructor(private readonly container: DependencyContainer) {
+    this.loadProviders().forEach(providers => {
+      this.container.register(providers.name, providers as any);
+    });
+  }
 
-export default container;
+  private loadProviders(): Function[] {
+    return [ListTodoUseCase, TodoRepository];
+  }
+
+  getContainer(): DependencyContainer {
+    return this.container;
+  }
+}
+
+export default new AppContainer(container).getContainer();

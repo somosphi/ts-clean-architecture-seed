@@ -1,4 +1,4 @@
-import { Status } from '../../../../core/enum';
+import { Status } from '../../../core/enum';
 
 export type ListTodoResponse = {
   id: string;
