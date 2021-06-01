@@ -10,6 +10,7 @@ import { logger } from '../../logger';
 import { Module } from './modules';
 import { env } from '../env';
 import { RouteConfig } from '../../presentation/controllers/controller.config';
+import { HttpResponse } from '../../presentation/ports/http';
 
 export class HttpServer implements Module {
   protected app: express.Application;
@@ -37,8 +38,19 @@ export class HttpServer implements Module {
           next: NextFunction
         ) => {
           try {
-            const data = await instance.handle(req);
-            res.status(statusCode).send(data);
+            const response = (await instance.handle(req)) as HttpResponse;
+
+            if (response?.headers) {
+              for (const header in response.headers) {
+                res.setHeader(header, response.headers[header]);
+              }
+            }
+
+            if (statusCode || response.status) {
+              res.status(statusCode);
+            }
+
+            res.send(response?.data);
           } catch (err) {
             const { code, message, statusCode } = instance.exception(err);
             res.status(statusCode).send({ code, message });

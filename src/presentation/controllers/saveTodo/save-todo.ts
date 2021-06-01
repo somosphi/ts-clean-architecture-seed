@@ -1,7 +1,11 @@
 import { injectable, inject } from 'tsyringe';
 import { post, httpStatus } from '../controller.config';
 import { Controller } from '../controller';
-import { HttpRequest, HttpExceptionResponse } from '../../ports/http';
+import {
+  HttpRequest,
+  HttpExceptionResponse,
+  HttpResponse,
+} from '../../ports/http';
 import { SaveTodoDTO } from '../../../core/useCases/saveTodo/save-todo.dto';
 import { SaveTodoResponse } from './save-todo.response';
 import { ISaveTodoUseCase } from '../../../core/useCases/saveTodo/save-todo.interface';
@@ -17,11 +21,13 @@ export class SaveTodoController extends Controller {
   }
 
   @httpStatus(201)
-  async handle(req: HttpRequest): Promise<SaveTodoResponse> {
+  async handle(req: HttpRequest): Promise<HttpResponse> {
     const body = req.body as SaveTodoDTO;
     const todo = await this.saveTodoUseCase.save(body);
 
-    return todo;
+    return {
+      data: todo,
+    };
   }
 
   exception(error: unknown): HttpExceptionResponse {
