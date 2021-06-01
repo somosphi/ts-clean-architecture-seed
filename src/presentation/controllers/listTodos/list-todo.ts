@@ -1,6 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 import { Controller } from '../controller';
-import { HttpExceptionResponse } from '../../ports/http';
+import { HttpExceptionResponse, HttpResponse } from '../../ports/http';
 import { get, httpStatus } from '../controller.config';
 import { ListTodoResponse } from './list-todo.response';
 import { IListTodoUseCase } from '../../../core/useCases/listTodos/list-todos.interface';
@@ -15,9 +15,11 @@ export class ListTodoController extends Controller {
   }
 
   @httpStatus(200)
-  async handle(): Promise<ListTodoResponse[]> {
+  async handle(): Promise<HttpResponse<ListTodoResponse[]>> {
     const todo = await this.listTodoUseCase.load();
-    return todo as ListTodoResponse[];
+    return {
+      data: todo,
+    };
   }
 
   exception(error: unknown): HttpExceptionResponse {
