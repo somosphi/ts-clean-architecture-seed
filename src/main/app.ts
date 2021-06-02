@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import container from '../infra/container';
+import container from './container';
 import { HttpServer } from './modules/http-server';
 import { Module } from './modules/modules';
 import { DependencyContainer } from 'tsyringe';

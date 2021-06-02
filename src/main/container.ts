@@ -1,6 +1,6 @@
 import { container, DependencyContainer } from 'tsyringe';
 import { ListTodoUseCase } from '../core/useCases/listTodos/list-todos';
-import { TodoRepository } from './repositories/todo';
+import { TodoRepository } from '../infra/repositories/todo';
 import { SaveTodoUseCase } from '../core/useCases/saveTodo/save-todo';
 
 class AppContainer {
