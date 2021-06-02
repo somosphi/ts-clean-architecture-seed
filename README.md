@@ -8,8 +8,8 @@
 ## ToDo
 
 - [x] Worker (Cron Job)
-- [ ] Request schema validation using Joi
+- [X] Request schema validation using Joi
 - [ ] Refactor repository
 - [ ] RabbitMQ
-- [ ] Unit tests
+- [x] Unit tests 
 - [ ] CI/CD
