@@ -1,11 +1,13 @@
 # clean-architecture-boilerplate
 
-## Stack 
+## Stack
+
 - Node 14v
 - TypeScript 4.3
 
 ## ToDo
-- [ ] Worker (Cron Job)
+
+- [x] Worker (Cron Job)
 - [ ] Request schema validation using Joi
 - [ ] Refactor repository
 - [ ] RabbitMQ
