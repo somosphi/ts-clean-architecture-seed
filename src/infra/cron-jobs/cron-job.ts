@@ -1,7 +1,7 @@
-import { CronJob } from 'cron';
+import { CronJob as NodeCron } from 'cron';
 import { logger } from '../../logger';
 
-export abstract class WorkerCronJob extends CronJob {
+export abstract class CronJob extends NodeCron {
   protected abstract runTask(): Promise<void>;
 
   name: string;
