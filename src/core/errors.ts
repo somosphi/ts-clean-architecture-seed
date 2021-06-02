@@ -22,3 +22,9 @@ export class TodoAlreadyExistsError extends CodedError {
     super('TODO_ALREADY_EXISTS', 'Todo already exists');
   }
 }
+
+export class UserNotFoundError extends CodedError {
+  constructor() {
+    super('USER_NOT_FOUND', 'User not found.');
+  }
+}
