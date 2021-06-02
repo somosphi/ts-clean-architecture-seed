@@ -11,6 +11,7 @@ import { Module } from './modules';
 import { env } from '../env';
 import { RouteConfig } from '../../presentation/controllers/controller.config';
 import { HttpResponse } from '../../presentation/ports/http';
+import { errorHandlerMiddleware } from '../../presentation/middleware.ts/error-handler';
 
 export class HttpServer implements Module {
   protected app: express.Application;
@@ -39,7 +40,6 @@ export class HttpServer implements Module {
         ) => {
           try {
             const response = (await instance.handle(req)) as HttpResponse;
-
             if (response?.headers) {
               for (const header in response.headers) {
                 res.setHeader(header, response.headers[header]);
@@ -52,8 +52,9 @@ export class HttpServer implements Module {
 
             res.send(response?.data);
           } catch (err) {
-            const { code, message, statusCode } = instance.exception(err);
-            res.status(statusCode).send({ code, message });
+            const error = instance.exception(err);
+
+            next(error);
           }
         };
 
@@ -100,6 +101,7 @@ export class HttpServer implements Module {
     );
 
     app.use(buildedRoutes);
+    app.use(errorHandlerMiddleware);
     app.listen(env.httpPort, () =>
       logger.info(`Server running on http://localhost:${env.httpPort}`)
     );
