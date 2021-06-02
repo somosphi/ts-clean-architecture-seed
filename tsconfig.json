@@ -4,11 +4,11 @@
     "outDir": "./release",
     "rootDir": "./src/",
     "module": "commonjs",
-    "target": "es6",
+    "target": "es2020",
     "esModuleInterop": true,
     "strict": true,
     "strictPropertyInitialization": false,
-    "lib": ["es2015"],
+    "lib": ["es2020"],
     "emitDecoratorMetadata": true
   },
   "include": ["./src/**/*"]
