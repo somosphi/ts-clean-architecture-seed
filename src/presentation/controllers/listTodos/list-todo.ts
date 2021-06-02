@@ -22,11 +22,7 @@ export class ListTodoController extends Controller {
     };
   }
 
-  exception(error: unknown): HttpExceptionResponse {
-    return {
-      code: 'UNEXPECTED_ERROR',
-      message: 'Internal server error',
-      statusCode: 500,
-    };
+  exception(error: Error): Error {
+    return error;
   }
 }
