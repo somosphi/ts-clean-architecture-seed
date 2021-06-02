@@ -1,6 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 import { Controller } from '../controller';
-import { HttpExceptionResponse, HttpResponse } from '../../ports/http';
+import { HttpResponse } from '../../ports/http';
 import { get, httpStatus } from '../controller.config';
 import { ListTodoResponse } from './list-todo.response';
 import { IListTodoUseCase } from '../../../core/useCases/listTodos/list-todos.interface';

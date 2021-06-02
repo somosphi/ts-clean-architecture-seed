@@ -6,7 +6,7 @@ import { SaveTodoDTO } from '../../../core/useCases/saveTodo/save-todo.dto';
 import { SaveTodoResponse } from './save-todo.response';
 import { ISaveTodoUseCase } from '../../../core/useCases/saveTodo/save-todo.interface';
 import { TodoAlreadyExistsError } from '../../../core/errors';
-import { validatorMiddleware } from '../../middleware.ts/validator-schema';
+import { validatorMiddleware } from '../../middleware/validator-schema';
 import { saveTodoSchema } from './save-todo.schema';
 import { BadRequest } from '../../errors';
 
