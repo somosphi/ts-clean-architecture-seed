@@ -1,4 +1,4 @@
-import { UserSources } from '../../../core/enum';
+import { UserSources } from '@/core/enum';
 
 export type ListUsersByIdResponse = {
   id: string;

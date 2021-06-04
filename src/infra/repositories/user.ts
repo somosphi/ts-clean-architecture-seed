@@ -1,6 +1,6 @@
-import { IUserRepository } from '../../core/ports/user.repository';
-import { User } from '../../core/entities/user';
-import { UserSources } from '../../core/enum';
+import { IUserRepository } from '@/core/ports/user.repository';
+import { User } from '@/core/entities/user';
+import { UserSources } from '@/core/enum';
 
 const now = new Date();
 const users: User[] = [

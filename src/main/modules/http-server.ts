@@ -4,16 +4,16 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import { DependencyContainer, InjectionToken } from 'tsyringe';
 import express, { Router, Request, Response, NextFunction } from 'express';
-import { logger } from '../../logger';
-import { Module } from './modules';
-import { env } from '../env';
-import { RouteConfig } from '../../presentation/controllers/controller.config';
-import { HttpResponse } from '../../presentation/ports/http';
-import { errorHandlerMiddleware } from '../../presentation/middleware.ts/error-handler';
+import { logger } from '@/logger';
+import { Module } from '@/main/modules/modules';
+import { env } from '@/main/env';
+import { RouteConfig } from '@/presentation/controllers/controller.config';
+import { HttpResponse } from '@/presentation/ports/http';
+import { errorHandlerMiddleware } from '@/presentation/middleware/error-handler';
 import {
   ListUsersByIdController,
   ListUsersController,
-} from '../../presentation/controllers';
+} from '@/presentation/controllers';
 
 export class HttpServer implements Module {
   protected app: express.Application;

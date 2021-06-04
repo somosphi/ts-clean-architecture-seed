@@ -1,7 +1,4 @@
-import {
-  HttpRequest,
-  HttpResponse,
-} from '../ports/http';
+import { HttpRequest, HttpResponse } from '../ports/http';
 import { RouteConfig } from './controller.config';
 
 export abstract class Controller {

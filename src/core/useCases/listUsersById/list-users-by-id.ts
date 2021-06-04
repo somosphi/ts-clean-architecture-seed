@@ -1,8 +1,8 @@
 import { injectable, inject } from 'tsyringe';
-import { User } from '../../entities/user';
-import { IListUsersByIdUseCase } from './list-users-by-id.interface';
-import { IUserRepository } from '../../ports/user.repository';
-import { UserNotFoundError } from '../../errors';
+import { IListUsersByIdUseCase } from '@/core/useCases/listUsersById/list-users-by-id.interface';
+import { User } from '@/core/entities/user';
+import { IUserRepository } from '@/core/ports/user.repository';
+import { UserNotFoundError } from '@/core/errors';
 
 @injectable()
 export class ListUsersByIdUseCase implements IListUsersByIdUseCase {
