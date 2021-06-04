@@ -1,4 +1,4 @@
-import { User } from '../entities/user';
+import { User } from '@/core/entities/user';
 
 export interface IUserRepository {
   all(): Promise<User[]>;

@@ -1,10 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 import { httpStatus, get } from '../controller.config';
 import { Controller } from '../controller';
-import {
-  HttpRequest,
-  HttpResponse,
-} from '../../ports/http';
+import { HttpRequest, HttpResponse } from '../../ports/http';
 import { IListUsersByIdUseCase } from '../../../core/useCases/listUsersById/list-users-by-id.interface';
 import { ListUsersByIdResponse } from './list-users-by-id.response';
 import { UserNotFoundError } from '../../../core/errors';

@@ -1,7 +1,9 @@
 import { container, DependencyContainer } from 'tsyringe';
-import { ListUsersUseCase } from '../core/useCases/listUsers/list-users';
-import { ListUsersByIdUseCase } from '../core/useCases/listUsersById/list-users-by-id';
-import { UserRepository } from '../infra/repositories/user';
+import { ListUsersUseCase } from '@/core/useCases/listUsers/list-users';
+import { ListUsersByIdUseCase } from '@/core/useCases/listUsersById/list-users-by-id';
+import { UserRepository } from '@/infra/repositories/user';
+import { HttpService } from '@/infra/http/http.service';
+import { JsonPlaceHolderIntegration } from '@/infra/http/integrations';
 
 class AppContainer {
   constructor(private readonly container: DependencyContainer) {
@@ -11,7 +13,13 @@ class AppContainer {
   }
 
   private loadProviders(): Function[] {
-    return [ListUsersUseCase, ListUsersByIdUseCase, UserRepository];
+    return [
+      HttpService,
+      JsonPlaceHolderIntegration,
+      ListUsersUseCase,
+      ListUsersByIdUseCase,
+      UserRepository,
+    ];
   }
 
   getContainer(): DependencyContainer {
