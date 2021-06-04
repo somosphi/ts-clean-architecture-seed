@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Ongoing Changes
 
 - Added http integration folder
+- Added test unit for useCases
 - Added test unit for controller
 - Added coverage by test
 - Added mocha config
