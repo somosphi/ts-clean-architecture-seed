@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Ongoing Changes
 
+- Added redis integration
 - Added http integration folder
 - Added test unit for useCases
 - Added test unit for controller

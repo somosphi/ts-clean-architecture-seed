@@ -9,6 +9,10 @@ const props = {
   httpBodyLimit: process.env.HTTP_BODY_LIMIT || '10kb',
   jsonPlaceholderUrl:
     process.env.JSON_PLACEHOLDER_URL || 'https://jsonplaceholder.typicode.com',
+  redisPort: process.env.REDIS_PORT
+    ? parseInt(process.env.REDIS_PORT, 10)
+    : 6379,
+  redisHost: process.env.REDIS_HOST || '',
 };
 
 export const env = new EnvValidator(props);
