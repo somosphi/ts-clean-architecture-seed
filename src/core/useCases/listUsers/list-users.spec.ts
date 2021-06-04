@@ -29,12 +29,12 @@ describe('ListUsersUseCase', () => {
         },
       ];
 
-      const userRepositoryFake = {
-        all: sinon.fake.resolves(fakeResponse),
+      const jsonPlaceHolderIntegrationFake = {
+        getUsers: sinon.fake.resolves(fakeResponse),
       };
 
       const container = {
-        userRepository: userRepositoryFake,
+        jsonPlaceHolderIntegration: jsonPlaceHolderIntegrationFake,
       };
       const listUsersUseCase = new ListUsersUseCase(
         // @ts-ignore
@@ -44,7 +44,7 @@ describe('ListUsersUseCase', () => {
       const result = await listUsersUseCase.list();
 
       expect(result).to.be.eql(fakeResponse);
-      assert(container.userRepository.all.calledOnce);
+      assert(container.jsonPlaceHolderIntegration.getUsers.calledOnce);
     });
   });
 });

@@ -1,0 +1,41 @@
+name: Node CI
+
+on: ["push", "pull_request"]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        node: [ '14' ]
+    name: Node ${{ matrix.node }} sample - test unit
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+      
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      
+      - name: Install npm dependencies
+        run: npm install
+      
+      - name: Build
+        run: npm run build
+      
+      - name: Run tests
+        run: npm run test:unit
+        
+      - name: Coveralls Parallel
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel: true
+          path-to-lcov: ./coverage/lcov.info # optional (default value)
+
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true
