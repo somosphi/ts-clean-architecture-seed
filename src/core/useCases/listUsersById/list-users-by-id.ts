@@ -1,6 +1,6 @@
-import { IListUsersByIdUseCase } from './list-users-by-id.interface';
-import { User } from '../../entities/user';
 import { injectable, inject } from 'tsyringe';
+import { User } from '../../entities/user';
+import { IListUsersByIdUseCase } from './list-users-by-id.interface';
 import { IUserRepository } from '../../ports/user.repository';
 import { UserNotFoundError } from '../../errors';
 
