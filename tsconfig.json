@@ -2,14 +2,18 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "outDir": "./release",
-    "rootDir": "./src/",
+    "rootDir": "src",
     "module": "commonjs",
     "target": "es2020",
     "esModuleInterop": true,
     "strict": true,
     "strictPropertyInitialization": false,
     "lib": ["es2020"],
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"]
+    }
   },
-  "include": ["./src/**/*"]
+  "include": ["src"]
 }

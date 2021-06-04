@@ -1,9 +1,9 @@
 import 'reflect-metadata';
-import container from './container';
-import { HttpServer } from './modules/http-server';
-import { Module } from './modules/modules';
 import { DependencyContainer } from 'tsyringe';
 import { Worker } from './modules/worker/worker';
+import container from '@/main/container';
+import { HttpServer } from '@/main/modules/http-server';
+import { Module } from '@/main/modules/modules';
 
 export class Application {
   protected httpServer?: HttpServer;

@@ -1,4 +1,4 @@
-import { UserSources } from '../enum';
+import { UserSources } from '@/core/enum';
 
 export class User {
   public readonly id: string;
@@ -9,7 +9,7 @@ export class User {
   public createdAt: Date;
   public updatedAt: Date;
 
-  constructor(props: User) {
+  constructor(props: Partial<User>) {
     Object.assign(this, props);
   }
 }

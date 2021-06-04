@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty } from 'class-validator';
+import { IsInt, IsNotEmpty, IsUrl } from 'class-validator';
 
 export class EnvValidator {
   @IsInt()
@@ -7,6 +7,10 @@ export class EnvValidator {
 
   @IsNotEmpty()
   httpBodyLimit: string;
+
+  @IsNotEmpty()
+  @IsUrl()
+  jsonPlaceholderUrl: string;
 
   constructor(props: any) {
     Object.assign(this, props);
