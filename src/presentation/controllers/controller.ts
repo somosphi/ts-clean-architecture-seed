@@ -1,6 +1,5 @@
 import {
   HttpRequest,
-  HttpExceptionResponse,
   HttpResponse,
 } from '../ports/http';
 import { RouteConfig } from './controller.config';

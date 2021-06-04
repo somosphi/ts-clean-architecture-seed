@@ -4,7 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --watch './src/**/*.ts' --exec ts-node ./src/main/server.ts"
+    "dev": "nodemon --watch './src/**/*.ts' --exec ts-node ./src/main/server.ts",
+    "test:unit": "nyc mocha --timeout 10000 --exit --config=.mocha.yml 'src/**/*.spec.ts'"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "all": true,
+    "include": [
+      "src"
+    ],
+    "exclude": [
+      "**/*.d.ts"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -29,10 +46,17 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.18",
     "@types/cron": "^1.7.2",
     "@types/compression": "^1.7.0",
     "@types/cors": "^2.8.10",
     "@types/express": "^4.17.11",
-    "@types/uuid": "^8.3.0"
+    "@types/mocha": "^8.2.2",
+    "@types/sinon": "^10.0.2",
+    "@types/uuid": "^8.3.0",
+    "chai": "^4.3.4",
+    "mocha": "^8.4.0",
+    "nyc": "^15.1.0",
+    "sinon": "^11.1.1"
   }
 }
