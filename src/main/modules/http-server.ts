@@ -9,7 +9,7 @@ import { Module } from './modules';
 import { env } from '../env';
 import { RouteConfig } from '../../presentation/controllers/controller.config';
 import { HttpResponse } from '../../presentation/ports/http';
-import { errorHandlerMiddleware } from '../../presentation/middleware.ts/error-handler';
+import { errorHandlerMiddleware } from '../../presentation/middleware/error-handler';
 import {
   ListUsersByIdController,
   ListUsersController,

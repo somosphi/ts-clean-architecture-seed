@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --watch './src/**/*.ts' --exec ts-node ./src/main/server.ts",
+    "build": "rm -rf lib && tsc",
     "test:unit": "nyc mocha --timeout 10000 --exit --config=.mocha.yml 'src/**/*.spec.ts'"
   },
   "nyc": {
@@ -29,6 +30,7 @@
   "dependencies": {
     "@somosphi/logger": "^1.6.0",
     "@types/bunyan-format": "^0.2.3",
+    "axios": "^0.21.1",
     "bunyan-format": "^0.2.1",
     "class-validator": "^0.13.1",
     "compression": "^1.7.4",
