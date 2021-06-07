@@ -13,7 +13,19 @@ export class Application {
   protected httpServer?: HttpServer;
 
   protected loadModules(container: DependencyContainer): Module[] {
-    return [new HttpServer(container), new Worker(container)];
+    return [
+      new HttpServer(container),
+      new Worker(container),
+      new AMQPServer(container, {
+        protocol: env.rabbitMQProtocol,
+        host: env.rabbitMQHost,
+        port: env.rabbitMQPort,
+        username: env.rabbitMQUsername,
+        password: env.rabbitMQPassword,
+        vhost: env.rabbitMQVHost,
+      }),
+      new CacheClient(),
+    ];
   }
 
   async start() {
