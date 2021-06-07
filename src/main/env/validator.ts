@@ -32,6 +32,10 @@ export class EnvValidator {
 
   @IsNotEmpty()
   rabbitMQVHost: string;
+  redisPort: number;
+
+  @IsNotEmpty()
+  redisHost: string;
 
   constructor(props: any) {
     Object.assign(this, props);

@@ -16,6 +16,10 @@ const props = {
   rabbitMQUsername: process.env.RABBITMQ_USERNAME || 'admin',
   rabbitMQPassword: process.env.RABBITMQ_PASSWORD || 'admin',
   rabbitMQVHost: process.env.RABBITMQ_VHOST || '/',
+  redisPort: process.env.REDIS_PORT
+    ? parseInt(process.env.REDIS_PORT, 10)
+    : 6379,
+  redisHost: process.env.REDIS_HOST || '',
 };
 
 export const env = new EnvValidator(props);

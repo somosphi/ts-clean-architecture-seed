@@ -7,6 +7,7 @@ import { Module } from '@/main/modules/modules';
 import { AMQPServer } from './modules/amqp/amqp-server';
 import { env } from './env';
 import { ValidationError, validateOrReject } from 'class-validator';
+import { CacheClient } from './modules/cache-client';
 
 export class Application {
   protected httpServer?: HttpServer;
@@ -23,6 +24,7 @@ export class Application {
         password: env.rabbitMQPassword,
         vhost: env.rabbitMQVHost,
       }),
+      new CacheClient(),
     ];
   }
 
