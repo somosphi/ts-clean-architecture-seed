@@ -7,7 +7,7 @@ import { HttpServer } from '@/main/modules/http/http-server';
 import { Module } from '@/main/modules/modules';
 import { AMQPServer } from '@/main/modules/amqp/amqp-server';
 import { env } from '@/main/env';
-import { CacheClient } from '@/main/modules/cache-client';
+import { CacheClient } from '@/main/modules/cache/cache-client';
 
 export class Application {
   protected httpServer?: HttpServer;

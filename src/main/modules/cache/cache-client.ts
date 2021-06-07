@@ -1,8 +1,8 @@
-import { Module } from './modules';
-import { logger } from '@/logger';
-import Redis from 'ioredis';
-import { env } from '../env';
 import { injectable } from 'tsyringe';
+import Redis from 'ioredis';
+import { Module } from '@/main/modules/modules';
+import { logger } from '@/logger';
+import { env } from '@/main/env';
 
 @injectable()
 export class CacheClient implements Module {
