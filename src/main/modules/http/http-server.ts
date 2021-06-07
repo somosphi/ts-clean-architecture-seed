@@ -7,13 +7,13 @@ import express, { Router, Request, Response, NextFunction } from 'express';
 import { logger } from '@/logger';
 import { Module } from '@/main/modules/modules';
 import { env } from '@/main/env';
-import { RouteConfig } from '@/presentation/controllers/controller.config';
-import { HttpResponse } from '@/presentation/ports/http';
-import { errorHandlerMiddleware } from '@/presentation/middleware/error-handler';
+import { RouteConfig } from '@/presentation/http/controllers/controller.config';
+import { HttpResponse } from '@/presentation/http/ports/http';
+import { errorHandlerMiddleware } from '@/presentation/http/middleware/error-handler';
 import {
   ListUsersByIdController,
   ListUsersController,
-} from '@/presentation/controllers';
+} from '@/presentation/http/controllers';
 
 export class HttpServer implements Module {
   protected app: express.Application;

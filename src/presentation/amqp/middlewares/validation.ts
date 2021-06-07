@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { ValidationError } from '@/infra/amqp/consumers/errors';
+import { ValidationError } from '@/presentation/amqp/errors';
 
 export const validation = (schema: Joi.Schema) => <T>(message: any): T => {
   const validation = schema.validate(message, {
