@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsUrl } from 'class-validator';
+import { IsInt, IsNotEmpty, IsUrl, IsNumber } from 'class-validator';
 
 export class EnvValidator {
   @IsInt()

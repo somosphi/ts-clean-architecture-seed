@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { DependencyContainer } from 'tsyringe';
 import { Worker } from './modules/worker/worker';
-import container from '@/main/container';
+import container from '@/main/container/app-container';
 import { HttpServer } from '@/main/modules/http-server';
 import { Module } from '@/main/modules/modules';
 

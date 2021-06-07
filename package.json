@@ -6,7 +6,9 @@
   "scripts": {
     "test:unit": "nyc mocha --timeout 10000 --exit --config=.mocha.yml -r tsconfig-paths/register 'src/**/*.spec.ts'",
     "dev": "nodemon --watch './src/**/*.ts' --exec 'ts-node' -r tsconfig-paths/register ./src/main/server.ts",
-    "build": "rimraf release && tsc -p tsconfig-build.json"
+    "build": "rimraf release && tsc -p tsconfig-build.json",
+    "migration:create": "knex migrate:make",
+    "migration:latest": "knex migrate:latest"
   },
   "nyc": {
     "extension": [
@@ -41,6 +43,7 @@
     "helmet": "^4.6.0",
     "joi": "^17.4.0",
     "knex": "^0.19.5",
+    "mysql2": "^2.2.5",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^2.7.1",
     "ts-node-dev": "^1.1.6",
