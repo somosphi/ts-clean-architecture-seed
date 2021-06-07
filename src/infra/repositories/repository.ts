@@ -1,10 +1,9 @@
 import knex, { QueryBuilder, Transaction } from 'knex';
-import { inject } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 
 export abstract class Repository<T> {
   protected abstract getTableName(): string;
-
-  constructor(@inject('mysqlDatabase') protected database: knex) {}
+  protected abstract database: knex;
 
   protected transactionable(trx?: Transaction): QueryBuilder {
     if (trx) {
