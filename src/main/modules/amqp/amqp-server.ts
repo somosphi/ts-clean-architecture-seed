@@ -3,8 +3,8 @@ import { DependencyContainer, InjectionToken } from 'tsyringe';
 import { AMQP } from '@/main/modules/amqp/amqp';
 import { Module } from '@/main/modules/modules';
 import { RabbitMQConfig } from '@/main/modules/amqp/amqp.config';
-import { Consumer } from '@/infra/amqp/consumers/consumer';
-import { FindUserByIdConsumer } from '@/infra/amqp/consumers/findUserById/find-user-by-id';
+import { Consumer } from '@/presentation/amqp/consumers/consumer';
+import { FindUserByIdConsumer } from '@/presentation/amqp/consumers/findUserById/find-user-by-id';
 import { logger } from '@/logger';
 
 export class AMQPServer extends AMQP implements Module {

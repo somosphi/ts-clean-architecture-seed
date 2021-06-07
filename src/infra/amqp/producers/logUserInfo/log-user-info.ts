@@ -1,6 +1,6 @@
 import { Options, Channel } from 'amqplib';
 import { injectable, inject } from 'tsyringe';
-import { Producer } from '@/infra/amqp/producers/producer';
+import { Producer } from '@/infra/amqp/producer';
 import { UserMessage } from './log-user-info.dto';
 import { logger } from '@/logger';
 
@@ -29,6 +29,7 @@ export class LogUserInfoProducer extends Producer {
     } catch (err) {
       logger.error(`Error sending message to exchange ${this.exchange}
        and routingKey - ${this.routingKey} -> reason: ${err.message}`);
+      throw err;
     }
   }
 }

@@ -1,14 +1,13 @@
-import { DependencyContainer, inject } from 'tsyringe';
+import { inject } from 'tsyringe';
 import { ConsumeMessage } from 'amqplib';
-import { Consumer } from '@/infra/amqp/consumers/consumer';
+import { Consumer } from '@/presentation/amqp/consumers/consumer';
 import { IListUsersByIdUseCase } from '@/core/useCases/listUsersById/list-users-by-id.interface';
-import { ListUsersByIdUseCase } from '@/core/useCases/listUsersById/list-users-by-id';
-import { FindUserMessage } from '@/infra/amqp/consumers/findUserById/find-user-by-id.dto';
-import { validation } from '@/infra/amqp/consumers/middlewares/validation';
-import { findUserSchema } from '@/infra/amqp/consumers/findUserById/find-user-by-id.schema';
+import { FindUserMessage } from '@/presentation/amqp/consumers/findUserById/find-user-by-id.dto';
+import { validation } from '@/presentation/amqp/middlewares/validation';
+import { findUserSchema } from '@/presentation/amqp/consumers/findUserById/find-user-by-id.schema';
 import { User } from '@/core/entities/user';
 import { logger } from '@/logger';
-import { convertToJson } from '@/infra/amqp/helper/buffer-converter';
+import { convertToJson } from '@/shared/helper/buffer-converter';
 
 export class FindUserByIdConsumer extends Consumer {
   constructor(
@@ -18,7 +17,7 @@ export class FindUserByIdConsumer extends Consumer {
     super('user.find');
   }
 
-  messageHandler(message: ConsumeMessage | null) {
+  messageHandler(message: ConsumeMessage | null): void {
     if (message) {
       const messageContent: FindUserMessage = validation(findUserSchema)<
         FindUserMessage

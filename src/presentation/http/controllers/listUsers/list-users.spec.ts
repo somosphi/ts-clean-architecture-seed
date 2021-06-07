@@ -2,8 +2,8 @@ import 'reflect-metadata';
 import sinon from 'sinon';
 import { expect, assert } from 'chai';
 import { ListUsersController } from './list-users';
-import { UserSources } from '../../../core/enum';
-import { User } from '../../../core/entities/user';
+import { UserSources } from '../../../../core/enum';
+import { User } from '../../../../core/entities/user';
 
 describe('ListUsersController', () => {
   describe('#handle', () => {

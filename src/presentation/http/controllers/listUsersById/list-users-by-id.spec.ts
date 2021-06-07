@@ -2,10 +2,10 @@ import 'reflect-metadata';
 import sinon from 'sinon';
 import { expect, assert } from 'chai';
 import { ListUsersByIdController } from './list-users-by-id';
-import { UserSources } from '../../../core/enum';
-import { User } from '../../../core/entities/user';
+import { UserSources } from '../../../../core/enum';
+import { User } from '../../../../core/entities/user';
 import { HttpRequest } from '../../ports/http';
-import { UserNotFoundError } from '../../../core/errors';
+import { UserNotFoundError } from '../../../../core/errors';
 import { BadRequest } from '../../errors';
 
 describe('ListUsersByIdController', () => {
@@ -47,7 +47,9 @@ describe('ListUsersByIdController', () => {
           updatedAt: fakeResponse.updatedAt.toISOString(),
         },
       });
-      assert(container.listTodoUseCase.listById.calledOnceWith(fakeReq.params.id));
+      assert(
+        container.listTodoUseCase.listById.calledOnceWith(fakeReq.params.id)
+      );
     });
   });
 

@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import { Request, Response, NextFunction } from 'express';
 import { BadRequest } from '../errors';
-import { logger } from '../../logger';
+import { logger } from '../../../logger';
 
 export const validatorMiddleware = (schema: Joi.Schema) => (
   req: Request,
