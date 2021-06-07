@@ -1,13 +1,13 @@
 import 'reflect-metadata';
+import { ValidationError, validateOrReject } from 'class-validator';
 import { DependencyContainer } from 'tsyringe';
 import { Worker } from './modules/worker/worker';
 import container from '@/main/container/app-container';
 import { HttpServer } from '@/main/modules/http/http-server';
 import { Module } from '@/main/modules/modules';
-import { AMQPServer } from './modules/amqp/amqp-server';
-import { env } from './env';
-import { ValidationError, validateOrReject } from 'class-validator';
-import { CacheClient } from './modules/cache-client';
+import { AMQPServer } from '@/main/modules/amqp/amqp-server';
+import { env } from '@/main/env';
+import { CacheClient } from '@/main/modules/cache-client';
 
 export class Application {
   protected httpServer?: HttpServer;
