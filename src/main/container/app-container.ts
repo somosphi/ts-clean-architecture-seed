@@ -1,18 +1,14 @@
-import { container, DependencyContainer } from 'tsyringe';
+import { container } from 'tsyringe';
 import { ListUsersUseCase } from '@/core/useCases/listUsers/list-users';
 import { ListUsersByIdUseCase } from '@/core/useCases/listUsersById/list-users-by-id';
 import { UserRepository } from '@/infra/repositories/user';
 import { HttpService } from '@/infra/http/http.service';
 import { JsonPlaceHolderIntegration } from '@/infra/http/integrations';
+import { KnexConnection } from '@/infra/db/knex';
+import { BaseContainer } from './config/base';
 
-class AppContainer {
-  constructor(private readonly container: DependencyContainer) {
-    this.loadProviders().forEach(providers => {
-      this.container.register(providers.name, providers as any);
-    });
-  }
-
-  private loadProviders(): Function[] {
+class AppContainer extends BaseContainer {
+  loadProviders(): Function[] {
     return [
       HttpService,
       JsonPlaceHolderIntegration,
@@ -22,8 +18,10 @@ class AppContainer {
     ];
   }
 
-  getContainer(): DependencyContainer {
-    return this.container;
+  loadConfigs(): any {
+    return {
+      mysqlDatabase: new KnexConnection().getConnection(),
+    };
   }
 }
 
