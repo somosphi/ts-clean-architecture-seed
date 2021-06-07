@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsUrl, IsNumber } from 'class-validator';
+import { IsInt, IsNotEmpty, IsUrl, IsNumber, IsEnum } from 'class-validator';
 
 export class EnvValidator {
   @IsInt()
@@ -13,6 +13,25 @@ export class EnvValidator {
   jsonPlaceholderUrl: string;
 
   @IsNotEmpty()
+  rabbitMQEnabled: string;
+
+  @IsEnum(['amqp'])
+  rabbitMQProtocol: string;
+
+  @IsNotEmpty()
+  rabbitMQHost: string;
+
+  @IsInt()
+  rabbitMQPort: number;
+
+  @IsNotEmpty()
+  rabbitMQUsername: string;
+
+  @IsNotEmpty()
+  rabbitMQPassword: string;
+
+  @IsNotEmpty()
+  rabbitMQVHost: string;
   redisPort: number;
 
   @IsNotEmpty()

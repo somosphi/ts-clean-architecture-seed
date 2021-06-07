@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { CodedError } from '../errors';
-import { logger } from '../../logger';
+import { CodedError } from '@/shared/coded-error';
+import { logger } from '@/logger';
 
 export const errorHandlerMiddleware = (
   err: any,
@@ -10,8 +10,8 @@ export const errorHandlerMiddleware = (
 ) => {
   if (err instanceof CodedError) {
     logger.error(err);
-    const { status, message, code, details } = err;
-    res.status(status).send({
+    const { statusCode, message, code, details } = err;
+    res.status(statusCode || 200).send({
       code,
       message,
       details,
