@@ -4,12 +4,17 @@ import { Worker } from './modules/worker/worker';
 import container from '@/main/container/app-container';
 import { HttpServer } from '@/main/modules/http-server';
 import { Module } from '@/main/modules/modules';
+import { CacheClient } from './modules/cache-client';
 
 export class Application {
   protected httpServer?: HttpServer;
 
   protected loadModules(container: DependencyContainer): Module[] {
-    return [new HttpServer(container), new Worker(container)];
+    return [
+      new HttpServer(container),
+      new Worker(container),
+      new CacheClient(),
+    ];
   }
 
   async start() {

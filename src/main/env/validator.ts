@@ -12,6 +12,12 @@ export class EnvValidator {
   @IsUrl()
   jsonPlaceholderUrl: string;
 
+  @IsNotEmpty()
+  redisPort: number;
+
+  @IsNotEmpty()
+  redisHost: string;
+
   constructor(props: any) {
     Object.assign(this, props);
   }
