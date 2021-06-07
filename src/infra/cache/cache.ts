@@ -1,18 +1,24 @@
+import { ICache } from '@/core/ports/cache';
 import { Redis } from 'ioredis';
-import { inject } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 
-export abstract class Cache {
+@injectable()
+export class Cache implements ICache {
   constructor(@inject('redisClient') protected readonly cache: Redis) {}
 
-  get(key: string) {
+  get(key: string): Promise<string | null> {
     return this.cache.get(key);
   }
 
-  set(key: string, value: any) {
-    return this.cache.set(key, value);
+  async set(key: string, value: any): Promise<void> {
+    await this.cache.set(key, value);
   }
 
-  setWithExpirationTime(key: string, value: any): Promise<'OK' | null> {
-    return this.cache.set(key, value, 'EX', 36000);
+  async setWithExpirationTime(
+    key: string,
+    value: any,
+    expirationTime: number
+  ): Promise<void> {
+    await this.cache.set(key, value, 'EX', expirationTime);
   }
 }

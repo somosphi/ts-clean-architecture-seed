@@ -1,14 +1,22 @@
-import { Cache } from '@/infra/cache/cache';
+import { ICache } from '@/core/ports/cache';
+import { inject, injectable } from 'tsyringe';
 
-export class UserCache extends Cache {
+@injectable()
+export class UserCache {
+  constructor(@inject('Cache') protected readonly cache: ICache) {}
+
   protected async getUserEmailAddress(id: number): Promise<string | null> {
-    return this.get(`users:${id}:emailAddress`);
+    return this.cache.get(`users:${id}:emailAddress`);
   }
 
   protected async setUserEmailAddress(
     id: number,
     emailAddress: string
-  ): Promise<'OK' | null> {
-    return this.setWithExpirationTime(`users:${id}:emailAddress`, emailAddress);
+  ): Promise<void> {
+    return this.cache.setWithExpirationTime(
+      `users:${id}:emailAddress`,
+      emailAddress,
+      36000
+    );
   }
 }
