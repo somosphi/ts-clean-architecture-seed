@@ -1,13 +1,14 @@
 import { DependencyContainer, InjectionToken } from 'tsyringe';
 import { CronJob } from '../../../infra/cron-jobs/cron-job';
 import { ListUsersJob } from '../../../infra/cron-jobs/list-users';
+import { FetchUsersJob } from '@/infra/cron-jobs/fetch-users';
 
 export abstract class BaseWorker {
   protected jobs: CronJob[];
   constructor(private container: DependencyContainer) {}
 
   getJobs(): Function[] {
-    return [ListUsersJob];
+    return [ListUsersJob, FetchUsersJob];
   }
 
   loadJobs() {
