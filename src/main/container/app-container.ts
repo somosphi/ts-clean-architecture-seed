@@ -6,6 +6,7 @@ import { HttpService } from '@/infra/http/http.service';
 import { JsonPlaceHolderIntegration } from '@/infra/http/integrations';
 import { KnexConnection } from '@/infra/db/knex';
 import { BaseContainer } from './config/base';
+import { LogUserInfoProducer } from '@/infra/amqp/producers/logUserInfo/log-user-info';
 
 class AppContainer extends BaseContainer {
   loadProviders(): Function[] {
@@ -15,6 +16,7 @@ class AppContainer extends BaseContainer {
       ListUsersUseCase,
       ListUsersByIdUseCase,
       UserRepository,
+      LogUserInfoProducer,
     ];
   }
 
