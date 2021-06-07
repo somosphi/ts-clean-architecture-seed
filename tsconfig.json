@@ -3,20 +3,17 @@
     "experimentalDecorators": true,
     "outDir": "./release",
     "rootDir": "src",
+    "module": "commonjs",
     "target": "es2020",
     "esModuleInterop": true,
     "strict": true,
-    "rootDirs": ["src"],
     "strictPropertyInitialization": false,
     "lib": ["es2020"],
     "emitDecoratorMetadata": true,
     "baseUrl": "src",
-    "types": ["node"],
     "paths": {
       "@/*": ["*"]
-    },
-    "moduleResolution": "node"
+    }
   },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+  "include": ["src"]
 }
