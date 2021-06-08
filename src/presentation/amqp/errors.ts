@@ -3,6 +3,6 @@ import { CodedError } from '@/shared/coded-error';
 
 export class ValidationError extends CodedError {
   constructor(details: Joi.ValidationErrorItem[]) {
-    super('VALIDATION_FAILED', 'Invalid request data', details);
+    super('VALIDATION_FAILED', 'Invalid request data', undefined, details);
   }
 }
