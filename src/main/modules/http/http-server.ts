@@ -103,7 +103,6 @@ export class HttpServer implements Module {
       })
     );
 
-    /* Status endpoint */
     router.get(
       ['/info', '/status'],
       async (
@@ -131,7 +130,7 @@ export class HttpServer implements Module {
         next(new NotFoundError());
       }
     );
-    
+
     app.use(errorHandlerMiddleware);
     app.listen(env.httpPort, () =>
       logger.info(`Server running on http://localhost:${env.httpPort}`)
