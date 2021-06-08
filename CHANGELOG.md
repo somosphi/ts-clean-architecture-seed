@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Ongoing Changes
 
+- Added route status
 - Added Decorator version
 - Added redis module
 - Added http integration folder
