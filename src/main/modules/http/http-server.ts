@@ -47,9 +47,9 @@ export class HttpServer implements Module {
                 res.setHeader(header, response.headers[header]);
               }
             }
-
-            if (statusCode || response.status) {
-              res.status(statusCode);
+            const httpStatus = statusCode || response.status;
+            if (httpStatus) {
+              res.status(httpStatus);
             }
 
             res.send(response?.data);
