@@ -2,11 +2,11 @@ import 'reflect-metadata';
 import sinon from 'sinon';
 import { expect, assert } from 'chai';
 import { ListUsersByIdController } from './list-users-by-id';
-import { UserSources } from '../../../../core/enum';
-import { User } from '../../../../core/entities/user';
-import { HttpRequest } from '../../ports/http';
-import { UserNotFoundError } from '../../../../core/errors';
-import { BadRequest } from '../../errors';
+import { UserSources } from '../../../../../core/enum';
+import { User } from '../../../../../core/entities/user';
+import { HttpRequest } from '../../../ports/http';
+import { UserNotFoundError } from '../../../../../core/errors';
+import { BadRequest } from '../../../errors';
 
 describe('ListUsersByIdController', () => {
   describe('#handle', () => {
