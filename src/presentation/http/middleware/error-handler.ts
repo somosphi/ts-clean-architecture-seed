@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { CodedError } from '@/shared/coded-error';
 import { logger } from '@/logger';
+import { HttpError } from '../errors';
 
 export const errorHandlerMiddleware = (
   err: any,
@@ -8,7 +9,7 @@ export const errorHandlerMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  if (err instanceof CodedError) {
+  if (err instanceof HttpError) {
     logger.error(err);
     const { statusCode, message, code, details } = err;
 
