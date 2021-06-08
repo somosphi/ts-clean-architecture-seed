@@ -1,5 +1,6 @@
 export interface RouteConfig {
   method: string;
+  version: string;
   path: string;
   middlewares: Function[];
   statusCode: number;
@@ -39,5 +40,20 @@ export const httpStatus = function (statusCode: number) {
     descriptor: PropertyDescriptor
   ) {
     target['statusCode'] = statusCode;
+  };
+};
+
+export const version = function (version: string): Function {
+  return function (constructor: Function) {
+    const routeConfigs = constructor.prototype.routeConfigs;
+    for (const iterator of routeConfigs) {
+      if (version) {
+        if (version.indexOf('/') > -1) {
+          iterator.path = version + iterator.path;
+        } else {
+          throw new Error('Decorator version need "/" to work.');
+        }
+      }
+    }
   };
 };

@@ -15,6 +15,7 @@ import {
   ListUsersController,
 } from '@/presentation/http/controllers';
 
+import { NotFoundError } from '@/presentation/http/errors';
 export class HttpServer implements Module {
   protected app: express.Application;
 
@@ -47,9 +48,9 @@ export class HttpServer implements Module {
                 res.setHeader(header, response.headers[header]);
               }
             }
-
-            if (statusCode || response.status) {
-              res.status(statusCode);
+            const httpStatus = statusCode || response.status;
+            if (httpStatus) {
+              res.status(httpStatus);
             }
 
             res.send(response?.data);
@@ -102,7 +103,34 @@ export class HttpServer implements Module {
       })
     );
 
+    router.get(
+      ['/info', '/status'],
+      async (
+        req: express.Request,
+        res: express.Response,
+        next: express.NextFunction
+      ) => {
+        try {
+          res.sendStatus(204);
+        } catch (err) {
+          next(err);
+        }
+      }
+    );
+
     app.use(buildedRoutes);
+
+    app.use(
+      '*',
+      (
+        req: express.Request,
+        res: express.Response,
+        next: express.NextFunction
+      ) => {
+        next(new NotFoundError());
+      }
+    );
+
     app.use(errorHandlerMiddleware);
     app.listen(env.httpPort, () =>
       logger.info(`Server running on http://localhost:${env.httpPort}`)

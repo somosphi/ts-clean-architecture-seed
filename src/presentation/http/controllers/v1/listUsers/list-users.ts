@@ -1,11 +1,12 @@
 import { injectable, inject } from 'tsyringe';
-import { Controller } from '../controller';
-import { HttpResponse } from '../../ports/http';
-import { get, httpStatus } from '../controller.config';
-import { IListUsersUseCase } from '../../../../core/useCases/listUsers/list-users.interface';
+import { Controller } from '../../controller';
+import { HttpResponse } from '../../../ports/http';
+import { get, httpStatus, version } from '../../controller.config';
+import { IListUsersUseCase } from '../../../../../core/useCases/listUsers/list-users.interface';
 import { ListUsersResponse } from './list-users.response';
-import { User } from '../../../../core/entities/user';
+import { User } from '../../../../../core/entities/user';
 
+@version('/v1')
 @get('/users')
 @injectable()
 export class ListUsersController extends Controller {
