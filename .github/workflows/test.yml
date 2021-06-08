@@ -1,4 +1,4 @@
-name: Node CI
+name: CI - Test
 
 on: ["push", "pull_request"]
 
@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         node: [ '14' ]
-    name: Node ${{ matrix.node }} sample - test unit
+    name: ${{ matrix.node }} - test unit
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
