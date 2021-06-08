@@ -6,8 +6,8 @@ export abstract class CodedError extends Error {
   constructor(
     code: string,
     message: string,
-    details?: Record<string, any>,
-    statusCode?: number
+    statusCode?: number,
+    details?: Record<string, any>
   ) {
     super(message);
     this.code = code;

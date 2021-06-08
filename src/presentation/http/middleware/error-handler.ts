@@ -11,6 +11,7 @@ export const errorHandlerMiddleware = (
   if (err instanceof CodedError) {
     logger.error(err);
     const { statusCode, message, code, details } = err;
+
     res.status(statusCode || 200).send({
       code,
       message,
