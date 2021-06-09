@@ -1,6 +1,6 @@
-import { IUserCache } from '@/core/ports/user.cache';
 import { inject, injectable } from 'tsyringe';
-import { Cache } from './ports/cache';
+import { IUserCache } from '@/core/ports/user.cache';
+import { Cache } from '@/infra/cache/ports/cache';
 
 @injectable()
 export class UserCache implements IUserCache {
