@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Ongoing Changes
 
+- Changed structure consumer amqp
 - Added route status
 - Added Decorator version
 - Added redis module
