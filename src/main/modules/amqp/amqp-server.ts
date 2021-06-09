@@ -1,4 +1,4 @@
-import { connect, Channel, Connection } from 'amqplib';
+import { connect, Channel, Connection, Message, ConsumeMessage } from 'amqplib';
 import { DependencyContainer, InjectionToken } from 'tsyringe';
 import { AMQP } from '@/main/modules/amqp/amqp';
 import { Module } from '@/main/modules/modules';
@@ -6,6 +6,8 @@ import { RabbitMQConfig } from '@/main/modules/amqp/amqp.config';
 import { Consumer } from '@/presentation/amqp/consumers/consumer';
 import { FindUserByIdConsumer } from '@/presentation/amqp/consumers/findUserById/find-user-by-id';
 import { logger } from '@/logger';
+import { validation } from '@/presentation/amqp/middlewares/validation';
+import { convertToJson } from '@/shared/helper/buffer-converter';
 
 export class AMQPServer extends AMQP implements Module {
   protected channel: Channel;
@@ -49,7 +51,25 @@ export class AMQPServer extends AMQP implements Module {
         consumer as InjectionToken
       );
 
-      this.channel.consume(instance.queue, instance.onConsume(this.channel));
+      this.channel.consume(
+        instance.queue,
+        async (message: ConsumeMessage | null) => {
+          try {
+            if (message) {
+              const messageContent = validation(instance.schema)(
+                convertToJson(message.content)
+              );
+
+              await instance.messageHandler(messageContent);
+            }
+          } catch (error) {
+            instance.onConsumeError(error, this.channel, message);
+          } finally {
+            if (message) this.channel.ack(message);
+          }
+        }
+      );
+
       logger.info(`RabbitMQ: 'Started queue '${instance.queue}' to consume`);
     });
   }
