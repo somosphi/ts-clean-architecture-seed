@@ -1,9 +1,9 @@
-import { ICache } from '@/core/ports/cache';
 import { Redis } from 'ioredis';
 import { inject, injectable } from 'tsyringe';
+import { Cache } from '@/infra/cache/ports/cache';
 
 @injectable()
-export class Cache implements ICache {
+export class CacheService implements Cache {
   constructor(@inject('redisClient') protected readonly cache: Redis) {}
 
   get(key: string): Promise<string | null> {
