@@ -2,13 +2,11 @@ import helmet from 'helmet';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import compression from 'compression';
-import { DependencyContainer, InjectionToken } from 'tsyringe';
-import express, { Router, Request, Response, NextFunction } from 'express';
+import { DependencyContainer } from 'tsyringe';
+import express, { Router } from 'express';
 import { logger } from '@/logger';
 import { Module } from '@/main/modules/modules';
 import { env } from '@/main/env';
-import { RouteConfig } from '@/presentation/http/controllers/controller.config';
-import { HttpResponse } from '@/presentation/http/ports/http';
 import { errorHandlerMiddleware } from '@/presentation/http/middleware/error-handler';
 import {
   ListUsersByIdController,
@@ -16,76 +14,17 @@ import {
 } from '@/presentation/http/controllers';
 
 import { NotFoundError } from '@/presentation/http/errors';
-export class HttpServer implements Module {
+import { BaseHttp } from '@/main/modules/http/base-http';
+
+export class HttpServer extends BaseHttp implements Module {
   protected app: express.Application;
 
-  constructor(private container: DependencyContainer) {}
+  constructor(container: DependencyContainer) {
+    super(container);
+  }
 
   protected loadControllers(): Function[] {
     return [ListUsersByIdController, ListUsersController];
-  }
-
-  protected buildRoutes(router: Router): Router {
-    this.loadControllers().forEach((controller: Function) => {
-      const instance = this.container.resolve(controller as InjectionToken);
-
-      if (!instance.routeConfigs) {
-        return;
-      }
-
-      instance.routeConfigs.forEach((config: RouteConfig) => {
-        const { path, middlewares, method, statusCode } = config;
-
-        const func = async (
-          req: Request,
-          res: Response,
-          next: NextFunction
-        ) => {
-          try {
-            const response = (await instance.handle(req)) as HttpResponse;
-            if (response?.headers) {
-              for (const header in response.headers) {
-                res.setHeader(header, response.headers[header]);
-              }
-            }
-            const httpStatus = statusCode || response.status;
-            if (httpStatus) {
-              res.status(httpStatus);
-            }
-
-            res.send(response?.data);
-          } catch (err) {
-            const error = instance.exception(err);
-
-            next(error);
-          }
-        };
-
-        const jobs = [...middlewares, func] as any;
-
-        switch (method) {
-          case 'get':
-            router.get(path, jobs);
-            break;
-          case 'post':
-            router.post(path, jobs);
-            break;
-          case 'put':
-            router.put(path, jobs);
-            break;
-          case 'patch':
-            router.patch(path, jobs);
-            break;
-          case 'delete':
-            router.delete(path, jobs);
-            break;
-          default:
-            break;
-        }
-      });
-    });
-
-    return router;
   }
 
   start(): void {

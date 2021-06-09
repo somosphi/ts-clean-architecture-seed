@@ -1,6 +1,6 @@
 import { inject, singleton } from 'tsyringe';
 import { logger } from '@/logger';
-import { CronJob } from './cron-job';
+import { CronJob } from '@/infra/cron-jobs/cron-job';
 import { IFetchUsersUseCase } from '@/core/useCases/fetchUsers/fetch-users.interface';
 
 @singleton()
