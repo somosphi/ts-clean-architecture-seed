@@ -1,9 +1,8 @@
 import knex, { QueryBuilder, Transaction } from 'knex';
-import { inject, injectable } from 'tsyringe';
 
 export abstract class Repository<T> {
-  protected abstract getTableName(): string;
   protected abstract database: knex;
+  tableName: string;
 
   protected transactionable(trx?: Transaction): QueryBuilder {
     if (trx) {
@@ -13,7 +12,7 @@ export abstract class Repository<T> {
   }
 
   protected get table(): QueryBuilder {
-    return this.database(this.getTableName());
+    return this.database(this.tableName);
   }
 
   get transaction() {

@@ -4,17 +4,15 @@ import { User } from '@/core/entities/user';
 import { Repository } from './repository';
 import { UserSources } from '@/core/enum';
 import { injectable, inject } from 'tsyringe';
+import { table } from './repository.config';
 
 @injectable()
+@table('users')
 export class UserRepository
   extends Repository<User>
   implements IUserRepository {
   constructor(@inject('mysqlDatabase') protected database: Knex) {
     super();
-  }
-
-  getTableName(): string {
-    return 'users';
   }
 
   async getByEmailsWithSource(
