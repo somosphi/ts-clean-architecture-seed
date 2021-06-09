@@ -6,8 +6,17 @@
 
 - Node JS: **14.17.0**
 - TypeScript: **4.3.2**
-- Knex.js: **0.19.5**
+- Express: **4.17.1**
 
+### Main Packages
+- amqplib
+- Axios
+- Knex.js
+- ioredis
+- Node Cron (cron)
+- Node MySQL 2 (mysql2)
+- rimraf
+- TSyringe
 
 ## Setup
 1. Create **.env** file in the root folder using **.env.sample** as an example and replace the content with your project configs/secrets.
