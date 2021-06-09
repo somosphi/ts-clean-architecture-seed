@@ -1,7 +1,7 @@
 import { inject, singleton } from 'tsyringe';
-import { IListUsersUseCase } from '../../core/useCases/listUsers/list-users.interface';
-import { logger } from '../../logger';
-import { CronJob } from './cron-job';
+import { IListUsersUseCase } from '@/core/useCases/listUsers/list-users.interface';
+import { logger } from '@/logger';
+import { CronJob } from '@/infra/cron-jobs/cron-job';
 
 @singleton()
 export class ListUsersJob extends CronJob {

@@ -1,19 +1,21 @@
 import { DependencyContainer, InjectionToken } from 'tsyringe';
-import { CronJob } from '../../../infra/cron-jobs/cron-job';
-import { ListUsersJob } from '../../../infra/cron-jobs/list-users';
-import { FetchUsersJob } from '@/infra/cron-jobs/fetch-users';
+import { CronJob } from '@/infra/cron-jobs/cron-job';
 
 export abstract class BaseWorker {
   protected jobs: CronJob[];
+  protected abstract loadJobs(): Function[];
+
   constructor(private container: DependencyContainer) {}
 
-  getJobs(): Function[] {
-    return [ListUsersJob, FetchUsersJob];
-  }
-
-  loadJobs() {
-    this.jobs = this.getJobs().map(job =>
+  resolveJobs() {
+    this.jobs = this.loadJobs().map(job =>
       this.container.resolve<CronJob>(job as InjectionToken)
     );
+  }
+
+  stop(): void {
+    this.jobs.forEach(job => {
+      if (job.running) job.stop();
+    });
   }
 }
