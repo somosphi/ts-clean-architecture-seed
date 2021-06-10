@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsUrl, IsNumber, IsEnum } from 'class-validator';
+import { IsInt, IsNotEmpty, IsUrl, IsEnum } from 'class-validator';
 
 export class EnvValidator {
   @IsInt()
@@ -32,6 +32,7 @@ export class EnvValidator {
 
   @IsNotEmpty()
   rabbitMQVHost: string;
+
   redisPort: number;
 
   @IsNotEmpty()

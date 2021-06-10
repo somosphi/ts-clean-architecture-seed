@@ -1,12 +1,13 @@
 import { Options, Channel } from 'amqplib';
 import { injectable, inject } from 'tsyringe';
 import { Producer } from '@/infra/amqp/producer';
-import { UserMessage } from './log-user-info.dto';
 import { logger } from '@/logger';
+import { UserMessage } from './log-user-info.dto';
 
 @injectable()
 export class LogUserInfoProducer extends Producer {
   protected readonly exchange: string = 'user.dx';
+
   protected readonly routingKey: string = 'user.create';
 
   constructor(@inject('vHost') protected readonly channel: Channel) {

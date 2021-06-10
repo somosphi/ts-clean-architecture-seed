@@ -14,7 +14,7 @@ describe('LogUserInfoProducer', () => {
     it('should send message to queue', () => {
       const fakeVhost = {};
 
-      //@ts-ignore
+      // @ts-ignore
       const logUserInfoProducer = new LogUserInfoProducer(fakeVhost);
 
       const message = {
@@ -49,7 +49,7 @@ describe('LogUserInfoProducer', () => {
     it('should return an error when send method failed', () => {
       const fakeVhost = {};
 
-      //@ts-ignore
+      // @ts-ignore
       const logUserInfoProducer = new LogUserInfoProducer(fakeVhost);
 
       const message = {

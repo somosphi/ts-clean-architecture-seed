@@ -21,7 +21,7 @@ export class FindUserByIdConsumer extends Consumer {
   @validationSchema(findUserSchema)
   async messageHandler(message: FindUserMessage): Promise<void> {
     const user: User = await this.listUsersByIdUseCase.listById(message.id);
-    
+
     logger.info(JSON.stringify(user));
   }
 

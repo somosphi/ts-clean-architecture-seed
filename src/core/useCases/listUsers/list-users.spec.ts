@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import sinon from 'sinon';
 import { expect, assert } from 'chai';
+import { UserSources } from '@/core/enum';
+import { User } from '@/core/entities/user';
 import { ListUsersUseCase } from './list-users';
-import { UserSources } from '../../../core/enum';
-import { User } from '../../../core/entities/user';
 
 describe('ListUsersUseCase', () => {
   describe('#list', () => {
@@ -33,7 +33,7 @@ describe('ListUsersUseCase', () => {
         all: sinon.fake.resolves(fakeResponse),
       };
 
-      //@ts-ignore
+      // @ts-ignore
       const listUsersUseCase = new ListUsersUseCase(fakeUserRepository);
 
       const result = await listUsersUseCase.list();

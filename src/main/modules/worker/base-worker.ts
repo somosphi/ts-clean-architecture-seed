@@ -3,6 +3,7 @@ import { CronJob } from '@/infra/cron-jobs/cron-job';
 
 export abstract class BaseWorker {
   protected jobs: CronJob[];
+
   protected abstract loadJobs(): Function[];
 
   constructor(private container: DependencyContainer) {}

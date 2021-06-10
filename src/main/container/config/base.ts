@@ -3,6 +3,7 @@ import { IBaseContainer } from '@/main/container/config/base.interface';
 
 export abstract class BaseContainer implements IBaseContainer {
   abstract loadProviders(): Function[];
+
   abstract loadConfigs(): any;
 
   constructor(protected readonly container: DependencyContainer) {

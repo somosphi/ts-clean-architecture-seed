@@ -1,10 +1,10 @@
 import 'reflect-metadata';
 import sinon from 'sinon';
 import { expect, assert } from 'chai';
+import { UserSources } from '@/core/enum';
+import { User } from '@/core/entities/user';
+import { UserNotFoundError } from '@/core/errors';
 import { ListUsersByIdUseCase } from './list-users-by-id';
-import { UserSources } from '../../../core/enum';
-import { User } from '../../../core/entities/user';
-import { UserNotFoundError } from '../../../core/errors';
 
 describe('ListUsersByIdUseCase', () => {
   describe('#listById', () => {
