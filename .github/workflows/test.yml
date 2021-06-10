@@ -24,7 +24,7 @@ jobs:
       - name: Build
         run: npm run build
       
-      - name: Run tests
+      - name: Run tests and lint
         run: npm run check
         
       - name: Coveralls Parallel
