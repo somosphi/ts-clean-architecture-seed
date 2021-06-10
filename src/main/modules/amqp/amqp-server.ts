@@ -8,6 +8,7 @@ import { logger } from '@/logger';
 
 export class AMQPServer extends BaseAMQP implements Module {
   protected channel: Channel;
+
   protected connection: Connection;
 
   constructor(

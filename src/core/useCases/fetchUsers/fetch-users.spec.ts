@@ -2,8 +2,8 @@ import 'reflect-metadata';
 import sinon from 'sinon';
 import { expect, assert } from 'chai';
 import { User } from '@/core/entities/user';
-import { FetchUsersUseCase } from './fetch-users';
 import { UserSources } from '@/core/enum';
+import { FetchUsersUseCase } from './fetch-users';
 
 describe('FetchUsersUseCase', () => {
   describe('#fetchUsers', () => {

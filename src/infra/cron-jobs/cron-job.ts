@@ -5,6 +5,7 @@ export abstract class CronJob extends NodeCron {
   protected abstract runTask(): Promise<void>;
 
   name: string;
+
   running: boolean;
 
   constructor(cronTime: string, timezone = 'Etc/UTC') {

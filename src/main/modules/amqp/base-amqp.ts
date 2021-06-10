@@ -8,10 +8,13 @@ import { convertToJson } from '@/shared/helper/buffer-converter';
 
 export abstract class BaseAMQP {
   protected abstract connection: Connection;
+
   protected abstract channel: Channel;
+
   protected abstract config: RabbitMQConfig;
 
   abstract start(): void;
+
   abstract loadConsumers(): Function[];
 
   constructor(protected readonly container: DependencyContainer) {}

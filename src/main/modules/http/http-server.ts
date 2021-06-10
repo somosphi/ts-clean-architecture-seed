@@ -21,6 +21,7 @@ export class HttpServer extends BaseHttp implements Module {
 
   constructor(container: DependencyContainer) {
     super(container);
+    this.container = container;
   }
 
   protected loadControllers(): Function[] {

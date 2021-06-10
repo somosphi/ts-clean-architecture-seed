@@ -22,7 +22,7 @@ export class ListUsersByIdController extends Controller {
 
   @httpStatus(200)
   async handle(req: HttpRequest): Promise<HttpResponse<ListUsersByIdResponse>> {
-    const id = req.params.id;
+    const { id } = req.params;
     const user = await this.listUsersByIdUseCase.listById(id);
 
     return {

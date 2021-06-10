@@ -2,6 +2,7 @@ import knex, { QueryBuilder, Transaction } from 'knex';
 
 export abstract class Repository<T> {
   protected abstract database: knex;
+
   tableName: string;
 
   protected transactionable(trx?: Transaction): QueryBuilder {
@@ -29,11 +30,15 @@ export abstract class Repository<T> {
   }
 
   async getById(id: string, trx?: Transaction): Promise<T | null> {
-    return this.transactionable(trx).where('id', id).first();
+    return this.transactionable(trx)
+      .where('id', id)
+      .first();
   }
 
   async deleteById(id: string, trx?: Transaction): Promise<boolean> {
-    const result = await this.transactionable(trx).where('id', id).delete();
+    const result = await this.transactionable(trx)
+      .where('id', id)
+      .delete();
     return result > 0;
   }
 
@@ -42,7 +47,9 @@ export abstract class Repository<T> {
     data: Record<string, any>,
     trx?: Transaction
   ): Promise<boolean> {
-    const result = await this.transactionable(trx).where('id', id).update(data);
+    const result = await this.transactionable(trx)
+      .where('id', id)
+      .update(data);
     return result > 0;
   }
 }

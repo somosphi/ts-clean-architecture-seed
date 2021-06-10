@@ -28,7 +28,7 @@ describe('FindUserByIdConsumer', () => {
       };
 
       const findUserByIdConsumer = new FindUserByIdConsumer(
-        //@ts-ignore
+        // @ts-ignore
         fakeListUserByIdUseCase
       );
 

@@ -25,7 +25,7 @@ describe('JsonPlaceHolderIntegration', () => {
         get: sinon.fake.resolves({ data }),
       };
       const jsonPlaceHolderIntegration = new JsonPlaceHolderIntegration(
-        //@ts-ignore
+        // @ts-ignore
         fakeHttp
       );
 

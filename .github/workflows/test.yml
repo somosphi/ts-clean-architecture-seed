@@ -1,4 +1,4 @@
-name: CI - Test
+name: CI - Test/Lint
 
 on: ["push", "pull_request"]
 
@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         node: [ '14' ]
-    name: ${{ matrix.node }} - test unit
+    name: ${{ matrix.node }} - test unit and lint
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
@@ -24,8 +24,8 @@ jobs:
       - name: Build
         run: npm run build
       
-      - name: Run tests
-        run: npm run test:unit
+      - name: Run tests and lint
+        run: npm run check
         
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
