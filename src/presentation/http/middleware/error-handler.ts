@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { CodedError } from '@/shared/coded-error';
+import { __ } from 'i18n';
 import { logger } from '@/logger';
 import { HttpError } from '../errors';
 
@@ -24,14 +24,14 @@ export const errorHandlerMiddleware = (
   if (err.code && err.code === 'ER_DUP_ENTRY') {
     res.status(409).send({
       code: 'DUPLICATED_RESOURCE',
-      message: 'Duplicated resource',
+      message: __('error.duplicatedResource'),
     });
     return next();
   }
 
   res.status(500).send({
     code: 'UNEXPECTED_ERROR',
-    message: 'Internal server failure',
+    message: __('error.unexpected'),
   });
 
   return next();
