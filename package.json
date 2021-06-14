@@ -8,7 +8,7 @@
     "dev": "nodemon --watch './src/**/*.ts' --exec 'ts-node' -r tsconfig-paths/register ./src/main/server.ts",
     "lint": "eslint  'src/**/*.ts'",
     "check": "npm run test:unit  && npm run lint",
-    "build": "rimraf release && tsc -p tsconfig-build.json",
+    "build": "rimraf release && tsc -p tsconfig-build.json && cp -r ./src/presentation/i18n/locales ./release/presentation/i18n",
     "migration:create": "knex migrate:make",
     "migration:latest": "knex migrate:latest"
   },
@@ -34,6 +34,7 @@
   "dependencies": {
     "@somosphi/logger": "^1.6.0",
     "@types/bunyan-format": "^0.2.3",
+    "@types/i18n": "^0.13.0",
     "amqplib": "^0.8.0",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
@@ -46,6 +47,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
+    "i18n": "^0.13.3",
     "ioredis": "^4.27.4",
     "joi": "^17.4.0",
     "knex": "^0.19.5",
