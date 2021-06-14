@@ -8,7 +8,7 @@
     "dev": "nodemon --watch './src/**/*.ts' --exec 'ts-node' -r tsconfig-paths/register ./src/main/server.ts",
     "lint": "eslint  'src/**/*.ts'",
     "check": "npm run test:unit  && npm run lint",
-    "build": "rimraf release && tsc -p tsconfig-build.json && cp -r ./src/i18n/locales ./release/i18n",
+    "build": "rimraf release && tsc -p tsconfig-build.json && cp -r ./src/presentation/i18n/locales ./release/presentation/i18n",
     "migration:create": "knex migrate:make",
     "migration:latest": "knex migrate:latest"
   },
