@@ -10,8 +10,6 @@ import { Worker } from './modules/worker/worker';
 import { CacheClient } from './modules/cache/cache-client';
 
 export class Application {
-  protected httpServer?: HttpServer;
-
   protected loadModules(container: DependencyContainer): Module[] {
     return [
       new HttpServer(container),

@@ -15,7 +15,7 @@ export class ListUsersJob extends CronJob {
   protected async runTask(): Promise<void> {
     const users = await this.listUsersUseCase.list();
     for (const user of users) {
-      logger.info(`(${user.id}) ${user.name}`);
+      logger.debug(`(${user.id}) ${user.name}`);
     }
   }
 }
