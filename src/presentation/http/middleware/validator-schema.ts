@@ -15,9 +15,9 @@ export const validatorMiddleware = (schema: Joi.Schema) => (
   });
 
   if (validation.error) {
-    logger.info(req?.body);
-    logger.info(req?.params);
-    logger.info(req?.query);
+    logger.debug(req?.body);
+    logger.debug(req?.params);
+    logger.debug(req?.query);
     return next(
       new BadRequest(
         'VALIDATION_FAILED',

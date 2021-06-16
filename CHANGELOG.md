@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Ongoing Changes
 
+- Changed build scripts
 - Added i18n
 - Added lint
 - Changed structure consumer amqp

@@ -1,16 +1,17 @@
 {
-  "name": "hexagonal-seed",
+  "name": "ts-clean-architecture-seed",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/main/server.js",
   "scripts": {
     "test:unit": "nyc mocha --timeout 10000 --exit --config=.mocha.yml -r tsconfig-paths/register 'src/**/*.spec.ts'",
-    "dev": "nodemon --watch './src/**/*.ts' --exec 'ts-node' -r tsconfig-paths/register ./src/main/server.ts",
+    "dev": "tsnd --respawn --ignore-watch node_modules -r tsconfig-paths/register ./src/main/server.ts",
     "lint": "eslint  'src/**/*.ts'",
     "check": "npm run test:unit  && npm run lint",
-    "build": "rimraf release && tsc -p tsconfig-build.json && cp -r ./src/presentation/i18n/locales ./release/presentation/i18n",
+    "build": "rimraf dist && tsc -p . && cp -r ./src/presentation/i18n/locales ./dist/presentation/i18n",
     "migration:create": "knex migrate:make",
-    "migration:latest": "knex migrate:latest"
+    "migration:latest": "knex migrate:latest",
+    "start": "node -r ./prod-paths.js ./dist/main/server.js"
   },
   "nyc": {
     "extension": [
@@ -58,7 +59,6 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^2.7.1",
     "sinon": "^11.1.1",
-    "ts-node-dev": "^1.1.6",
     "tsconfig-paths": "^3.9.0",
     "tsyringe": "^4.5.0",
     "typescript": "^4.3.2",
@@ -83,6 +83,7 @@
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.18.3"
+    "eslint-plugin-react": "^7.18.3",
+    "ts-node-dev": "^1.1.6"
   }
 }
