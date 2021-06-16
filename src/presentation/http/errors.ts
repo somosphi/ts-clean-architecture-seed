@@ -1,3 +1,4 @@
+import { __ } from 'i18n';
 import { CodedError } from '@/shared/coded-error';
 
 export class HttpError extends CodedError {
@@ -22,6 +23,6 @@ export class BadRequest extends HttpError {
 
 export class NotFoundError extends HttpError {
   constructor() {
-    super('NOT_FOUND', 'Page not found', 404);
+    super('NOT_FOUND', __('error.notFound'), 404);
   }
 }

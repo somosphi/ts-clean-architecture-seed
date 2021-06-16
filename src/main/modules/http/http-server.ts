@@ -4,6 +4,7 @@ import compression from 'compression';
 import { DependencyContainer } from 'tsyringe';
 import express, { Router } from 'express';
 import { logger } from '@/logger';
+import i18n from '@/presentation/i18n';
 import { Module } from '@/main/modules/modules';
 import { env } from '@/main/env';
 import { errorHandlerMiddleware } from '@/presentation/http/middleware/error-handler';
@@ -34,6 +35,7 @@ export class HttpServer extends BaseHttp implements Module {
 
     app.set('trust proxy', true);
     app.use(helmet());
+    app.use(i18n.init);
     app.use(compression());
     app.use(
       bodyParser.json({
