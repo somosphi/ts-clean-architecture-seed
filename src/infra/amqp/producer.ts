@@ -6,16 +6,16 @@ export abstract class Producer {
 
   publish(
     exchange: string,
-    routingKey: string,
+    routing_key: string,
     message: object,
-    additionalParams?: Options.Publish
+    additional_params?: Options.Publish
   ): void {
     try {
       this.channel.publish(
         exchange || '',
-        routingKey,
+        routing_key,
         converter(message),
-        additionalParams
+        additional_params
       );
     } catch (err) {
       throw Error(

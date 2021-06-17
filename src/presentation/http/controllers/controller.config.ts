@@ -3,20 +3,20 @@ export interface RouteConfig {
   version: string;
   path: string;
   middlewares: Function[];
-  statusCode: number;
+  status_code: number;
 }
 
 const createRouteDecorator = (method: string) =>
   function(path: string, middlewares: Function[] = []): Function {
     return function(constructor: Function) {
-      const { statusCode } = constructor.prototype;
-      if (!constructor.prototype.routeConfigs) {
-        constructor.prototype.routeConfigs = [
+      const { status_code } = constructor.prototype;
+      if (!constructor.prototype.route_configs) {
+        constructor.prototype.route_configs = [
           {
             path,
             method,
             middlewares,
-            statusCode,
+            status_code,
           },
         ];
       }
@@ -33,20 +33,20 @@ export const patch = createRouteDecorator('patch');
 
 export const del = createRouteDecorator('delete');
 
-export const httpStatus = function(statusCode: number) {
+export const httpStatus = function(status_code: number) {
   return function(
     target: any,
     propertyKey: string,
     descriptor: PropertyDescriptor
   ) {
-    target.statusCode = statusCode;
+    target.status_code = status_code;
   };
 };
 
 export const version = function(version: string): Function {
   return function(constructor: Function) {
-    const { routeConfigs } = constructor.prototype;
-    for (const iterator of routeConfigs) {
+    const { route_configs } = constructor.prototype;
+    for (const iterator of route_configs) {
       if (version) {
         if (version.indexOf('/') > -1) {
           iterator.path = version + iterator.path;

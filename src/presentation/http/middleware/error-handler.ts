@@ -3,7 +3,7 @@ import { CodedError } from '@/shared/coded-error';
 import { logger } from '@/logger';
 import { HttpError } from '../errors';
 
-export const errorHandlerMiddleware = (
+export const error_handler_middleware = (
   err: any,
   req: Request,
   res: Response,
@@ -11,9 +11,9 @@ export const errorHandlerMiddleware = (
 ) => {
   if (err instanceof HttpError) {
     logger.error(err);
-    const { statusCode, message, code, details } = err;
+    const { status_code, message, code, details } = err;
 
-    res.status(statusCode || 200).send({
+    res.status(status_code || 200).send({
       code,
       message,
       details,

@@ -7,8 +7,8 @@ import { env } from '@/main/env';
 
 describe('JsonPlaceHolderIntegration', () => {
   const sandbox = sinon.createSandbox();
-  const baseURL = 'http://localhost:3000';
-  sandbox.replace(env, 'jsonPlaceholderUrl', baseURL);
+  const base_url = 'http://localhost:3000';
+  sandbox.replace(env, 'json_placeholder_url', base_url);
 
   describe('#getUsers', () => {
     it('should return all users', async () => {
@@ -20,26 +20,26 @@ describe('JsonPlaceHolderIntegration', () => {
         },
       ];
 
-      const fakeHttp = {
+      const fake_http = {
         createInstance: sinon.fake.returns(undefined),
         get: sinon.fake.resolves({ data }),
       };
-      const jsonPlaceHolderIntegration = new JsonPlaceHolderIntegration(
+      const json_placeholder_integration = new JsonPlaceHolderIntegration(
         // @ts-ignore
-        fakeHttp
+        fake_http
       );
 
-      const users = await jsonPlaceHolderIntegration.getUsers();
+      const users = await json_placeholder_integration.getUsers();
       const result = data.map(item => ({
-        emailAddress: item.email,
+        email_address: item.email,
         name: item.name,
         source: UserSources.JsonPlaceholder,
         username: item.username,
       }));
 
       expect(users).to.be.eql(result);
-      assert(fakeHttp.createInstance.calledOnceWith({ baseURL }));
-      assert(fakeHttp.get.calledOnceWith('/users'));
+      assert(fake_http.createInstance.calledOnceWith({ baseURL: base_url }));
+      assert(fake_http.get.calledOnceWith('/users'));
     });
   });
 });

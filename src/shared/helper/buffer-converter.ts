@@ -9,6 +9,6 @@ export const converter = (content: any): Buffer => {
   }
 };
 
-export const convertToJson = (content: Buffer): any => {
+export const convert_to_json = (content: Buffer): any => {
   return JSON.parse(content.toString());
 };

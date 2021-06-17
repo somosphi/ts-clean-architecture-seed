@@ -1,5 +1,5 @@
 import Joi from 'joi';
 
-export const findUserSchema = Joi.object({
+export const find_user_schema = Joi.object({
   id: Joi.string().required(),
 });

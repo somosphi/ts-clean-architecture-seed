@@ -11,8 +11,8 @@ export class CacheClient implements Module {
   async start(): Promise<void> {
     logger.info(`Started cache client`);
     this.redisClient = new Redis({
-      port: env.redisPort,
-      host: env.redisHost,
+      port: env.redis_port,
+      host: env.redis_host,
     });
   }
 }

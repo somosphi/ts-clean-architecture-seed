@@ -7,11 +7,11 @@ import { UserNotFoundError } from '@/core/errors';
 @injectable()
 export class ListUsersByIdUseCase implements IListUsersByIdUseCase {
   constructor(
-    @inject('UserRepository') private userRepository: IUserRepository
+    @inject('UserRepository') private user_repository: IUserRepository
   ) {}
 
   async listById(id: string): Promise<User> {
-    const user = await this.userRepository.getById(id);
+    const user = await this.user_repository.getById(id);
 
     if (!user) {
       throw new UserNotFoundError();

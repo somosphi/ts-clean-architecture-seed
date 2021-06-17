@@ -3,7 +3,7 @@ import { Channel, ConsumeMessage } from 'amqplib';
 import { Consumer } from '@/presentation/amqp/consumers/consumer';
 import { IListUsersByIdUseCase } from '@/core/useCases/listUsersById/list-users-by-id.interface';
 import { FindUserMessage } from '@/presentation/amqp/consumers/findUserById/find-user-by-id.dto';
-import { findUserSchema } from '@/presentation/amqp/consumers/findUserById/find-user-by-id.schema';
+import { find_user_schema } from '@/presentation/amqp/consumers/findUserById/find-user-by-id.schema';
 import { User } from '@/core/entities/user';
 import { logger } from '@/logger';
 import { queue, validationSchema } from '../consume.config';
@@ -13,14 +13,16 @@ import { queue, validationSchema } from '../consume.config';
 export class FindUserByIdConsumer extends Consumer {
   constructor(
     @inject('ListUsersByIdUseCase')
-    private listUsersByIdUseCase: IListUsersByIdUseCase
+    private list_users_by_id_use_case: IListUsersByIdUseCase
   ) {
     super();
   }
 
-  @validationSchema(findUserSchema)
+  @validationSchema(find_user_schema)
   async messageHandler(message: FindUserMessage): Promise<void> {
-    const user: User = await this.listUsersByIdUseCase.listById(message.id);
+    const user: User = await this.list_users_by_id_use_case.listById(
+      message.id
+    );
 
     logger.info(JSON.stringify(user));
   }

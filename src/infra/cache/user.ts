@@ -7,13 +7,13 @@ export class UserCache implements IUserCache {
   constructor(@inject('Cache') protected readonly cache: Cache) {}
 
   async getUserEmailAddress(id: number): Promise<string | null> {
-    return this.cache.get(`users:${id}:emailAddress`);
+    return this.cache.get(`users:${id}:email_address`);
   }
 
-  async setUserEmailAddress(id: number, emailAddress: string): Promise<void> {
+  async setUserEmailAddress(id: number, email_address: string): Promise<void> {
     return this.cache.setWithExpirationTime(
-      `users:${id}:emailAddress`,
-      emailAddress,
+      `users:${id}:email_address`,
+      email_address,
       36000
     );
   }

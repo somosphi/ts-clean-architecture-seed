@@ -6,16 +6,17 @@ import { IFetchUsersUseCase } from '@/core/useCases/fetchUsers/fetch-users.inter
 @singleton()
 export class FetchUsersJob extends CronJob {
   constructor(
-    @inject('FetchUsersUseCase') private fetchUsersUseCase: IFetchUsersUseCase
+    @inject('FetchUsersUseCase')
+    private fetch_users_use_case: IFetchUsersUseCase
   ) {
     super('*/60 * * * * *');
     this.name = 'Fetch Users Job';
   }
 
   protected async runTask(): Promise<void> {
-    const fetchedUsers = await this.fetchUsersUseCase.fetchUsers();
+    const fetched_users = await this.fetch_users_use_case.fetchUsers();
     logger.info('Fetched users from json placeholder api', {
-      usersCount: fetchedUsers.length,
+      users_count: fetched_users.length,
     });
   }
 }

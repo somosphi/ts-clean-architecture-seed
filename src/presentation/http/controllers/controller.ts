@@ -8,5 +8,5 @@ export abstract class Controller {
 
   path?: string;
 
-  routeConfigs?: RouteConfig[];
+  route_configs?: RouteConfig[];
 }

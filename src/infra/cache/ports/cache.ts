@@ -4,6 +4,6 @@ export interface Cache {
   setWithExpirationTime(
     key: string,
     value: any,
-    expirationTime: number
+    expiration_time: number
   ): Promise<void>;
 }

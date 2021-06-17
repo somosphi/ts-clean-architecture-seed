@@ -9,47 +9,49 @@ import { IFetchUsersUseCase } from './fetch-users.interface';
 export class FetchUsersUseCase implements IFetchUsersUseCase {
   constructor(
     @inject('JsonPlaceHolderIntegration')
-    private jsonPlaceHolderIntegration: IJsonPlaceHolderIntegration,
-    @inject('UserRepository') private userRepository: IUserRepository
+    private json_placeholder_integration: IJsonPlaceHolderIntegration,
+    @inject('UserRepository') private user_repository: IUserRepository
   ) {}
 
   async fetchUsers(): Promise<string[]> {
-    const jsonPlaceholderUsers = await this.jsonPlaceHolderIntegration.getUsers();
+    const json_placeholder_users = await this.json_placeholder_integration.getUsers();
 
-    const jsonPlaceholderEmails = jsonPlaceholderUsers.map(
-      jsonPlaceholderUser => jsonPlaceholderUser.emailAddress
+    const json_placeholder_emails = json_placeholder_users.map(
+      json_placeholder_user => json_placeholder_user.email_address
     );
-    const fetchedIds: string[] = [];
+    const fetched_ids: string[] = [];
 
-    await this.userRepository.transaction(async (trx: Transaction) => {
-      const sourceDatabaseUsers = await this.userRepository.getByEmailsWithSource(
-        jsonPlaceholderEmails,
+    await this.user_repository.transaction(async (trx: Transaction) => {
+      const source_database_users = await this.user_repository.getByEmailsWithSource(
+        json_placeholder_emails,
         UserSources.JsonPlaceholder,
         trx
       );
 
       await Promise.all(
-        jsonPlaceholderUsers.map(async jsonPlaceholderUser => {
-          const jsonPlaceholderEmail = jsonPlaceholderUser.emailAddress.toLowerCase();
+        json_placeholder_users.map(async json_placeholder_user => {
+          const json_placeholder_email = json_placeholder_user.email_address.toLowerCase();
 
-          const sourceDatabaseUser = sourceDatabaseUsers.find(
-            sourceDatabaseUser =>
-              sourceDatabaseUser.emailAddress === jsonPlaceholderEmail
+          const source_database_user = source_database_users.find(
+            source_database_user =>
+              source_database_user.email_address === json_placeholder_email
           );
 
-          if (!sourceDatabaseUser) {
-            const createData = {
-              name: jsonPlaceholderUser.name,
-              username: jsonPlaceholderUser.username,
-              emailAddress: jsonPlaceholderEmail,
+          if (!source_database_user) {
+            const create_data = {
+              name: json_placeholder_user.name,
+              username: json_placeholder_user.username,
+              email_address: json_placeholder_email,
               source: UserSources.JsonPlaceholder,
             };
-            fetchedIds.push(await this.userRepository.create(createData, trx));
+            fetched_ids.push(
+              await this.user_repository.create(create_data, trx)
+            );
           }
         })
       );
     });
 
-    return fetchedIds;
+    return fetched_ids;
   }
 }

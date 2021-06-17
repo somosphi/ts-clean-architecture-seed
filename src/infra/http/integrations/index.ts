@@ -1,3 +1,1 @@
-import { JsonPlaceHolderIntegration } from './jsonplaceholder/jsonplaceholder';
-
-export { JsonPlaceHolderIntegration };
+export * from './jsonplaceholder/jsonplaceholder';

@@ -8,52 +8,52 @@ import { FetchUsersUseCase } from './fetch-users';
 describe('FetchUsersUseCase', () => {
   describe('#fetchUsers', () => {
     it('should fetch all users when database result is empty', async () => {
-      const sourceDatabaseUsers: User[] = [];
+      const source_database_users: User[] = [];
 
-      const jsonPlaceholderUsers: any[] = [
+      const json_placeholder_users: any[] = [
         {
           name: 'Fulano',
           username: 'fulano',
-          emailAddress: 'AAA@AAA.com',
+          email_address: 'AAA@AAA.com',
         },
       ];
 
-      const placeholderEmails = jsonPlaceholderUsers.map(
-        jsonPlaceholderUser => jsonPlaceholderUser.emailAddress
+      const placeholder_emails = json_placeholder_users.map(
+        json_placeholder_user => json_placeholder_user.email_address
       );
 
       const providers = {
-        jsonPlaceholderIntegration: {
-          getUsers: sinon.fake.resolves(jsonPlaceholderUsers),
+        json_placeholder_integration: {
+          getUsers: sinon.fake.resolves(json_placeholder_users),
         },
-        userRepository: {
-          getByEmailsWithSource: sinon.fake.resolves(sourceDatabaseUsers),
+        user_repository: {
+          getByEmailsWithSource: sinon.fake.resolves(source_database_users),
           create: sinon.fake.resolves('1'),
           transaction: sinon.fake((cb: Function) => cb()),
         },
       };
 
-      const fetchUsersUseCase = new FetchUsersUseCase(
+      const fetch_users_use_case = new FetchUsersUseCase(
         // @ts-ignore
         ...Object.values(providers)
       );
 
-      const fetchedIds = await fetchUsersUseCase.fetchUsers();
+      const fetched_ids = await fetch_users_use_case.fetchUsers();
 
-      const [fetchUser] = jsonPlaceholderUsers;
-      expect(fetchedIds).to.be.eql(['1']);
-      assert(providers.jsonPlaceholderIntegration.getUsers.calledOnce);
+      const [fetch_user] = json_placeholder_users;
+      expect(fetched_ids).to.be.eql(['1']);
+      assert(providers.json_placeholder_integration.getUsers.calledOnce);
       assert(
-        providers.userRepository.getByEmailsWithSource(
-          placeholderEmails,
+        providers.user_repository.getByEmailsWithSource(
+          placeholder_emails,
           UserSources.JsonPlaceholder
         )
       );
       assert(
-        providers.userRepository.create.calledOnceWith({
-          name: fetchUser.name,
-          username: fetchUser.username,
-          emailAddress: fetchUser.emailAddress.toLowerCase(),
+        providers.user_repository.create.calledOnceWith({
+          name: fetch_user.name,
+          username: fetch_user.username,
+          email_address: fetch_user.email_address.toLowerCase(),
           source: UserSources.JsonPlaceholder,
         })
       );

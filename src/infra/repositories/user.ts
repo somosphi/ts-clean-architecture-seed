@@ -10,7 +10,15 @@ import { table } from './repository.config';
 @table('users')
 export class UserRepository extends Repository<User>
   implements IUserRepository {
-  constructor(@inject('mysqlDatabase') protected database: Knex) {
+  protected properties = [
+    'name',
+    'email_address',
+    'source',
+    'created_at',
+    'updated_at',
+  ];
+
+  constructor(@inject('mysql_database') protected database: Knex) {
     super();
   }
 
@@ -20,7 +28,7 @@ export class UserRepository extends Repository<User>
     trx?: Transaction
   ): Promise<User[]> {
     return this.transactionable(trx)
-      .whereIn('emailAddress', emails)
+      .whereIn('email_address', emails)
       .where('source', source);
   }
 }

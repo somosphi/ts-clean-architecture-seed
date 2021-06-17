@@ -12,12 +12,12 @@ export abstract class BaseHttp {
     this.loadControllers().forEach((controller: Function) => {
       const instance = this.container.resolve(controller as InjectionToken);
 
-      if (!instance.routeConfigs) {
+      if (!instance.route_configs) {
         return;
       }
 
-      instance.routeConfigs.forEach((config: RouteConfig) => {
-        const { path, middlewares, method, statusCode } = config;
+      instance.route_configs.forEach((config: RouteConfig) => {
+        const { path, middlewares, method, status_code } = config;
 
         const func = async (
           req: Request,
@@ -31,9 +31,9 @@ export abstract class BaseHttp {
                 res.setHeader(header, response.headers[header]);
               }
             }
-            const httpStatus = statusCode || response.status;
-            if (httpStatus) {
-              res.status(httpStatus);
+            const http_status = status_code || response.status;
+            if (http_status) {
+              res.status(http_status);
             }
 
             res.send(response?.data);

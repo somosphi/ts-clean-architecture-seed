@@ -1,16 +1,16 @@
 import { CodedError } from '@/shared/coded-error';
 
 export class HttpError extends CodedError {
-  statusCode: number;
+  status_code: number;
 
   constructor(
     code: string,
     message: string,
-    statusCode: number,
+    status_code: number,
     details?: Record<string, any>
   ) {
     super(code, message, details);
-    this.statusCode = statusCode;
+    this.status_code = status_code;
   }
 }
 

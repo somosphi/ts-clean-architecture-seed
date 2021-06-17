@@ -18,20 +18,20 @@ describe('FetchUsersJob', () => {
           id: '1',
           name: 'test',
           username: 'test',
-          emailAddress: 'test@test.com',
+          email_address: 'test@test.com',
           source: UserSources.JsonPlaceholder,
-          createdAt: now,
-          updatedAt: now,
+          created_at: now,
+          updated_at: now,
         },
       ];
-      const fakeUseCase = {
+      const fake_use_case = {
         list: sinon.fake.resolves(users),
       };
 
-      const listUsersJob = new ListUsersJobTest(fakeUseCase);
-      await listUsersJob.runTask();
+      const list_users_job = new ListUsersJobTest(fake_use_case);
+      await list_users_job.runTask();
 
-      assert(fakeUseCase.list.calledOnce);
+      assert(fake_use_case.list.calledOnce);
     });
   });
 });

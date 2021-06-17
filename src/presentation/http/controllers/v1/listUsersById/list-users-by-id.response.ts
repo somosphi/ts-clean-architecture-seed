@@ -4,8 +4,8 @@ export type ListUsersByIdResponse = {
   id: string;
   name: string;
   username: string;
-  emailAddress: string;
+  email_address: string;
   source: UserSources;
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
 };

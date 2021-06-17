@@ -10,7 +10,7 @@ import { env } from '@/main/env';
 export class JsonPlaceHolderIntegration implements IJsonPlaceHolderIntegration {
   constructor(@inject('HttpService') private readonly http: Http) {
     http.createInstance({
-      baseURL: env.jsonPlaceholderUrl,
+      baseURL: env.json_placeholder_url,
     });
   }
 
@@ -19,7 +19,7 @@ export class JsonPlaceHolderIntegration implements IJsonPlaceHolderIntegration {
     return result.data.map(
       item =>
         new User({
-          emailAddress: item.email,
+          email_address: item.email,
           name: item.name,
           source: UserSources.JsonPlaceholder,
           username: item.username,

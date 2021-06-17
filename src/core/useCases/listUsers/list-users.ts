@@ -6,10 +6,10 @@ import { IUserRepository } from '@/core/ports/user.repository';
 @injectable()
 export class ListUsersUseCase implements IListUsersUseCase {
   constructor(
-    @inject('UserRepository') private userRepository: IUserRepository
+    @inject('UserRepository') private user_repository: IUserRepository
   ) {}
 
   async list(): Promise<User[]> {
-    return this.userRepository.all();
+    return this.user_repository.all();
   }
 }

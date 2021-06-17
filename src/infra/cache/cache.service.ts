@@ -4,7 +4,7 @@ import { Cache } from '@/infra/cache/ports/cache';
 
 @injectable()
 export class CacheService implements Cache {
-  constructor(@inject('redisClient') protected readonly cache: Redis) {}
+  constructor(@inject('redis_client') protected readonly cache: Redis) {}
 
   get(key: string): Promise<string | null> {
     return this.cache.get(key);
@@ -17,8 +17,8 @@ export class CacheService implements Cache {
   async setWithExpirationTime(
     key: string,
     value: any,
-    expirationTime: number
+    expiration_time: number
   ): Promise<void> {
-    await this.cache.set(key, value, 'EX', expirationTime);
+    await this.cache.set(key, value, 'EX', expiration_time);
   }
 }

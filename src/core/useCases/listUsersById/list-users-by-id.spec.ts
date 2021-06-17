@@ -9,49 +9,50 @@ import { ListUsersByIdUseCase } from './list-users-by-id';
 describe('ListUsersByIdUseCase', () => {
   describe('#listById', () => {
     it('should return User', async () => {
-      const fakeResponse: User = {
+      const fake_response: User = {
         id: 'string',
         name: 'string',
         username: 'string',
-        emailAddress: 'string',
+        email_address: 'string',
         source: UserSources.JsonPlaceholder,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
       };
 
       const id = '12';
 
-      const userRepositoryFake = {
-        getById: sinon.fake.resolves(fakeResponse),
+      const user_repository_fake = {
+        getById: sinon.fake.resolves(fake_response),
       };
 
       const container = {
-        userRepository: userRepositoryFake,
+        user_repository: user_repository_fake,
       };
-      const listUsersByIdUseCase = new ListUsersByIdUseCase(
+      const list_users_by_id_use_case = new ListUsersByIdUseCase(
         // @ts-ignore
         ...Object.values(container)
       );
 
-      const result = await listUsersByIdUseCase.listById(id);
+      const result = await list_users_by_id_use_case.listById(id);
 
-      expect(result).to.be.eql(fakeResponse);
-      assert(container.userRepository.getById.calledOnceWith(id));
+      expect(result).to.be.eql(fake_response);
+      assert(container.user_repository.getById.calledOnceWith(id));
     });
 
     it('should return UserNotFoundError', async () => {
-      const fakeResponse = null;
+      const fake_response = null;
 
       const id = '12';
 
-      const userRepositoryFake = {
-        getById: sinon.fake.resolves(fakeResponse),
+      const user_repository_fake = {
+        getById: sinon.fake.resolves(fake_response),
       };
 
       const container = {
-        userRepository: userRepositoryFake,
+        user_repository: user_repository_fake,
       };
-      const listUsersByIdUseCase = new ListUsersByIdUseCase(
+
+      const list_users_by_id_use_case = new ListUsersByIdUseCase(
         // @ts-ignore
         ...Object.values(container)
       );
@@ -59,7 +60,7 @@ describe('ListUsersByIdUseCase', () => {
       let err = null;
 
       try {
-        await listUsersByIdUseCase.listById(id);
+        await list_users_by_id_use_case.listById(id);
       } catch (error) {
         err = error;
       }

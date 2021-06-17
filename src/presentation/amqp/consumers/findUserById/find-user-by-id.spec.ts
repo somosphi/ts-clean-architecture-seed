@@ -17,27 +17,27 @@ describe('FindUserByIdConsumer', () => {
         id: '1',
         name: 'Test',
         username: 'Test',
-        emailAddress: 'test@gmai.com',
+        email_address: 'test@gmai.com',
         source: UserSources.JsonPlaceholder,
-        createdAt: date,
-        updatedAt: date,
+        created_at: date,
+        updated_at: date,
       };
 
-      const fakeListUserByIdUseCase = {
+      const fake_list_user_by_id_use_case = {
         listById: sinon.fake.resolves(user),
       };
 
-      const findUserByIdConsumer = new FindUserByIdConsumer(
+      const find_user_by_id_consumer = new FindUserByIdConsumer(
         // @ts-ignore
-        fakeListUserByIdUseCase
+        fake_list_user_by_id_use_case
       );
 
       const message = {
         id: '1',
       };
 
-      await findUserByIdConsumer.messageHandler(message);
-      assert(fakeListUserByIdUseCase.listById.calledOnceWith(message.id));
+      await find_user_by_id_consumer.messageHandler(message);
+      assert(fake_list_user_by_id_use_case.listById.calledOnceWith(message.id));
     });
   });
 });

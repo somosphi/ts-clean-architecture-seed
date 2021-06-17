@@ -11,44 +11,44 @@ import { BadRequest } from '../../../errors';
 describe('ListUsersByIdController', () => {
   describe('#handle', () => {
     it('should return ListUsersByIdResponse', async () => {
-      const fakeReq: HttpRequest = {
+      const fake_req: HttpRequest = {
         body: {},
         params: {
           id: '12',
         },
       };
-      const fakeResponse: User = {
+      const fake_response: User = {
         id: 'string',
         name: 'string',
         username: 'string',
-        emailAddress: 'string',
+        email_address: 'string',
         source: UserSources.JsonPlaceholder,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
       };
-      const listTodoUseCaseFake = {
-        listById: sinon.fake.resolves(fakeResponse),
+      const list_todo_use_case_fake = {
+        listById: sinon.fake.resolves(fake_response),
       };
 
       const container = {
-        listTodoUseCase: listTodoUseCaseFake,
+        listTodoUseCase: list_todo_use_case_fake,
       };
-      const listUsersByIdController = new ListUsersByIdController(
+      const list_users_by_id_controller = new ListUsersByIdController(
         // @ts-ignore
         ...Object.values(container)
       );
 
-      const result = await listUsersByIdController.handle(fakeReq);
+      const result = await list_users_by_id_controller.handle(fake_req);
 
       expect(result).to.be.eql({
         data: {
-          ...fakeResponse,
-          createdAt: fakeResponse.createdAt.toISOString(),
-          updatedAt: fakeResponse.updatedAt.toISOString(),
+          ...fake_response,
+          created_at: fake_response.created_at.toISOString(),
+          updated_at: fake_response.updated_at.toISOString(),
         },
       });
       assert(
-        container.listTodoUseCase.listById.calledOnceWith(fakeReq.params.id)
+        container.listTodoUseCase.listById.calledOnceWith(fake_req.params.id)
       );
     });
   });
@@ -57,8 +57,8 @@ describe('ListUsersByIdController', () => {
     it('should return Error', () => {
       const error = new Error();
       // @ts-ignore
-      const listUsersByIdController = new ListUsersByIdController();
-      const result = listUsersByIdController.exception(error);
+      const list_users_by_id_controller = new ListUsersByIdController();
+      const result = list_users_by_id_controller.exception(error);
 
       expect(result).to.be.eql(error);
       expect(result).to.be.instanceOf(Error);
@@ -67,8 +67,8 @@ describe('ListUsersByIdController', () => {
     it('should return BadRequest error', () => {
       const error = new UserNotFoundError();
       // @ts-ignore
-      const listUsersByIdController = new ListUsersByIdController();
-      const result = listUsersByIdController.exception(error);
+      const list_users_by_id_controller = new ListUsersByIdController();
+      const result = list_users_by_id_controller.exception(error);
 
       expect(result).to.be.instanceOf(BadRequest);
     });

@@ -11,20 +11,20 @@ import { User } from '../../../../../core/entities/user';
 @injectable()
 export class ListUsersController extends Controller {
   constructor(
-    @inject('ListUsersUseCase') private listUsersUseCase: IListUsersUseCase
+    @inject('ListUsersUseCase') private list_users_use_case: IListUsersUseCase
   ) {
     super();
   }
 
   @httpStatus(200)
   async handle(): Promise<HttpResponse<ListUsersResponse[]>> {
-    const users = await this.listUsersUseCase.list();
+    const users = await this.list_users_use_case.list();
 
     return {
       data: users.map((user: User) => ({
         ...user,
-        createdAt: user.createdAt.toISOString(),
-        updatedAt: user.updatedAt.toISOString(),
+        created_at: user.created_at.toISOString(),
+        updated_at: user.updated_at.toISOString(),
       })),
     };
   }

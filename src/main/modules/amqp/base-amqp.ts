@@ -4,7 +4,7 @@ import { RabbitMQConfig } from '@/main/modules/amqp/amqp.config';
 import { logger } from '@/logger';
 import { Consumer } from '@/presentation/amqp/consumers/consumer';
 import { validation } from '@/presentation/amqp/middlewares/validation';
-import { convertToJson } from '@/shared/helper/buffer-converter';
+import { convert_to_json } from '@/shared/helper/buffer-converter';
 
 export abstract class BaseAMQP {
   protected abstract connection: Connection;
@@ -30,11 +30,11 @@ export abstract class BaseAMQP {
         async (message: ConsumeMessage | null) => {
           try {
             if (message) {
-              const messageContent = validation(instance.schema)(
-                convertToJson(message.content)
+              const message_content = validation(instance.schema)(
+                convert_to_json(message.content)
               );
 
-              await instance.messageHandler(messageContent);
+              await instance.messageHandler(message_content);
             }
           } catch (error) {
             instance.onConsumeError(error, this.channel, message);

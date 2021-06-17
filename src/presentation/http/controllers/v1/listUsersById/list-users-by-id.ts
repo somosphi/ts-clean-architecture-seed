@@ -6,16 +6,16 @@ import { IListUsersByIdUseCase } from '../../../../../core/useCases/listUsersByI
 import { ListUsersByIdResponse } from './list-users-by-id.response';
 import { UserNotFoundError } from '../../../../../core/errors';
 import { BadRequest } from '../../../errors';
-import { validatorMiddleware } from '../../../middleware/validator-schema';
-import { listByIdSchema } from './list-users-by-id.schema';
+import { validator_middleware } from '../../../middleware/validator-schema';
+import { list_by_id_schema } from './list-users-by-id.schema';
 
 @version('/v1')
-@get('/users/:id', [validatorMiddleware(listByIdSchema)])
+@get('/users/:id', [validator_middleware(list_by_id_schema)])
 @injectable()
 export class ListUsersByIdController extends Controller {
   constructor(
     @inject('ListUsersByIdUseCase')
-    private listUsersByIdUseCase: IListUsersByIdUseCase
+    private list_users_by_id_use_case: IListUsersByIdUseCase
   ) {
     super();
   }
@@ -23,13 +23,13 @@ export class ListUsersByIdController extends Controller {
   @httpStatus(200)
   async handle(req: HttpRequest): Promise<HttpResponse<ListUsersByIdResponse>> {
     const { id } = req.params;
-    const user = await this.listUsersByIdUseCase.listById(id);
+    const user = await this.list_users_by_id_use_case.listById(id);
 
     return {
       data: {
         ...user,
-        createdAt: user.createdAt.toISOString(),
-        updatedAt: user.updatedAt.toISOString(),
+        created_at: user.created_at.toISOString(),
+        updated_at: user.updated_at.toISOString(),
       },
     };
   }

@@ -26,7 +26,7 @@ class AppContainer extends BaseContainer {
 
   loadConfigs(): any {
     return {
-      mysqlDatabase: new KnexConnection().getConnection(),
+      mysql_database: new KnexConnection().getConnection(),
     };
   }
 }

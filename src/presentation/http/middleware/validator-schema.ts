@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import { BadRequest } from '../errors';
 import { logger } from '../../../logger';
 
-export const validatorMiddleware = (schema: Joi.Schema) => (
+export const validator_middleware = (schema: Joi.Schema) => (
   req: Request,
   res: Response,
   next: NextFunction

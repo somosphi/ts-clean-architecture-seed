@@ -12,79 +12,79 @@ describe('LogUserInfoProducer', () => {
 
   describe('#send', () => {
     it('should send message to queue', () => {
-      const fakeVhost = {};
+      const fake_vhost = {};
 
       // @ts-ignore
-      const logUserInfoProducer = new LogUserInfoProducer(fakeVhost);
+      const log_user_info_producer = new LogUserInfoProducer(fake_vhost);
 
       const message = {
         id: '1',
         name: 'Test',
         username: 'test',
-        emailAddress: 'test@gmail.com',
+        email_address: 'test@gmail.com',
       };
 
-      const optionsConfig: Options.Publish = {
+      const options_config: Options.Publish = {
         priority: 0,
         deliveryMode: 2,
         contentEncoding: 'UTF-8',
         contentType: 'application/json',
       };
 
-      const stubPublish = sandbox
-        .stub(logUserInfoProducer, 'publish')
+      const stub_publish = sandbox
+        .stub(log_user_info_producer, 'publish')
         .returns(undefined);
 
-      logUserInfoProducer.send(message);
+      log_user_info_producer.send(message);
 
       assert(
-        stubPublish.calledOnceWith(
+        stub_publish.calledOnceWith(
           'user.dx',
           'user.create',
           message,
-          optionsConfig
+          options_config
         )
       );
     });
     it('should return an error when send method failed', () => {
-      const fakeVhost = {};
+      const fake_vhost = {};
 
       // @ts-ignore
-      const logUserInfoProducer = new LogUserInfoProducer(fakeVhost);
+      const log_user_info_producer = new LogUserInfoProducer(fake_vhost);
 
       const message = {
         id: '1',
         name: 'Test',
         username: 'test',
-        emailAddress: 'test@gmail',
+        email_address: 'test@gmail',
       };
 
-      const optionsConfig: Options.Publish = {
+      const options_config: Options.Publish = {
         priority: 0,
         deliveryMode: 2,
         contentEncoding: 'UTF-8',
         contentType: 'application/json',
       };
 
-      const stubPublic = sandbox
-        .stub(logUserInfoProducer, 'publish')
+      const stub_public = sandbox
+        .stub(log_user_info_producer, 'publish')
         .throws(new Error('Test'));
 
       let error = null;
 
       try {
-        logUserInfoProducer.send(message);
+        log_user_info_producer.send(message);
       } catch (err) {
         error = err;
       }
 
       expect(error).to.be.instanceOf(Error);
       assert(
-        stubPublic.calledOnceWith(
+        stub_public.calledOnceWith(
           'user.dx',
           'user.create',
           message,
-          optionsConfig
+          options_config
         )
       );
     });

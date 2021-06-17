@@ -7,13 +7,13 @@ export class User {
 
   public username: string;
 
-  public emailAddress: string;
+  public email_address: string;
 
   public source: UserSources;
 
-  public createdAt: Date;
+  public created_at: Date;
 
-  public updatedAt: Date;
+  public updated_at: Date;
 
   constructor(props: Partial<User>) {
     Object.assign(this, props);

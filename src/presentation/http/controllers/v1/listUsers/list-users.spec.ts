@@ -8,37 +8,37 @@ import { User } from '../../../../../core/entities/user';
 describe('ListUsersController', () => {
   describe('#handle', () => {
     it('should return ListUsersResponse', async () => {
-      const fakeResponse: User[] = [
+      const fake_response: User[] = [
         {
           id: 'string',
           name: 'string',
           username: 'string',
-          emailAddress: 'string',
+          email_address: 'string',
           source: UserSources.JsonPlaceholder,
-          createdAt: new Date(),
-          updatedAt: new Date(),
+          created_at: new Date(),
+          updated_at: new Date(),
         },
       ];
 
-      const listTodoUseCaseFake = {
-        list: sinon.fake.resolves(fakeResponse),
+      const list_todo_use_case_fake = {
+        list: sinon.fake.resolves(fake_response),
       };
 
       const container = {
-        listTodoUseCase: listTodoUseCaseFake,
+        listTodoUseCase: list_todo_use_case_fake,
       };
-      const listUsersController = new ListUsersController(
+      const list_users_controller = new ListUsersController(
         // @ts-ignore
         ...Object.values(container)
       );
 
-      const result = await listUsersController.handle();
+      const result = await list_users_controller.handle();
 
       expect(result).to.be.eql({
-        data: fakeResponse.map((user: User) => ({
+        data: fake_response.map((user: User) => ({
           ...user,
-          createdAt: user.createdAt.toISOString(),
-          updatedAt: user.updatedAt.toISOString(),
+          created_at: user.created_at.toISOString(),
+          updated_at: user.updated_at.toISOString(),
         })),
       });
       assert(container.listTodoUseCase.list.calledOnce);
@@ -49,8 +49,8 @@ describe('ListUsersController', () => {
     it('should return error', () => {
       const error = new Error();
       // @ts-ignore
-      const listUsersController = new ListUsersController();
-      const result = listUsersController.exception(error);
+      const list_users_controller = new ListUsersController();
+      const result = list_users_controller.exception(error);
 
       expect(result).to.be.eql(error);
     });

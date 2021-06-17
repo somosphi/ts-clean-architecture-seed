@@ -1,5 +1,5 @@
 import { CronJob as NodeCron } from 'cron';
-import { logger } from '../../logger';
+import { logger } from '@/logger';
 
 export abstract class CronJob extends NodeCron {
   protected abstract runTask(): Promise<void>;
@@ -8,8 +8,8 @@ export abstract class CronJob extends NodeCron {
 
   running: boolean;
 
-  constructor(cronTime: string, timezone = 'Etc/UTC') {
-    super(cronTime, () => this.execute(), null, false, timezone);
+  constructor(cron_time: string, timezone = 'Etc/UTC') {
+    super(cron_time, () => this.execute(), null, false, timezone);
     this.name = 'Worker Cron Job';
     this.running = false;
   }

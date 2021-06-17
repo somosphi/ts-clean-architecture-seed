@@ -7,7 +7,7 @@ import express, { Router } from 'express';
 import { logger } from '@/logger';
 import { Module } from '@/main/modules/modules';
 import { env } from '@/main/env';
-import { errorHandlerMiddleware } from '@/presentation/http/middleware/error-handler';
+import { error_handler_middleware } from '@/presentation/http/middleware/error-handler';
 import {
   ListUsersByIdController,
   ListUsersController,
@@ -31,7 +31,7 @@ export class HttpServer extends BaseHttp implements Module {
   start(): void {
     const app = express();
     const router = Router({ mergeParams: true });
-    const buildedRoutes = this.buildRoutes(router);
+    const builded_routes = this.buildRoutes(router);
 
     app.set('trust proxy', true);
     app.use(helmet());
@@ -39,7 +39,7 @@ export class HttpServer extends BaseHttp implements Module {
     app.use(compression());
     app.use(
       bodyParser.json({
-        limit: env.httpBodyLimit,
+        limit: env.http_body_limit,
       })
     );
 
@@ -58,7 +58,7 @@ export class HttpServer extends BaseHttp implements Module {
       }
     );
 
-    app.use(buildedRoutes);
+    app.use(builded_routes);
 
     app.use(
       '*',
@@ -71,9 +71,9 @@ export class HttpServer extends BaseHttp implements Module {
       }
     );
 
-    app.use(errorHandlerMiddleware);
-    app.listen(env.httpPort, () =>
-      logger.info(`Server running on http://localhost:${env.httpPort}`)
+    app.use(error_handler_middleware);
+    app.listen(env.http_port, () =>
+      logger.info(`Server running on http://localhost:${env.http_port}`)
     );
     this.app = app;
   }

@@ -8,38 +8,38 @@ import { ListUsersUseCase } from './list-users';
 describe('ListUsersUseCase', () => {
   describe('#list', () => {
     it('should return User[]', async () => {
-      const fakeResponse: User[] = [
+      const fake_response: User[] = [
         {
           id: 'string',
           name: 'string',
           username: 'string',
-          emailAddress: 'string',
+          email_address: 'string',
           source: UserSources.JsonPlaceholder,
-          createdAt: new Date(),
-          updatedAt: new Date(),
+          created_at: new Date(),
+          updated_at: new Date(),
         },
         {
           id: 'string',
           name: 'string',
           username: 'string',
-          emailAddress: 'string',
+          email_address: 'string',
           source: UserSources.JsonPlaceholder,
-          createdAt: new Date(),
-          updatedAt: new Date(),
+          created_at: new Date(),
+          updated_at: new Date(),
         },
       ];
 
-      const fakeUserRepository = {
-        all: sinon.fake.resolves(fakeResponse),
+      const fake_user_repository = {
+        all: sinon.fake.resolves(fake_response),
       };
 
       // @ts-ignore
-      const listUsersUseCase = new ListUsersUseCase(fakeUserRepository);
+      const list_users_use_case = new ListUsersUseCase(fake_user_repository);
 
-      const result = await listUsersUseCase.list();
+      const result = await list_users_use_case.list();
 
-      expect(result).to.be.eql(fakeResponse);
-      assert(fakeUserRepository.all.calledOnce);
+      expect(result).to.be.eql(fake_response);
+      assert(fake_user_repository.all.calledOnce);
     });
   });
 });

@@ -6,14 +6,17 @@ exports.up = knex =>
     table.bigIncrements('id').unsigned();
     table.string('name').notNullable();
     table.string('username').notNullable();
-    table.string('emailAddress').notNullable().unique();
+    table
+      .string('email_address')
+      .notNullable()
+      .unique();
     table.enum('source', ['JSON_PLACEHOLDER']).notNullable();
     table
-      .dateTime('createdAt')
+      .dateTime('created_at')
       .notNullable()
       .defaultTo(knex.raw('CURRENT_TIMESTAMP'));
     table
-      .dateTime('updatedAt')
+      .dateTime('updated_at')
       .notNullable()
       .defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
   });

@@ -3,6 +3,8 @@ import knex, { QueryBuilder, Transaction } from 'knex';
 export abstract class Repository<T> {
   protected abstract database: knex;
 
+  protected abstract properties: string[];
+
   tableName: string;
 
   protected transactionable(trx?: Transaction): QueryBuilder {
@@ -13,7 +15,7 @@ export abstract class Repository<T> {
   }
 
   protected get table(): QueryBuilder {
-    return this.database(this.tableName);
+    return this.database(this.tableName).columns(this.properties);
   }
 
   get transaction() {
