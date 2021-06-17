@@ -13,25 +13,25 @@ export class EnvValidator {
   json_placeholder_url: string;
 
   @IsNotEmpty()
-  rabbitMQ_enabled: string;
+  rabbit_mq_enabled: string;
 
   @IsEnum(['amqp'])
-  rabbitMQ_protocol: string;
+  rabbit_mq_protocol: string;
 
   @IsNotEmpty()
-  rabbitMQ_host: string;
+  rabbit_mq_host: string;
 
   @IsInt()
-  rabbitMQ_port: number;
+  rabbit_mq_port: number;
 
   @IsNotEmpty()
-  rabbitMQ_username: string;
+  rabbit_mq_username: string;
 
   @IsNotEmpty()
-  rabbitMQ_password: string;
+  rabbit_mq_password: string;
 
   @IsNotEmpty()
-  rabbitMQ_vhost: string;
+  rabbit_mq_vhost: string;
 
   redis_port: number;
 

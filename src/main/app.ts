@@ -17,12 +17,12 @@ export class Application {
       new HttpServer(container),
       new Worker(container),
       new AMQPServer(container, {
-        protocol: env.rabbitMQ_protocol,
-        host: env.rabbitMQ_host,
-        port: env.rabbitMQ_port,
-        username: env.rabbitMQ_username,
-        password: env.rabbitMQ_password,
-        vhost: env.rabbitMQ_vhost,
+        protocol: env.rabbit_mq_protocol,
+        host: env.rabbit_mq_host,
+        port: env.rabbit_mq_port,
+        username: env.rabbit_mq_username,
+        password: env.rabbit_mq_password,
+        vhost: env.rabbit_mq_vhost,
       }),
       new CacheClient(),
     ];
