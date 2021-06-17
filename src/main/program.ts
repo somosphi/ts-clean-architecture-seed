@@ -9,7 +9,7 @@ const worker = new Worker(container);
 worker.start();
 
 const program = new commander.Command();
-const jobs = worker.jobs;
+const { jobs } = worker;
 
 program
   .command('list')

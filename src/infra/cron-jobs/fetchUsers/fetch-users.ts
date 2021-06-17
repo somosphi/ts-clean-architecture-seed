@@ -6,6 +6,7 @@ import Command from '@/infra/cron-jobs/ports/command';
 @singleton()
 export class FetchUsersJob implements Command {
   readonly name: string = 'Fetch Users Job';
+
   readonly schedule: string = '0 0 */1 * *';
 
   constructor(
