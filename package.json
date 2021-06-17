@@ -11,7 +11,8 @@
     "build": "rimraf dist && tsc -p . && cp -r ./src/presentation/i18n/locales ./dist/presentation/i18n",
     "migration:create": "knex migrate:make",
     "migration:latest": "knex migrate:latest",
-    "start": "node -r ./prod-paths.js ./dist/main/server.js"
+    "start": "node -r ./prod-paths.js ./dist/main/server.js",
+    "cli-dev": "tsnd -r tsconfig-paths/register src/main/modules/cli/index.ts"
   },
   "nyc": {
     "extension": [
