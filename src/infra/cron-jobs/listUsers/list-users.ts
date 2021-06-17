@@ -1,21 +1,21 @@
 import { inject, singleton } from 'tsyringe';
-import { IListUsersUseCase } from '@/core/useCases/listUsers/list-users.interface';
 import { logger } from '@/logger';
-import { CronJob } from '@/infra/cron-jobs/cron-job';
+import { IListUsersUseCase } from '@/core/useCases/listUsers/list-users.interface';
+import Command from '@/infra/cron-jobs/ports/command';
 
 @singleton()
-export class ListUsersJob extends CronJob {
+export class ListUsersJob implements Command {
+  readonly name: string = 'List Users Job';
+  readonly schedule: string = '0 0 */1 * *';
+
   constructor(
     @inject('ListUsersUseCase') private listUsersUseCase: IListUsersUseCase
-  ) {
-    super('*/5 * * * *');
-    this.name = 'List Users Job';
-  }
+  ) {}
 
-  protected async runTask(): Promise<void> {
+  async run(): Promise<void> {
     const users = await this.listUsersUseCase.list();
     for (const user of users) {
-      logger.info(`(${user.id}) ${user.name}`);
+      logger.debug(`(${user.id}) ${user.name}`);
     }
   }
 }

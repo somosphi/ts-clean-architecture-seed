@@ -1,4 +1,3 @@
-import { logger } from '@/logger';
 import { Module } from '@/main/modules/modules';
 import { BaseWorker } from '@/main/modules/worker/base-worker';
 import { ListUsersJob } from '@/infra/cron-jobs/listUsers/list-users';
@@ -11,11 +10,5 @@ export class Worker extends BaseWorker implements Module {
 
   start(): void {
     this.resolveJobs();
-
-    logger.info(`Worker started with ${this.jobs.length} job(s)`);
-
-    this.jobs.forEach(job => {
-      if (!job.running) job.start();
-    });
   }
 }

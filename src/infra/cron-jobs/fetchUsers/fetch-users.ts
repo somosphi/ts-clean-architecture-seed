@@ -1,20 +1,20 @@
 import { inject, singleton } from 'tsyringe';
 import { logger } from '@/logger';
-import { CronJob } from '@/infra/cron-jobs/cron-job';
 import { IFetchUsersUseCase } from '@/core/useCases/fetchUsers/fetch-users.interface';
+import Command from '@/infra/cron-jobs/ports/command';
 
 @singleton()
-export class FetchUsersJob extends CronJob {
+export class FetchUsersJob implements Command {
+  readonly name: string = 'Fetch Users Job';
+  readonly schedule: string = '0 0 */1 * *';
+
   constructor(
     @inject('FetchUsersUseCase') private fetchUsersUseCase: IFetchUsersUseCase
-  ) {
-    super('*/60 * * * * *');
-    this.name = 'Fetch Users Job';
-  }
+  ) {}
 
-  protected async runTask(): Promise<void> {
+  async run(): Promise<void> {
     const fetchedUsers = await this.fetchUsersUseCase.fetchUsers();
-    logger.info('Fetched users from json placeholder api', {
+    logger.debug('Fetched users from json placeholder api', {
       usersCount: fetchedUsers.length,
     });
   }

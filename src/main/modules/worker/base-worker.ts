@@ -1,8 +1,8 @@
 import { DependencyContainer, InjectionToken } from 'tsyringe';
-import { CronJob } from '@/infra/cron-jobs/cron-job';
+import Command from '@/infra/cron-jobs/ports/command';
 
 export abstract class BaseWorker {
-  protected jobs: CronJob[];
+  jobs: Command[];
 
   protected abstract loadJobs(): Function[];
 
@@ -10,13 +10,7 @@ export abstract class BaseWorker {
 
   resolveJobs() {
     this.jobs = this.loadJobs().map(job =>
-      this.container.resolve<CronJob>(job as InjectionToken)
+      this.container.resolve<Command>(job as InjectionToken)
     );
-  }
-
-  stop(): void {
-    this.jobs.forEach(job => {
-      if (job.running) job.stop();
-    });
   }
 }

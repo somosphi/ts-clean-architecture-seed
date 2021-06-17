@@ -5,12 +5,12 @@ import { UserSources } from '@/core/enum';
 
 describe('FetchUsersJob', () => {
   class ListUsersJobTest extends ListUsersJob {
-    runTask() {
-      return super.runTask();
+    command() {
+      return super.run();
     }
   }
 
-  describe('#runTask', () => {
+  describe('#run', () => {
     it('should list users from database', async () => {
       const now = new Date();
       const users = [
@@ -29,7 +29,7 @@ describe('FetchUsersJob', () => {
       };
 
       const listUsersJob = new ListUsersJobTest(fakeUseCase);
-      await listUsersJob.runTask();
+      await listUsersJob.run();
 
       assert(fakeUseCase.list.calledOnce);
     });

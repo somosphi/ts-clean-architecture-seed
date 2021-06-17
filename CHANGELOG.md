@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Ongoing Changes
 
+- Added Commander.js to execute jobs
 - Added i18n
 - Added lint
 - Changed structure consumer amqp
