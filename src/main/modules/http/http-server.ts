@@ -1,5 +1,4 @@
 import helmet from 'helmet';
-import cors from 'cors';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import { DependencyContainer } from 'tsyringe';
@@ -36,7 +35,6 @@ export class HttpServer extends BaseHttp implements Module {
 
     app.set('trust proxy', true);
     app.use(helmet());
-    app.use(cors());
     app.use(i18n.init);
     app.use(compression());
     app.use(

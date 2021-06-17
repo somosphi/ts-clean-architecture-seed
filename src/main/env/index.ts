@@ -4,8 +4,7 @@ import { EnvValidator } from './validator';
 dotenv.config();
 
 const props = {
-  httpPort:
-    (process.env.HTTP_PORT && parseInt(process.env.HTTP_PORT, 10)) || 3000,
+  httpPort: parseInt(process.env.HTTP_PORT || '3000', 10),
   httpBodyLimit: process.env.HTTP_BODY_LIMIT || '10kb',
   jsonPlaceholderUrl:
     process.env.JSON_PLACEHOLDER_URL || 'https://jsonplaceholder.typicode.com',
@@ -16,9 +15,7 @@ const props = {
   rabbitMQUsername: process.env.RABBITMQ_USERNAME || 'admin',
   rabbitMQPassword: process.env.RABBITMQ_PASSWORD || 'admin',
   rabbitMQVHost: process.env.RABBITMQ_VHOST || '/',
-  redisPort: process.env.REDIS_PORT
-    ? parseInt(process.env.REDIS_PORT, 10)
-    : 6379,
+  redisPort: parseInt(process.env.REDIS_PORT || '6379', 10),
   redisHost: process.env.REDIS_HOST || '',
 };
 
