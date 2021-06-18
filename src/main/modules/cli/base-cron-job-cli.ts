@@ -45,7 +45,6 @@ export abstract class BaseCronJobCli extends BaseCli {
   }
 
   runJob(name: string) {
-    console.log('name', name);
     const job = this.jobs.find(job => job.name === name);
 
     if (!job) {

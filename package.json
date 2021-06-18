@@ -12,7 +12,8 @@
     "migration:create": "knex migrate:make",
     "migration:latest": "knex migrate:latest",
     "start": "node -r ./prod-paths.js ./dist/main/server.js",
-    "cli-dev": "tsnd -r tsconfig-paths/register src/main/modules/cli/index.ts"
+    "cli-dev": "tsnd -r tsconfig-paths/register src/main/modules/cli/index.ts",
+    "cli": "node -r ./prod-paths.js ./dist/main/modules/cli/index.js"
   },
   "nyc": {
     "extension": [
