@@ -1,6 +1,6 @@
 # Clean Architecture Boilerplate
 
-[![Coverage Status](https://coveralls.io/repos/github/somosphi/clean-architecture-boilerplate/badge.svg?branch=master)](https://coveralls.io/github/somosphi/clean-architecture-boilerplate?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/somosphi/ts-clean-architecture-seed/badge.svg?branch=update-readme-file)](https://coveralls.io/github/somosphi/ts-clean-architecture-seed?branch=update-readme-file)
 
 ## Stack
 
