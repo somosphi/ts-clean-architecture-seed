@@ -3,6 +3,7 @@ import { InjectionToken } from 'tsyringe';
 import { table } from 'table';
 import Command from '@/infra/cron-jobs/ports/command';
 import { BaseCli } from '@/main/modules/cli/base-cli';
+import { removeAllWhiteSpacesAndConvertToLowerCase } from '@/shared/helper/string-manipulation';
 
 export abstract class BaseCronJobCli extends BaseCli {
   jobs: Command[];
@@ -44,11 +45,17 @@ export abstract class BaseCronJobCli extends BaseCli {
     process.exit(0);
   }
 
-  runJob(name: string) {
-    const job = this.jobs.find(job => job.name === name);
+  runJob(jobName: string) {
+    const jobNameFormatted = removeAllWhiteSpacesAndConvertToLowerCase(jobName);
+
+    const job = this.jobs.find(job => {
+      return (
+        removeAllWhiteSpacesAndConvertToLowerCase(job.name) === jobNameFormatted
+      );
+    });
 
     if (!job) {
-      console.warn(`'${name}' not found`);
+      console.warn(`'${jobName}' not found`);
       process.exit(1);
     }
 
