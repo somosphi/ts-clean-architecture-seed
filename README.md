@@ -9,6 +9,7 @@
 - Express: **4.17.1**
 
 ### Main Packages
+
 - amqplib
 - Axios
 - Knex.js
@@ -19,13 +20,39 @@
 - TSyringe
 
 ## Setup
+
 1. Create **.env** file in the root folder using **.env.sample** as an example and replace the content with your project configs/secrets.
 2. Install development dependencies:
-`npm install`
+   `npm install`
 
 ## Running
-1. Start application: `npm run dev` 
+
+1. Start application: `npm run dev`
 2. Application will run at `localhost:3000`
 
+## Lint
+
+`npm run lint`
+
 ## Testing
-1. Run command: `npm run test`
+
+`npm run test:unit`
+
+## CLI
+
+- Dev (TS): `npm run cli-dev <option> <arg>`
+- PRD (JS): `npm run cli <option> <arg>`
+
+| Description | Command               | Short           |
+| ----------- | --------------------- | --------------- |
+| Help        | `--help`              | `-h`            |
+| List jobs   | `--list-jobs`         | `-lj`           |
+| Run job     | `--run-job <jobname>` | `-rj <jobname>` |
+
+```
+Ex:
+- npm run cli --run-job "List Users Job"
+- npm run cli -rj "listusersjob"
+- npm run cli-dev -lj
+- npm run cli-dev --help
+```
