@@ -10,18 +10,18 @@ export abstract class BaseCronJobCli extends BaseCli {
 
   protected abstract loadJobs(): Function[];
 
-  resolveJobs() {
+  resolveJobs(): void {
     this.jobs = this.loadJobs().map(job =>
       this.container.resolve<Command>(job as InjectionToken)
     );
   }
 
-  setupOptions() {
+  setupOptions(): void {
     this.program.option('-lj, --list-jobs', 'List jobs');
     this.program.option('-rj, --run-job <job-name>', 'Run job');
   }
 
-  processCommand() {
+  processCommand(): void {
     const options = this.getOptions();
 
     if (options.listJobs) {
@@ -34,7 +34,7 @@ export abstract class BaseCronJobCli extends BaseCli {
     }
   }
 
-  listJobs() {
+  listJobs(): void {
     const data = [['Index', 'Schedule', 'Name']];
 
     this.jobs.forEach((job, index) => {
@@ -45,7 +45,7 @@ export abstract class BaseCronJobCli extends BaseCli {
     process.exit(0);
   }
 
-  runJob(jobName: string) {
+  runJob(jobName: string): void {
     const jobNameFormatted = removeAllWhiteSpacesAndConvertToLowerCase(jobName);
 
     const job = this.jobs.find(job => {

@@ -1,2 +1,3 @@
-export const removeAllWhiteSpacesAndConvertToLowerCase = (str: string) =>
-  str.replace(/\s/g, '').toLowerCase();
+export const removeAllWhiteSpacesAndConvertToLowerCase = (
+  str: string
+): string => str.replace(/\s/g, '').toLowerCase();
