@@ -27,7 +27,7 @@ export class AMQPServer extends BaseAMQP implements Module {
       this.connection = await connect(this.config);
       this.channel = await this.connection.createChannel();
 
-      logger.info(`RabbitMQ: AMQP server started`);
+      logger.debug(`RabbitMQ: AMQP server started`);
 
       this.container.register('vHost', { useValue: this.channel });
       logger.info(

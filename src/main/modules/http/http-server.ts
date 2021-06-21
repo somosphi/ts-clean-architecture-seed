@@ -73,7 +73,7 @@ export class HttpServer extends BaseHttp implements Module {
 
     app.use(errorHandlerMiddleware);
     app.listen(env.httpPort, () =>
-      logger.info(`Server running on http://localhost:${env.httpPort}`)
+      logger.info(`Server running on port ${env.httpPort}`)
     );
     this.app = app;
   }
