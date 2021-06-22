@@ -34,7 +34,7 @@ export abstract class BaseAMQP {
                 convertToJson(message.content)
               );
 
-              await instance.messageHandler(messageContent);
+              instance.messageHandler(messageContent);
             }
           } catch (error) {
             instance.onConsumeError(error, this.channel, message);
