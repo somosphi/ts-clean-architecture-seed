@@ -1,0 +1,7 @@
+{
+  "error.notFound": "Página não encontrada",
+  "error.resourceNotFound": "Recurso não encontrado",
+  "error.unexpected": "Falha interna do servidor",
+  "error.validation": "Dados inválidos",
+  "error.duplicatedResource": "Recurso duplicado."
+}

@@ -24,7 +24,7 @@ export class LogUserInfoProducer extends Producer {
 
     try {
       this.publish(this.exchange, this.routingKey, message, optionsConfig);
-      logger.info(
+      logger.debug(
         `Sending message to exchange - ${this.exchange} and routingKey - ${this.routingKey}`
       );
     } catch (err) {

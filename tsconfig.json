@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "experimentalDecorators": true,
-    "outDir": "./release",
+    "outDir": "./dist",
     "rootDir": "src",
     "module": "commonjs",
     "target": "es2020",
@@ -15,5 +15,6 @@
       "@/*": ["*"]
     }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["dist", "node_modules"]
 }

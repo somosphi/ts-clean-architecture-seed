@@ -1,5 +1,4 @@
 import { connect, Channel, Connection } from 'amqplib';
-import { DependencyContainer, InjectionToken } from 'tsyringe';
 import { BaseAMQP } from '@/main/modules/amqp/base-amqp';
 import { Module } from '@/main/modules/modules';
 import { RabbitMQConfig } from '@/main/modules/amqp/amqp.config';

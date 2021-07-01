@@ -6,7 +6,6 @@ import { HttpServer } from '@/main/modules/http/http-server';
 import { Module } from '@/main/modules/modules';
 import { AMQPServer } from '@/main/modules/amqp/amqp-server';
 import { env } from '@/main/env';
-import { Worker } from './modules/worker/worker';
 import { CacheClient } from './modules/cache/cache-client';
 
 export class Application {
@@ -22,7 +21,6 @@ export class Application {
         password: env.rabbitMQPassword,
         vhost: env.rabbitMQVHost,
       }),
-      new Worker(container),
       new CacheClient(container),
       new HttpServer(container),
     ];

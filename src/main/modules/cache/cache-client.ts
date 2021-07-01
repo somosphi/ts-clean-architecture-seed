@@ -12,7 +12,7 @@ export class CacheClient implements Module {
   constructor(protected appContainer: AppContainer) {}
 
   async start(): Promise<void> {
-    logger.info(`Started cache client`);
+    logger.debug(`Started cache client on port ${env.redisPort}`);
     this.redisClient = new Redis({
       port: env.redisPort,
       host: env.redisHost,

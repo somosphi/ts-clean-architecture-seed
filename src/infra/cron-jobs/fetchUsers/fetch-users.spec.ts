@@ -1,16 +1,15 @@
 import sinon from 'sinon';
 import { assert } from 'chai';
 import { FetchUsersJob } from '@/infra/cron-jobs/fetchUsers/fetch-users';
-import expectCt from 'helmet/dist/middlewares/expect-ct';
 
 describe('FetchUsersJob', () => {
   class FetchUsersJobTest extends FetchUsersJob {
     runTask() {
-      return super.runTask();
+      return super.run();
     }
   }
 
-  describe('#runTask', () => {
+  describe('#run', () => {
     it('should fetch users from json place holder integration', async () => {
       const ids = ['1'];
       const fakeUseCase = {
@@ -18,7 +17,7 @@ describe('FetchUsersJob', () => {
       };
 
       const fetchUsersJob = new FetchUsersJobTest(fakeUseCase);
-      await fetchUsersJob.runTask();
+      await fetchUsersJob.run();
 
       assert(fakeUseCase.fetchUsers.calledOnce);
     });
