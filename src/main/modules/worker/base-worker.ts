@@ -1,16 +1,17 @@
-import { DependencyContainer, InjectionToken } from 'tsyringe';
+import { InjectionToken } from 'tsyringe';
 import { CronJob } from '@/infra/cron-jobs/cron-job';
+import { AppContainer } from '@/main/container/app-container';
 
 export abstract class BaseWorker {
   protected jobs: CronJob[];
 
   protected abstract loadJobs(): Function[];
 
-  constructor(private container: DependencyContainer) {}
+  constructor(private appContainer: AppContainer) {}
 
   resolveJobs() {
     this.jobs = this.loadJobs().map(job =>
-      this.container.resolve<CronJob>(job as InjectionToken)
+      this.appContainer.getContainer().resolve<CronJob>(job as InjectionToken)
     );
   }
 

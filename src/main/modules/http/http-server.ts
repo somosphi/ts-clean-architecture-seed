@@ -15,13 +15,13 @@ import {
 
 import { NotFoundError } from '@/presentation/http/errors';
 import { BaseHttp } from '@/main/modules/http/base-http';
+import { AppContainer } from '@/main/container/app-container';
 
 export class HttpServer extends BaseHttp implements Module {
   protected app: express.Application;
 
-  constructor(container: DependencyContainer) {
-    super(container);
-    this.container = container;
+  constructor(appContainer: AppContainer) {
+    super(appContainer.getContainer());
   }
 
   protected loadControllers(): Function[] {
