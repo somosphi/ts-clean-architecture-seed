@@ -2,7 +2,7 @@
 
 ## Introdução:
 
-O projeto baseado na arquitetura limpa (clean architecture), tem como principal objetivo o desacoplhamento de camadas onde as camadas mais internas da aplicação (core) não devem sofrer com mudanças da parte mais externas(infra), como por exemplo mudanças de frameworks, pacotes e etc.
+O projeto baseado na arquitetura limpa (clean architecture), tem como principal objetivo o desacoplamento de camadas onde as camadas mais internas da aplicação (core) não devem sofrer com mudanças da parte mais externas(infra), como por exemplo mudanças de frameworks, pacotes e etc.
 
 ## Iniciando a o projeto:
 
