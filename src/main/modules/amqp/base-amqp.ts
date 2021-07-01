@@ -1,10 +1,13 @@
 import { Connection, Channel, ConsumeMessage } from 'amqplib';
-import { DependencyContainer, InjectionToken } from 'tsyringe';
+import { InjectionToken } from 'tsyringe';
 import { RabbitMQConfig } from '@/main/modules/amqp/amqp.config';
 import { logger } from '@/logger';
-import { Consumer } from '@/presentation/amqp/consumers/consumer';
-import { validation } from '@/presentation/amqp/middlewares/validation';
 import { convertToJson } from '@/shared/helper/buffer-converter';
+import { EventEmmiter } from '@/main/event';
+import { ContainerEvent } from '@/main/enum';
+import { AppContainer } from '@/main/container/app-container';
+import { validation } from '@/presentation/amqp/middlewares/validation';
+import { Consumer } from '@/presentation/amqp/consumers/consumer';
 
 export abstract class BaseAMQP {
   protected abstract connection: Connection;
@@ -17,34 +20,40 @@ export abstract class BaseAMQP {
 
   abstract loadConsumers(): Function[];
 
-  constructor(protected readonly container: DependencyContainer) {}
+  constructor(protected readonly app_container: AppContainer) {}
 
   protected startConsumers(): void {
+    const event = EventEmmiter.getInstance();
+
     this.loadConsumers().forEach((consumer: Function) => {
-      const instance = this.container.resolve<Consumer>(
-        consumer as InjectionToken
-      );
+      const container = this.app_container.getContainer();
 
-      this.channel.consume(
-        instance.queue,
-        async (message: ConsumeMessage | null) => {
-          try {
-            if (message) {
-              const messageContent = validation(instance.schema)(
-                convertToJson(message.content)
-              );
+      event.on(ContainerEvent.Loaded, () => {
+        const instance = container.resolve<Consumer>(
+          consumer as InjectionToken
+        );
 
-              instance.messageHandler(messageContent);
+        this.channel.consume(
+          instance.queue,
+          async (message: ConsumeMessage | null) => {
+            try {
+              if (message) {
+                const message_content = validation(instance.schema)(
+                  convertToJson(message.content)
+                );
+
+                instance.messageHandler(message_content);
+              }
+            } catch (error) {
+              instance.onConsumeError(error, this.channel, message);
+            } finally {
+              if (message) this.channel.ack(message);
             }
-          } catch (error) {
-            instance.onConsumeError(error, this.channel, message);
-          } finally {
-            if (message) this.channel.ack(message);
           }
-        }
-      );
+        );
 
-      logger.info(`RabbitMQ: 'Started queue '${instance.queue}' to consume`);
+        logger.info(`RabbitMQ: 'Started queue '${instance.queue}' to consume`);
+      });
     });
   }
 

@@ -4,7 +4,7 @@ import { RouteConfig } from '@/presentation/http/controllers/controller.config';
 import { HttpResponse } from '@/presentation/http/ports/http';
 
 export abstract class BaseHttp {
-  constructor(protected container: DependencyContainer) {}
+  constructor(private container: DependencyContainer) {}
 
   protected abstract loadControllers(): Function[];
 
