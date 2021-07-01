@@ -1,4 +1,3 @@
-import { container } from 'tsyringe';
 import { UserRepository } from '@/infra/repositories/user';
 import { HttpService } from '@/infra/http/http.service';
 import { JsonPlaceHolderIntegration } from '@/infra/http/integrations';
@@ -11,7 +10,7 @@ import {
 } from '@/core/useCases';
 import { BaseContainer } from './config/base';
 
-class AppContainer extends BaseContainer {
+export class AppContainer extends BaseContainer {
   loadProviders(): Function[] {
     return [
       HttpService,
@@ -31,4 +30,3 @@ class AppContainer extends BaseContainer {
   }
 }
 
-export default new AppContainer(container).getContainer();
