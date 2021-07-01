@@ -1,3 +1,3 @@
 export enum ContainerEvent {
-    Loaded = 'CONTAINER_LOADED',
-  }
+  Loaded = 'CONTAINER_LOADED',
+}

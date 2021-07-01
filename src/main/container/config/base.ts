@@ -8,13 +8,12 @@ export abstract class BaseContainer implements IBaseContainer {
 
   abstract loadConfigs(): any;
 
-  isLoaded: boolean = false;
+  isLoaded: boolean;
 
   constructor(protected readonly container: DependencyContainer) {}
 
   loadContainer(): void {
     if (!this.isLoaded) {
-
       const event = EventEmmiter.getInstance();
       this.loadProviders().forEach(providers => {
         this.container.register(providers.name, providers as any);

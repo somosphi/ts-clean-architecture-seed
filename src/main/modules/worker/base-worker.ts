@@ -4,6 +4,7 @@ import { AppContainer } from '@/main/container/app-container';
 
 export abstract class BaseWorker {
   protected jobs: CronJob[];
+
   protected abstract loadJobs(): Function[];
 
   constructor(private appContainer: AppContainer) {}

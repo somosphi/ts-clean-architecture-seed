@@ -10,6 +10,7 @@ import { AppContainer } from '@/main/container/app-container';
 
 export class AMQPServer extends BaseAMQP implements Module {
   protected channel: Channel;
+
   protected connection: Connection;
 
   constructor(
@@ -30,6 +31,7 @@ export class AMQPServer extends BaseAMQP implements Module {
   async start(): Promise<void> {
     try {
       this.connection = await connect(this.config);
+
       this.channel = await this.connection.createChannel();
 
       logger.info(`RabbitMQ: AMQP server started`);
