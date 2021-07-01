@@ -57,5 +57,3 @@ Ex:
 - npm run cli-dev -lj
 - npm run cli-dev --help
 ```
-
-### [Documentation](doc.md)
