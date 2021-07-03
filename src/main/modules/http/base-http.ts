@@ -1,7 +1,14 @@
 import { DependencyContainer, InjectionToken } from 'tsyringe';
-import { Router, Request, Response, NextFunction } from 'express';
+import {
+  Router,
+  Request,
+  Response,
+  NextFunction,
+  RequestHandler,
+} from 'express';
 import { RouteConfig } from '@/presentation/http/controllers/controller.config';
-import { HttpResponse } from '@/presentation/http/ports/http';
+import { HttpResponse, HttpRequest } from '@/presentation/http/ports/http';
+import { ErrorHandlerMiddleware } from '@/presentation/http/middleware/error-handler';
 
 export abstract class BaseHttp {
   constructor(private container: DependencyContainer) {}
@@ -69,5 +76,18 @@ export abstract class BaseHttp {
     });
 
     return router;
+  }
+
+  protected errorHandler(): unknown {
+    const errorHandler = this.container.resolve<ErrorHandlerMiddleware>(
+      'ErrorHandlerMiddleware'
+    );
+
+    return (err: any, req: HttpRequest, res: Response, next: NextFunction) => {
+      const { data, status } = errorHandler.handle(req, err);
+      res.status(status!).send(data);
+
+      return next();
+    };
   }
 }

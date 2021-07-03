@@ -1,6 +1,7 @@
 import { UserSources } from '@/core/enum';
+import { Entity } from '@/core/entities/entity.config';
 
-export class User {
+export class User extends Entity<User> {
   public readonly id: string;
 
   public name: string;
@@ -16,6 +17,19 @@ export class User {
   public updatedAt: Date;
 
   constructor(props: Partial<User>) {
+    super();
+    this.validate(props);
+    const { createdAt, updatedAt } = props;
     Object.assign(this, props);
+
+    if (createdAt) {
+      this.createdAt = new Date(createdAt);
+    }
+
+    if (updatedAt) {
+      this.updatedAt = new Date(updatedAt);
+    }
   }
+
+  protected validate(props: Partial<User>): void {}
 }

@@ -1,38 +1,40 @@
-import { Request, Response, NextFunction } from 'express';
+import { injectable } from 'tsyringe';
 import { __ } from 'i18n';
-import { logger } from '@/logger';
-import { HttpError } from '../errors';
+import { Middleware } from '@/presentation/http/middleware/middleware.config';
+import { HttpRequest, HttpResponse } from '@/presentation/http/ports/http';
+import { HttpError } from '@/presentation/http/errors';
 
-export const errorHandlerMiddleware = (
-  err: any,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  if (err instanceof HttpError) {
-    logger.error(err);
-    const { statusCode, message, code, details } = err;
+@injectable()
+export class ErrorHandlerMiddleware implements Middleware {
+  handle(req: HttpRequest, error: any): HttpResponse {
+    if (error instanceof HttpError) {
+      const { statusCode, message, code, details } = error;
+      return {
+        data: {
+          code,
+          message,
+          details,
+        },
+        status: statusCode || 200,
+      };
+    }
 
-    res.status(statusCode || 200).send({
-      code,
-      message,
-      details,
-    });
-    return next();
+    if (error?.code === 'ER_DUP_ENTRY') {
+      return {
+        data: {
+          code: 'DUPLICATED_RESOURCE',
+          message: __('error.duplicatedResource'),
+        },
+        status: 409,
+      };
+    }
+
+    return {
+      data: {
+        code: 'UNEXPECTED_ERROR',
+        message: __('error.unexpected'),
+      },
+      status: 500,
+    };
   }
-
-  if (err.code && err.code === 'ER_DUP_ENTRY') {
-    res.status(409).send({
-      code: 'DUPLICATED_RESOURCE',
-      message: __('error.duplicatedResource'),
-    });
-    return next();
-  }
-
-  res.status(500).send({
-    code: 'UNEXPECTED_ERROR',
-    message: __('error.unexpected'),
-  });
-
-  return next();
-};
+}
