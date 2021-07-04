@@ -1,7 +1,10 @@
+import Joi from 'joi';
+
 export interface RouteConfig {
   method: string;
   version: string;
   path: string;
+  schema: Joi.Schema;
   middlewares: Function[];
   statusCode: number;
 }
@@ -40,6 +43,16 @@ export const httpStatus = function(statusCode: number) {
     descriptor: PropertyDescriptor
   ) {
     target.statusCode = statusCode;
+  };
+};
+
+export const schema = function(schema: Joi.Schema) {
+  return function(
+    target: any,
+    propertyKey: string,
+    descriptor: PropertyDescriptor
+  ) {
+    target.schema = schema;
   };
 };
 

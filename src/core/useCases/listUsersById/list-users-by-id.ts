@@ -2,7 +2,7 @@ import { injectable, inject } from 'tsyringe';
 import { IListUsersByIdUseCase } from '@/core/useCases/listUsersById/list-users-by-id.interface';
 import { User } from '@/core/entities/user';
 import { IUserRepository } from '@/core/ports/user.repository';
-import { UserNotFoundError } from '@/core/errors';
+import { UserNotFoundError } from '@/core/exceptions';
 
 @injectable()
 export class ListUsersByIdUseCase implements IListUsersByIdUseCase {
@@ -17,6 +17,6 @@ export class ListUsersByIdUseCase implements IListUsersByIdUseCase {
       throw new UserNotFoundError();
     }
 
-    return user;
+    return new User(user);
   }
 }

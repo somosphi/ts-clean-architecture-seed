@@ -1,12 +1,11 @@
 import 'reflect-metadata';
 import sinon from 'sinon';
 import { expect, assert } from 'chai';
-import { ListUsersByIdController } from './list-users-by-id';
-import { UserSources } from '../../../../../core/enum';
-import { User } from '../../../../../core/entities/user';
-import { HttpRequest } from '../../../ports/http';
-import { UserNotFoundError } from '../../../../../core/errors';
-import { BadRequest } from '../../../errors';
+import { ListUsersByIdController } from '@/presentation/http/controllers';
+import { UserSources } from '@/core/enum';
+import { HttpRequest } from '@/presentation/http/ports/http';
+import { UserNotFoundError } from '@/core/exceptions';
+import { BadRequest } from '@/presentation/http/exceptions';
 
 describe('ListUsersByIdController', () => {
   describe('#handle', () => {
@@ -17,7 +16,7 @@ describe('ListUsersByIdController', () => {
           id: '12',
         },
       };
-      const fakeResponse: User = {
+      const fakeResponse = {
         id: 'string',
         name: 'string',
         username: 'string',

@@ -6,9 +6,13 @@ import {
   NextFunction,
   RequestHandler,
 } from 'express';
+import Joi from 'joi';
 import { RouteConfig } from '@/presentation/http/controllers/controller.config';
 import { HttpResponse, HttpRequest } from '@/presentation/http/ports/http';
 import { ErrorHandlerMiddleware } from '@/presentation/http/middleware/error-handler';
+import { logger } from '@/logger';
+import { BadRequest } from '@/presentation/http/exceptions';
+import { Controller } from '@/presentation/http/controllers/controller';
 
 export abstract class BaseHttp {
   constructor(private container: DependencyContainer) {}
@@ -24,34 +28,14 @@ export abstract class BaseHttp {
       }
 
       instance.routeConfigs.forEach((config: RouteConfig) => {
-        const { path, middlewares, method, statusCode } = config;
+        const { path, middlewares, method, statusCode, schema } = config;
 
-        const func = async (
-          req: Request,
-          res: Response,
-          next: NextFunction
-        ) => {
-          try {
-            const response = (await instance.handle(req)) as HttpResponse;
-            if (response?.headers) {
-              for (const header in response.headers) {
-                res.setHeader(header, response.headers[header]);
-              }
-            }
-            const httpStatus = statusCode || response.status;
-            if (httpStatus) {
-              res.status(httpStatus);
-            }
+        const requestValidator = this.requestValidator(schema);
+        const func = this.requestHandle(instance, statusCode);
 
-            res.send(response?.data);
-          } catch (err) {
-            const error = instance.exception(err);
-
-            next(error);
-          }
-        };
-
-        const jobs = [...middlewares, func] as any;
+        const jobs = schema
+          ? ([...middlewares, requestValidator, func] as any)
+          : ([...middlewares, func] as any);
 
         switch (method) {
           case 'get':
@@ -76,6 +60,60 @@ export abstract class BaseHttp {
     });
 
     return router;
+  }
+
+  private requestHandle(
+    instance: Controller,
+    statusCode?: number
+  ): RequestHandler {
+    return async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const response = (await instance.handle(req)) as HttpResponse;
+        if (response?.headers) {
+          for (const header in response.headers) {
+            res.setHeader(header, response.headers[header]);
+          }
+        }
+        const httpStatus = statusCode || response.status;
+        if (httpStatus) {
+          res.status(httpStatus);
+        }
+
+        res.send(response?.data);
+      } catch (err) {
+        const error = instance.exception(err);
+
+        next(error);
+      }
+    };
+  }
+
+  private requestValidator(schema?: Joi.Schema): RequestHandler | void {
+    if (!schema) return;
+    return (req: Request, res: Response, next: NextFunction) => {
+      const validation = schema.validate(req, {
+        abortEarly: false,
+        stripUnknown: true,
+        allowUnknown: true,
+      });
+
+      if (validation.error) {
+        logger.debug(req?.body);
+        logger.debug(req?.params);
+        logger.debug(req?.query);
+        return next(
+          new BadRequest(
+            'VALIDATION_FAILED',
+            'Invalid request data',
+            validation.error.details
+          )
+        );
+      }
+
+      Object.assign(req, validation.value);
+
+      return next();
+    };
   }
 
   protected errorHandler(): unknown {

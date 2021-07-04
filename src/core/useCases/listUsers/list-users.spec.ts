@@ -8,7 +8,7 @@ import { ListUsersUseCase } from './list-users';
 describe('ListUsersUseCase', () => {
   describe('#list', () => {
     it('should return User[]', async () => {
-      const fakeResponse: User[] = [
+      const fakeResponse = [
         {
           id: 'string',
           name: 'string',

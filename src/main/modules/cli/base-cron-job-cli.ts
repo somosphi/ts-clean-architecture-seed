@@ -3,7 +3,7 @@ import { InjectionToken } from 'tsyringe';
 import { table } from 'table';
 import Command from '@/infra/cron-jobs/ports/command';
 import { BaseCli } from '@/main/modules/cli/base-cli';
-import { removeAllWhiteSpacesAndConvertToLowerCase } from '@/shared/helper/string-manipulation';
+import { removeAllWhiteSpacesAndConvertToLowerCase } from '@/shared/helper';
 
 export abstract class BaseCronJobCli extends BaseCli {
   jobs: Command[];

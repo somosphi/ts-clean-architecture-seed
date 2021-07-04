@@ -10,11 +10,9 @@ import {
   ListUsersByIdController,
   ListUsersController,
 } from '@/presentation/http/controllers';
-import { NotFoundError } from '@/presentation/http/errors';
 import { BaseHttp } from '@/main/modules/http/base-http';
 import { AppContainer } from '@/main/container/app-container';
-import { ErrorHandlerMiddleware } from '@/presentation/http/middleware/error-handler';
-import { HttpRequest } from '@/presentation/http/ports/http';
+import { NotFoundError } from '@/presentation/http/exceptions';
 
 export class HttpServer extends BaseHttp implements Module {
   protected app: express.Application;
@@ -66,7 +64,7 @@ export class HttpServer extends BaseHttp implements Module {
         res: express.Response,
         next: express.NextFunction
       ) => {
-        next(new NotFoundError());
+        next(new NotFoundError('PAGE_NOT_FOUND', 'Page not found.'));
       }
     );
 

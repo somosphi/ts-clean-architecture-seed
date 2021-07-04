@@ -1,15 +1,20 @@
 import { injectable, inject } from 'tsyringe';
-import { Controller } from '../../controller';
-import { HttpResponse } from '../../../ports/http';
-import { get, httpStatus, version } from '../../controller.config';
-import { IListUsersUseCase } from '../../../../../core/useCases/listUsers/list-users.interface';
-import { ListUsersResponse } from './list-users.response';
-import { User } from '../../../../../core/entities/user';
+import { Controller } from '@/presentation/http/controllers/controller';
+import { HttpResponse } from '@/presentation/http/ports/http';
+import {
+  get,
+  httpStatus,
+  version,
+} from '@/presentation/http/controllers/controller.config';
+import { IListUsersUseCase } from '@/core/useCases/listUsers/list-users.interface';
+import { ListUsersResponse } from '@/presentation/http/controllers';
+import { User } from '@/core/entities/user';
 
 @version('/v1')
 @get('/users')
 @injectable()
 export class ListUsersController extends Controller {
+  protected readonly version = '/v1';
   constructor(
     @inject('ListUsersUseCase') private listUsersUseCase: IListUsersUseCase
   ) {

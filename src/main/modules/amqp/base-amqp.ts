@@ -2,7 +2,7 @@ import { Connection, Channel, ConsumeMessage } from 'amqplib';
 import { InjectionToken } from 'tsyringe';
 import { RabbitMQConfig } from '@/main/modules/amqp/amqp.config';
 import { logger } from '@/logger';
-import { convertToJson } from '@/shared/helper/buffer-converter';
+import { convertToJson } from '@/shared/helper';
 import { EventEmmiter } from '@/main/event';
 import { ContainerEvent } from '@/main/enum';
 import { AppContainer } from '@/main/container/app-container';
