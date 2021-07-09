@@ -14,7 +14,6 @@ import { User } from '@/core/entities/user';
 @get('/users')
 @injectable()
 export class ListUsersController extends Controller {
-  protected readonly version = '/v1';
   constructor(
     @inject('ListUsersUseCase') private listUsersUseCase: IListUsersUseCase
   ) {

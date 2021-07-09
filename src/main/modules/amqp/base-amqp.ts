@@ -7,7 +7,7 @@ import { EventEmmiter } from '@/main/event';
 import { ContainerEvent } from '@/main/enum';
 import { AppContainer } from '@/main/container/app-container';
 import { validation } from '@/presentation/amqp/middlewares/validation';
-import { Consumer } from '@/presentation/amqp/consumers/consumer';
+import { Consumer } from '@/presentation/amqp/consumer';
 
 export abstract class BaseAMQP {
   protected abstract connection: Connection;

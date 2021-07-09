@@ -6,9 +6,7 @@ export const queue = function(queue: string): Function {
   };
 };
 
-export const validationSchema = function(
-  schema: Joi.ObjectSchema<any>
-): Function {
+export const schema = function(schema: Joi.ObjectSchema<any>): Function {
   return function(target: any) {
     target.schema = schema;
   };

@@ -17,8 +17,6 @@ import { listByIdSchema } from '@/presentation/http/controllers/v1/listUsersById
 @get('/users/:id')
 @injectable()
 export class ListUsersByIdController extends Controller {
-  protected readonly version = '/v1';
-
   constructor(
     @inject('ListUsersByIdUseCase')
     private listUsersByIdUseCase: IListUsersByIdUseCase
