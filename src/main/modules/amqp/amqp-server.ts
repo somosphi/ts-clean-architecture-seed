@@ -29,7 +29,9 @@ export class AMQPServer extends BaseAMQP implements Module {
 
   async start(): Promise<void> {
     try {
-      this.connection = await connect(this.config);
+      this.connection = await connect(
+        `${this.config.protocol}://${this.config.username}:${this.config.password}@${this.config.host}/${this.config.vhost}`
+      );
 
       this.channel = await this.connection.createChannel();
 
