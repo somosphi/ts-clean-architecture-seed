@@ -24,6 +24,7 @@
 1. Create **.env** file in the root folder using **.env.sample** as an example and replace the content with your project configs/secrets.
 2. Install development dependencies:
    `npm install`
+3. View [documentation](doc.md)
 
 ## Running
 

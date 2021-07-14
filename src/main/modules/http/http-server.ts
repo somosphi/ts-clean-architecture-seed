@@ -15,66 +15,77 @@ import {
 
 import { NotFoundError } from '@/presentation/http/errors';
 import { BaseHttp } from '@/main/modules/http/base-http';
+import { AppContainer } from '@/main/container/app-container';
 
 export class HttpServer extends BaseHttp implements Module {
   protected app: express.Application;
 
-  constructor(container: DependencyContainer) {
-    super(container);
-    this.container = container;
+  constructor(appContainer: AppContainer) {
+    super(appContainer.getContainer());
   }
 
   protected loadControllers(): Function[] {
     return [ListUsersByIdController, ListUsersController];
   }
 
+  protected reconnect(): void {
+    logger.warn(`Trying to connect to express 5 seconds`);
+    setTimeout(() => {
+      this.start();
+    }, 5000);
+  }
+
   start(): void {
-    const app = express();
-    const router = Router({ mergeParams: true });
-    const buildedRoutes = this.buildRoutes(router);
+    try {
+      const app = express();
+      const router = Router({ mergeParams: true });
+      const buildedRoutes = this.buildRoutes(router);
 
-    app.set('trust proxy', true);
-    app.use(helmet());
-    app.use(i18n.init);
-    app.use(compression());
-    app.use(
-      bodyParser.json({
-        limit: env.httpBodyLimit,
-      })
-    );
+      app.set('trust proxy', true);
+      app.use(helmet());
+      app.use(i18n.init);
+      app.use(compression());
+      app.use(
+        bodyParser.json({
+          limit: env.httpBodyLimit,
+        })
+      );
 
-    router.get(
-      ['/info', '/status'],
-      async (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
-      ) => {
-        try {
-          res.sendStatus(204);
-        } catch (err) {
-          next(err);
+      router.get(
+        ['/info', '/status'],
+        async (
+          req: express.Request,
+          res: express.Response,
+          next: express.NextFunction
+        ) => {
+          try {
+            res.sendStatus(204);
+          } catch (err) {
+            next(err);
+          }
         }
-      }
-    );
+      );
 
-    app.use(buildedRoutes);
+      app.use(buildedRoutes);
 
-    app.use(
-      '*',
-      (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
-      ) => {
-        next(new NotFoundError());
-      }
-    );
+      app.use(
+        '*',
+        (
+          req: express.Request,
+          res: express.Response,
+          next: express.NextFunction
+        ) => {
+          next(new NotFoundError());
+        }
+      );
 
-    app.use(errorHandlerMiddleware);
-    app.listen(env.httpPort, () =>
-      logger.info(`Server running on port ${env.httpPort}`)
-    );
-    this.app = app;
+      app.use(errorHandlerMiddleware);
+      app.listen(env.httpPort, () =>
+        logger.info(`Server running on port ${env.httpPort}`)
+      );
+      this.app = app;
+    } catch (error) {
+      this.reconnect();
+    }
   }
 }
