@@ -3,6 +3,7 @@ import { Transaction } from 'knex';
 import { UserSources } from '../enum';
 
 export interface IUserRepository {
+  getByUsername(username: string): Promise<User | null>;
   all(): Promise<User[]>;
   getById(id: string): Promise<User | null>;
   transaction: any;

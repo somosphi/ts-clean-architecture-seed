@@ -2,7 +2,8 @@
 
 ## Introdução:
 
-O projeto baseado na arquitetura limpa (clean architecture), tem como principal objetivo o desacoplamento de camadas onde as camadas mais internas da aplicação (core) não devem sofrer com mudanças da parte mais externas(infra), como por exemplo mudanças de frameworks, pacotes e etc.
+O projeto é baseado na arquitetura limpa (clean architecture), tem como principal objetivo o desacoplamento de camadas, onde as camadas mais internas da aplicação (core) não devem sofrer com mudanças da parte mais externas(infra), como por exemplo mudanças de frameworks, pacotes e etc.
+
 
 ## Iniciando a o projeto:
 
@@ -31,15 +32,16 @@ Feito isso basta rodar o seguite comando e o servidor estará rodando:
     ├── core/
     │   ├── entities
     │   ├── ports
+    │   ├── exceptions    
     │   ├── useCases
-    │   ├── enum.ts
-    │   └── error.ts
+    │   └── enum.ts
     ├── infra/
     │   ├── amqp/
     │   │   ├── producers
     │   │   └── producer.ts
     │   ├── cache/
     │   │   ├── ports
+    │   │   ├── index.ts
     │   │   └── cache.service.ts
     │   ├── cron-jobs/
     │   │   └── ports
@@ -75,7 +77,7 @@ Feito isso basta rodar o seguite comando e o servidor estará rodando:
     │       ├── http/
     │       │   ├── base-http.ts
     │       │   └── http-server.ts
-    │       └── modules.ts
+    │       └── modules.ts    
     ├── presentation/
     │   ├── amqp/
     │   │   ├── consumers/
@@ -86,16 +88,23 @@ Feito isso basta rodar o seguite comando e o servidor estará rodando:
     │   │   └── errors.ts
     │   ├── http/
     │   │   ├── controllers/
-    │   │   │   ├── v1
+    │   │   │   ├── v1/
+    │   │   │   │   └── index.ts
     │   │   │   ├── controller.config.ts
-    │   │   │   ├── controller.ts
-    │   │   │   └── index.ts
+    │   │   │   └── controller.ts
+    │   │   ├── exceptions/
+    │   │   │   ├── authentication.ts
+    │   │   │   ├── bad-request.ts
+    │   │   │   ├── http-error.ts
+    │   │   │   ├── index,ts
+    │   │   │   ├── not-found.ts
+    │   │   │   └── unauthorized.ts
     │   │   ├── middlwares/
     │   │   │   ├── error-handler.ts
-    │   │   │   └── validator-schema.ts
-    │   │   ├── ports/
-    │   │   │   └── http.ts
-    │   │   └── errors.ts
+    │   │   │   ├── auth.ts
+    │   │   │   └── middleware.config.ts
+    │   │   └── ports/
+    │   │       └── http.ts
     │   └── i18n/
     │       ├── locales
     │       └── index.ts
@@ -116,7 +125,7 @@ Feito isso basta rodar o seguite comando e o servidor estará rodando:
 - `useCases`: Responsável por conter as regras de negócio da aplicação. Não deve depender diretamente de implementações externas e sim de abstrações que são mantidas na pasta de `ports`:
 
   - Todos useCases devem implementar uma interface que defina qual será o método principal da classe que será chamado em outras camadas da aplicação.
-  - As abstrações de dependências externas são injetadas via injeção de dependência no construtor da classe.
+  - As abstrações de dependências externas são injetadas via injeção de dependência no construtor da classe utilizando o decorator `@inject`.
   - No exemplo abaixo apontamos para uma abstração de `UserRepository`(`IUserRepository`) e informamos qual é a classe que vai substituir essa abstração em tempo de execução(`UserRepository`);
 
     ```typescript
@@ -158,7 +167,7 @@ Feito isso basta rodar o seguite comando e o servidor estará rodando:
 - `amqp`: Responsável por abrigar os producers da aplicação:
 
   - `producers`: Código que enviará mensagem para determinada fila.
-    - Todos os producers extende a classe `Producer` que disponibiliza um método para fazer o send da mensagem para uma fila.
+    - Todos os producers extende a classe `Producer` que disponibiliza um método para fazer o `send` da mensagem para uma fila.
     - Devem conter as propriedades `exchange` e `routingKey`.
     - Para o producer realizar o envio de mensagens para a fila deve injetar `channel` no construtor (cadastrado no container como `vHost`).
 
@@ -265,6 +274,7 @@ Feito isso basta rodar o seguite comando e o servidor estará rodando:
   - Todas as repositories deve extender a classe `Repository` e informar o tipo do repository com base na `entity`.
   - Deve implementar o contrato definido na camada `core`.
   - Deve injetar o knex no construtor(cadastrado no conteiner como `mysqlDatabase`).
+  - Todos os repositories devem utilizar o decorator `@table` para informar a tabela em que as queries irão rodar. 
 
   ```typescript
   @injectable()
@@ -282,14 +292,14 @@ Feito isso basta rodar o seguite comando e o servidor estará rodando:
 
 ## Main Layer
 
-- Camada mais acoplada da arquitetura.
+- Camada mais acoplada da arquitetura, onde são definidos os modulos da aplicação (http, amqp, cli e etc) e suas dependências.
 
 - `container`: Diretório onde as classes serão cadastradas para realizar a injeção de dependências(Devem ser colocadas no arquivo `app-container.ts`)
 
-  - `loadProviders`: Lista de todas as classes que serão injetadas(@inject(`NomeDaClasse`))
+  - `loadProviders`: Lista de todas as classes que serão injetadas(@inject(`NomeDaClasse`)). Para que uma classe possa ser injetada ela deve conter o decorator de `@injectable` antes da definição da classe.
 
   - `loadConfigs`: Caso o valor a ser injetadado não seja uma classe, deve ser colocado neste método, sendo a chave do objeto
-    o nome a ser injetado. (No exemplo abaixo temos o mysql_database`que será injetado no construtor dos`repositories`)
+    o nome a ser injetado. (No exemplo abaixo temos o `mysql_database` que será injetado no construtor dos `repositories`)
 
   ```typescript
   class AppContainer extends BaseContainer {
@@ -316,7 +326,7 @@ Feito isso basta rodar o seguite comando e o servidor estará rodando:
 - `env`: Diretório responsável por registrar as variáveis de ambiente:
 
   - `index.ts`: Realiza o tratamento das variáveis de ambiente, como por exemplo, passar o uma string para um int e definir valores default;
-  - `validator.ts`: Utiliza o pacote de class-validator para validar a variável conforme a annotation;
+  - `validator.ts`: Utiliza o pacote de class-validator para validar a variável conforme o decorator utilizado;
 
   ```typescript
     @IsNotEmpty()
@@ -338,16 +348,16 @@ Feito isso basta rodar o seguite comando e o servidor estará rodando:
 
 ## Presentation Layer
 
-- Lida com a customização dos request e response através de adaptadores de interface.
+- Porta de entrada da aplicação
 
   - `amqp`: Diretório onde se encontra os consumers da aplicação.
 
     - `consumers`:
 
-      - Todos os consumers deverão ter a annotation de `@queue(nome da fila)` que irá informar de qual fila as mensagens serão consumidas
+      - Todos os consumers deverão conter o decorator `@queue` que irá informar de qual fila as mensagens serão consumidas
       - Todos os consumers deverão extender a classe `Consumer`;
       - Deve receber via injeção de dependência uma abstração de useCase(camada que contém as regras de negócio);
-      - Para validação da mensagem utilizamos a annotation `@validation_schema` que verificará se a mensagem está como o esperado;
+      - Para validação da mensagem utilizamos o decorator `@schema` que verificará se a mensagem está como o esperado;
       - Todos os consumers deve ter os métodos `messageHandler` e `onConsumeError`;
 
         - `messageHandler`: Responsável por trabalhar com a mensagem vinda da fila
@@ -366,7 +376,7 @@ Feito isso basta rodar o seguite comando e o servidor estará rodando:
             super();
           }
 
-          @validation_schema(find_user_schema)
+          @schema(find_user_schema)
           async messageHandler(message: FindUserMessage): Promise<void> {
             const user: User = await this.listUsersByIdUseCase.listById(
               message.id
@@ -388,13 +398,13 @@ Feito isso basta rodar o seguite comando e o servidor estará rodando:
 
   - `controllers`:
 
-    - Todos os controllers devem conter a annotation `@version(/vx)` que define a versão da rota;
+    - Todos os controllers devem conter o decorator `@version(/vx)` que define a versão da rota;
     - Devem conter também a annotation de definição de método http (`@get()`, `@post()`, `@delete`, `@put()`, `@path()`);
 
-      - As annotations de métodos esperam 2 parâmetros sendo o primeiro uma string informando a rota e o segundo um array de middlewares:
+      - Os decorators qu definem os métodos esperam 2 parâmetros sendo o primeiro uma string informando a rota e o segundo um array de middlewares:
 
         ```typescript
-          @get('/users/:id', [validator_middleware(list_by_id_schema)])
+          @get('/users/:id', [AuthMiddleware])
         ```
 
     - Todos os controllers devem extender a `Controller`.
@@ -403,13 +413,13 @@ Feito isso basta rodar o seguite comando e o servidor estará rodando:
       - `handle`: É responsável por lidar com a requisições http
         - Recebe como parâmetro um propriedade do tipo `HttpRequest`
         - Pode retornar um `void` ou um `HttpResponse`;
-        - O método handle pode conter a annotations `@httpStatus(status)` que define o status a ser respondido ou retornar esse status no objeto de `HttpResponse`;
+        - O método handle pode conter o decorator `@httpStatus(status)` que define o status a ser respondido ou retornar esse status no objeto de `HttpResponse`;
       - `exception`: É responsável pelo tratamento de erro que pode ocorrer no método `handler`
         - Deve sempre retornar um erro;
 
     ```typescript
     @version('/v1')
-    @get('/users')
+    @get('/users', [AuthMiddleware])
     @injectable()
     export class ListUsersController extends Controller {
       constructor(
@@ -444,3 +454,37 @@ Feito isso basta rodar o seguite comando e o servidor estará rodando:
       }
     }
     ```
+  - `middlewares`: Responsáveis por interceptar a requisição http
+    - Todos os middlewares devem implementar a interface `Middleware`;
+    - Os middlewares podem conter 2 parâmetros, sendo que o paramêtro `req` é obrigatório
+      - O parâmetro `req` é a requisição recebida;
+    - Os middlewares podem retornar void ou um `HttpResponse`
+    - Todos os middlewares devem conter o decorator de `@singleton`
+
+    ```typescript
+      @singleton()
+      export class AuthMiddleware implements Middleware {
+        async handle(req: HttpRequest) {
+          const userInfo = req.headers['user-info'] as string;
+          if (!userInfo || !userInfo.startsWith('Bearer ')) {
+            throw new AuthenticationError();
+          }
+
+          const replacedUserInfo = userInfo.replace('Bearer ', '');
+
+          try {
+            const decodedToken = await jwt.verify(replacedUserInfo, env.jwtSecret);
+            const { name, username, emailAddress } = decodedToken as Partial<User>;
+
+            req.user = {
+              name: name!,
+              username: username!,
+              emailAddress: emailAddress!,
+            };
+          } catch (err) {
+            throw new AuthenticationError();
+          }
+        }
+      }
+    ```
+  

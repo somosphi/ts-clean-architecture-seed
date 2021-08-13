@@ -2,7 +2,7 @@ import { injectable } from 'tsyringe';
 import { __ } from 'i18n';
 import { Middleware } from '@/presentation/http/middleware/middleware.config';
 import { HttpRequest, HttpResponse } from '@/presentation/http/ports/http';
-import { HttpError } from '@/presentation/http/exceptions';
+import { HttpError } from '@/presentation/http/exceptions/http-error';
 
 @injectable()
 export class ErrorHandlerMiddleware implements Middleware {

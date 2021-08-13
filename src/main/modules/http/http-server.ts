@@ -1,7 +1,7 @@
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import compression from 'compression';
-import express, { Router, Request, NextFunction, Response } from 'express';
+import express, { Router } from 'express';
 import { logger } from '@/logger';
 import i18n from '@/presentation/i18n';
 import { Module } from '@/main/modules/modules';
@@ -9,7 +9,8 @@ import { env } from '@/main/env';
 import {
   ListUsersByIdController,
   ListUsersController,
-} from '@/presentation/http/controllers';
+  LoginByUsernameController,
+} from '@/presentation/http/controllers/v1';
 import { BaseHttp } from '@/main/modules/http/base-http';
 import { AppContainer } from '@/main/container/app-container';
 import { NotFoundError } from '@/presentation/http/exceptions';
@@ -22,7 +23,11 @@ export class HttpServer extends BaseHttp implements Module {
   }
 
   protected loadControllers(): Function[] {
-    return [ListUsersByIdController, ListUsersController];
+    return [
+      ListUsersByIdController,
+      ListUsersController,
+      LoginByUsernameController,
+    ];
   }
 
   start(): void {
@@ -67,8 +72,8 @@ export class HttpServer extends BaseHttp implements Module {
         next(new NotFoundError('PAGE_NOT_FOUND', 'Page not found.'));
       }
     );
-
-    app.use(this.errorHandler);
+    const errorHandler = this.errorHandler() as any;
+    app.use(errorHandler);
 
     app.listen(env.httpPort, () =>
       logger.info(`Server running on port ${env.httpPort}`)

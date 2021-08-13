@@ -13,6 +13,7 @@ import { ErrorHandlerMiddleware } from '@/presentation/http/middleware/error-han
 import { logger } from '@/logger';
 import { BadRequest } from '@/presentation/http/exceptions';
 import { Controller } from '@/presentation/http/controllers/controller';
+import { Middleware } from '@/presentation/http/middleware/middleware.config';
 
 export abstract class BaseHttp {
   constructor(private container: DependencyContainer) {}
@@ -33,9 +34,13 @@ export abstract class BaseHttp {
         const requestValidator = this.requestValidator(schema);
         const func = this.requestHandle(instance, statusCode);
 
+        const funcMiddleware: RequestHandler[] = this.buildMiddlewares(
+          middlewares
+        );
+
         const jobs = schema
-          ? ([...middlewares, requestValidator, func] as any)
-          : ([...middlewares, func] as any);
+          ? ([...funcMiddleware, requestValidator, func] as any)
+          : ([...funcMiddleware, func] as any);
 
         switch (method) {
           case 'get':
@@ -82,10 +87,27 @@ export abstract class BaseHttp {
         res.send(response?.data);
       } catch (err) {
         const error = instance.exception(err);
-
         next(error);
       }
     };
+  }
+
+  private buildMiddlewares(middlewares: Function[]): RequestHandler[] {
+    return middlewares.map(middleware => {
+      const instanceMiddleware = this.container.resolve(
+        middleware as InjectionToken
+      ) as Middleware;
+
+      return async (req: Request, res: Response, next: NextFunction) => {
+        try {
+          await instanceMiddleware.handle(req);
+          next();
+        } catch (err) {
+          logger.error(err);
+          next(err);
+        }
+      };
+    });
   }
 
   private requestValidator(schema?: Joi.Schema): RequestHandler | void {
@@ -118,13 +140,12 @@ export abstract class BaseHttp {
 
   protected errorHandler(): unknown {
     const errorHandler = this.container.resolve<ErrorHandlerMiddleware>(
-      'ErrorHandlerMiddleware'
+      ErrorHandlerMiddleware
     );
 
     return (err: any, req: HttpRequest, res: Response, next: NextFunction) => {
       const { data, status } = errorHandler.handle(req, err);
       res.status(status!).send(data);
-
       return next();
     };
   }

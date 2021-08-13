@@ -38,6 +38,9 @@ export class EnvValidator {
   @IsNotEmpty()
   redisHost: string;
 
+  @IsNotEmpty()
+  jwtSecret: string;
+
   constructor(props: any) {
     Object.assign(this, props);
   }

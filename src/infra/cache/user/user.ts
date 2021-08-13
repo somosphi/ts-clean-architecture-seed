@@ -4,7 +4,7 @@ import { Cache } from '@/infra/cache/ports/cache';
 
 @injectable()
 export class UserCache implements IUserCache {
-  constructor(@inject('Cache') protected readonly cache: Cache) {}
+  constructor(@inject('CacheService') protected readonly cache: Cache) {}
 
   async getUserEmailAddress(id: number): Promise<string | null> {
     return this.cache.get(`users:${id}:emailAddress`);

@@ -1,9 +1,8 @@
 import 'reflect-metadata';
 import sinon from 'sinon';
 import { expect, assert } from 'chai';
-import { ListUsersController } from '@/presentation/http/controllers';
+import { ListUsersController } from '@/presentation/http/controllers/v1';
 import { UserSources } from '@/core/enum';
-
 
 describe('ListUsersController', () => {
   describe('#handle', () => {
@@ -35,7 +34,7 @@ describe('ListUsersController', () => {
       const result = await listUsersController.handle();
 
       expect(result).to.be.eql({
-        data: fakeResponse.map((user) => ({
+        data: fakeResponse.map(user => ({
           ...user,
           createdAt: user.createdAt.toISOString(),
           updatedAt: user.updatedAt.toISOString(),

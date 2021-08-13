@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import sinon from 'sinon';
 import { expect, assert } from 'chai';
-import { ListUsersByIdController } from '@/presentation/http/controllers';
+import { ListUsersByIdController } from '@/presentation/http/controllers/v1';
 import { UserSources } from '@/core/enum';
 import { HttpRequest } from '@/presentation/http/ports/http';
 import { UserNotFoundError } from '@/core/exceptions';

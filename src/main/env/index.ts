@@ -17,6 +17,7 @@ const props = {
   rabbitMQVHost: process.env.RABBITMQ_VHOST || '/',
   redisPort: parseInt(process.env.REDIS_PORT || '6379', 10),
   redisHost: process.env.REDIS_HOST || '',
+  jwtSecret: process.env.JWT_SECRET || '',
 };
 
 export const env = new EnvValidator(props);

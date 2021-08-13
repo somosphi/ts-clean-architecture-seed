@@ -3,6 +3,11 @@ export type HttpRequest = {
   params: any;
   query?: any;
   headers?: any;
+  user?: {
+    username: string;
+    emailAddress: string;
+    name: string;
+  };
 };
 
 export type HttpResponse<T = any> = {

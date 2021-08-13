@@ -12,9 +12,10 @@ import { ListUsersByIdResponse } from '@/presentation/http/controllers/v1/listUs
 import { UserNotFoundError } from '@/core/exceptions';
 import { BadRequest } from '@/presentation/http/exceptions';
 import { listByIdSchema } from '@/presentation/http/controllers/v1/listUsersById/list-users-by-id.schema';
+import { AuthMiddleware } from '@/presentation/http/middleware/auth';
 
 @version('/v1')
-@get('/users/:id')
+@get('/users/:id', [AuthMiddleware])
 @injectable()
 export class ListUsersByIdController extends Controller {
   constructor(

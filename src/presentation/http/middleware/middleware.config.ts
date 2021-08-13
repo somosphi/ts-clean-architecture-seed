@@ -1,5 +1,5 @@
-import { HttpRequest, HttpResponse } from "@/presentation/http/ports/http";
+import { HttpRequest, HttpResponse } from '@/presentation/http/ports/http';
 
 export interface Middleware {
-  handle(req: HttpRequest, error: Error): HttpResponse;
+  handle(req: HttpRequest, error?: Error): HttpResponse | Promise<void>;
 }
