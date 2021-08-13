@@ -10,6 +10,7 @@ export class LoginByUsernameUseCase implements ILoginByUsernameUseCase {
   constructor(
     @inject('UserRepository') private readonly userRepository: IUserRepository
   ) {}
+
   async login(username: string): Promise<string> {
     const user = await this.userRepository.getByUsername(username);
 
@@ -18,6 +19,6 @@ export class LoginByUsernameUseCase implements ILoginByUsernameUseCase {
     }
 
     const { name, emailAddress } = user;
-    return await jwt.sign({ name, username, emailAddress }, env.jwtSecret);
+    return jwt.sign({ name, username, emailAddress }, env.jwtSecret);
   }
 }

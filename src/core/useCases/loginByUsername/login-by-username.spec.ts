@@ -18,7 +18,7 @@ describe('LoginByUsernameUseCase', () => {
         getByUsername: sandbox.fake.resolves(undefined),
       };
 
-      //@ts-ignore
+      // @ts-ignore
       const loginByUsernameUseCase = new LoginByUsernameUseCase(userRepository);
 
       const username = 'test';
@@ -45,7 +45,7 @@ describe('LoginByUsernameUseCase', () => {
       const fakeToken = '1';
       const stubSign = sandbox.stub(jwt, 'sign').resolves(fakeToken);
 
-      //@ts-ignore
+      // @ts-ignore
       const loginByUsernameUseCase = new LoginByUsernameUseCase(userRepository);
 
       const username = 'test';
@@ -54,7 +54,7 @@ describe('LoginByUsernameUseCase', () => {
       expect(token).to.be.eql(fakeToken);
       assert(userRepository.getByUsername.calledOnceWith(username));
       assert(
-        //@ts-ignore
+        // @ts-ignore
         stubSign.calledOnceWith(
           { name: user.name, username, emailAddress: user.emailAddress },
           fakeJwtSecret

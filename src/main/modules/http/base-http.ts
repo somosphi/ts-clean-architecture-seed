@@ -111,7 +111,7 @@ export abstract class BaseHttp {
   }
 
   private requestValidator(schema?: Joi.Schema): RequestHandler | void {
-    if (!schema) return;
+    if (!schema) return undefined;
     return (req: Request, res: Response, next: NextFunction) => {
       const validation = schema.validate(req, {
         abortEarly: false,

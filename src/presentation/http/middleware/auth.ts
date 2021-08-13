@@ -1,8 +1,8 @@
 import { singleton } from 'tsyringe';
 import jwt from 'jsonwebtoken';
 import { Middleware } from '@/presentation/http/middleware/middleware.config';
-import { HttpRequest } from '../ports/http';
-import { AuthenticationError } from '../exceptions';
+import { HttpRequest } from '@/presentation/http/ports/http';
+import { AuthenticationError } from '@/presentation/http/exceptions';
 import { env } from '@/main/env';
 import { User } from '@/core/entities/user';
 

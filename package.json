@@ -7,6 +7,7 @@
     "test:unit": "nyc mocha --timeout 10000 --exit --config=.mocha.yml -r tsconfig-paths/register 'src/**/*.spec.ts'",
     "dev": "tsnd --respawn --ignore-watch node_modules -r tsconfig-paths/register ./src/main/server.ts",
     "lint": "eslint  'src/**/*.ts'",
+    "lint:fix": "eslint --fix 'src/**/*.ts'",
     "check": "npm run test:unit  && npm run lint",
     "build": "rimraf dist && tsc -p . && cp -r ./src/presentation/i18n/locales ./dist/presentation/i18n",
     "migration:create": "knex migrate:make",

@@ -27,7 +27,7 @@ describe('LoginByUsernameController', () => {
           username: 'test',
         },
       };
-      //@ts-ignore
+      // @ts-ignore
       const result = await loginByUsernameController.handle(req);
       expect(result).to.be.eql({ headers: { 'User-Info': token } });
       assert(loginByUsernameUseCase.login.calledOnceWith(req.body.username));
@@ -35,7 +35,7 @@ describe('LoginByUsernameController', () => {
   });
   describe('#handle', () => {
     it('should return not found error when error to be instance of UserNotFoundError', () => {
-      //@ts-ignore
+      // @ts-ignore
       const loginByUsernameController = new LoginByUsernameController();
 
       const error = loginByUsernameController.exception(

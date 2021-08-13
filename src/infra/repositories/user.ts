@@ -10,7 +10,6 @@ import { table } from './repository.config';
 @table('users')
 export class UserRepository extends Repository<User>
   implements IUserRepository {
-
   protected properties = [
     'id',
     'name',

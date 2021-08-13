@@ -1,5 +1,5 @@
-import { User } from '@/core/entities/user';
 import { Transaction } from 'knex';
+import { User } from '@/core/entities/user';
 import { UserSources } from '../enum';
 
 export interface IUserRepository {

@@ -1,4 +1,4 @@
-import { CodedError } from "@/shared/coded-error";
+import { CodedError } from '@/shared/coded-error';
 
 export class HttpError extends CodedError {
   statusCode: number;
