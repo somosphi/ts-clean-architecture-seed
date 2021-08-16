@@ -1,5 +1,6 @@
 import { UserSources } from '@/core/enum';
 import { Entity } from '@/core/entities/entity.config';
+import { Email } from '@/core/valueObjects';
 
 export class User extends Entity<User> {
   public readonly id: string;
@@ -31,5 +32,9 @@ export class User extends Entity<User> {
     }
   }
 
-  protected validate(props: Partial<User>): void {}
+  protected validate(props: Partial<User>): void {
+    if (props.emailAddress) {
+      new Email(props.emailAddress);
+    }
+  }
 }
