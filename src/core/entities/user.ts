@@ -34,7 +34,7 @@ export class User extends Entity<User> {
 
   protected validate(props: Partial<User>): void {
     if (props.emailAddress) {
-      new Email(props.emailAddress);
+      this.emailAddress = new Email(props.emailAddress).getValue();
     }
   }
 }
