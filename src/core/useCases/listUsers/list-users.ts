@@ -10,6 +10,8 @@ export class ListUsersUseCase implements IListUsersUseCase {
   ) {}
 
   async list(): Promise<User[]> {
-    return this.userRepository.all();
+    const users = await this.userRepository.all();
+
+    return users.map(user => new User(user));
   }
 }

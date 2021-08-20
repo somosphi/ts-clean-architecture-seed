@@ -1,5 +1,5 @@
-import { Channel, Options, connect } from 'amqplib';
-import { converter } from '@/shared/helper/buffer-converter';
+import { Channel, Options } from 'amqplib';
+import { converter } from '@/shared/helper';
 
 export abstract class Producer {
   protected abstract channel: Channel;

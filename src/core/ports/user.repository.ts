@@ -1,8 +1,9 @@
-import { User } from '@/core/entities/user';
 import { Transaction } from 'knex';
-import { UserSources } from '../enum';
+import { User } from '@/core/entities/user';
+import { UserSources } from '@/core/enum';
 
 export interface IUserRepository {
+  getByUsername(username: string): Promise<User | null>;
   all(): Promise<User[]>;
   getById(id: string): Promise<User | null>;
   transaction: any;

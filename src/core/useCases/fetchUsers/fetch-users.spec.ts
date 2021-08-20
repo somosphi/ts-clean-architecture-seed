@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import { expect, assert } from 'chai';
 import { User } from '@/core/entities/user';
 import { UserSources } from '@/core/enum';
-import { FetchUsersUseCase } from './fetch-users';
+import { FetchUsersUseCase } from '@/core/useCases/fetchUsers/fetch-users';
 
 describe('FetchUsersUseCase', () => {
   describe('#fetchUsers', () => {

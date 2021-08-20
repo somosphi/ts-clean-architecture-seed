@@ -7,12 +7,15 @@ import {
   FetchUsersUseCase,
   ListUsersByIdUseCase,
   ListUsersUseCase,
+  LoginByUsernameUseCase,
 } from '@/core/useCases';
-import { BaseContainer } from './config/base';
+import { BaseContainer } from '@/main/container/config/base';
+import { CacheService } from '@/infra/cache/cache.service';
 
 export class AppContainer extends BaseContainer {
   loadProviders(): Function[] {
     return [
+      CacheService,
       HttpService,
       JsonPlaceHolderIntegration,
       ListUsersUseCase,
@@ -20,6 +23,7 @@ export class AppContainer extends BaseContainer {
       UserRepository,
       LogUserInfoProducer,
       FetchUsersUseCase,
+      LoginByUsernameUseCase,
     ];
   }
 

@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosInstance, Method } from 'axios';
-import { Http, HttpConfig, HttpResponse } from '@/infra/http/ports';
 import { injectable } from 'tsyringe';
+import { Http, HttpConfig, HttpResponse } from '@/infra/http/ports';
 
 @injectable()
 export class HttpService implements Http {

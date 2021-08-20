@@ -1,5 +1,5 @@
-import { RouteConfig } from './controller.config';
-import { HttpRequest, HttpResponse } from '../ports/http';
+import { RouteConfig } from '@/presentation/http/controllers/controller.config';
+import { HttpRequest, HttpResponse } from '@/presentation/http/ports/http';
 
 export abstract class Controller {
   abstract handle(req: HttpRequest): Promise<HttpResponse | void>;

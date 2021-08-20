@@ -2,14 +2,13 @@ import 'reflect-metadata';
 import sinon from 'sinon';
 import { expect, assert } from 'chai';
 import { UserSources } from '@/core/enum';
-import { User } from '@/core/entities/user';
-import { UserNotFoundError } from '@/core/errors';
-import { ListUsersByIdUseCase } from './list-users-by-id';
+import { UserNotFoundError } from '@/core/exceptions';
+import { ListUsersByIdUseCase } from '@/core/useCases/listUsersById/list-users-by-id';
 
 describe('ListUsersByIdUseCase', () => {
   describe('#listById', () => {
     it('should return User', async () => {
-      const fakeResponse: User = {
+      const fakeResponse = {
         id: 'string',
         name: 'string',
         username: 'string',

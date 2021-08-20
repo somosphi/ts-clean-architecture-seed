@@ -3,7 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import { IJsonPlaceHolderIntegration } from '@/core/ports/jsonplaceholder.integration';
 import { IUserRepository } from '@/core/ports/user.repository';
 import { UserSources } from '@/core/enum';
-import { IFetchUsersUseCase } from './fetch-users.interface';
+import { IFetchUsersUseCase } from '@/core/useCases/fetchUsers/fetch-users.interface';
 
 @injectable()
 export class FetchUsersUseCase implements IFetchUsersUseCase {

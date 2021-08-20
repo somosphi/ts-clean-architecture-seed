@@ -1,16 +1,21 @@
 import { injectable, inject } from 'tsyringe';
-import { httpStatus, get, version } from '../../controller.config';
-import { Controller } from '../../controller';
-import { HttpRequest, HttpResponse } from '../../../ports/http';
-import { IListUsersByIdUseCase } from '../../../../../core/useCases/listUsersById/list-users-by-id.interface';
-import { ListUsersByIdResponse } from './list-users-by-id.response';
-import { UserNotFoundError } from '../../../../../core/errors';
-import { BadRequest } from '../../../errors';
-import { validatorMiddleware } from '../../../middleware/validator-schema';
-import { listByIdSchema } from './list-users-by-id.schema';
+import {
+  httpStatus,
+  get,
+  version,
+  schema,
+} from '@/presentation/http/controllers/controller.config';
+import { Controller } from '@/presentation/http/controllers/controller';
+import { HttpRequest, HttpResponse } from '@/presentation/http/ports/http';
+import { IListUsersByIdUseCase } from '@/core/useCases';
+import { ListUsersByIdResponse } from '@/presentation/http/controllers/v1/listUsersById/list-users-by-id.response';
+import { UserNotFoundError } from '@/core/exceptions';
+import { BadRequest } from '@/presentation/http/exceptions';
+import { listByIdSchema } from '@/presentation/http/controllers/v1/listUsersById/list-users-by-id.schema';
+import { AuthMiddleware } from '@/presentation/http/middleware/auth';
 
 @version('/v1')
-@get('/users/:id', [validatorMiddleware(listByIdSchema)])
+@get('/users/:id', [AuthMiddleware])
 @injectable()
 export class ListUsersByIdController extends Controller {
   constructor(
@@ -21,6 +26,7 @@ export class ListUsersByIdController extends Controller {
   }
 
   @httpStatus(200)
+  @schema(listByIdSchema)
   async handle(req: HttpRequest): Promise<HttpResponse<ListUsersByIdResponse>> {
     const { id } = req.params;
     const user = await this.listUsersByIdUseCase.listById(id);
