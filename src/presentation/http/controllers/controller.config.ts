@@ -20,7 +20,7 @@ const createRouteDecorator = (method: string) =>
             method,
             middlewares,
             statusCode,
-            schema
+            schema,
           },
         ];
       }
