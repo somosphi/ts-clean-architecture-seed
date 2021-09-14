@@ -12,7 +12,7 @@ export interface RouteConfig {
 const createRouteDecorator = (method: string) =>
   function(path: string, middlewares: Function[] = []): Function {
     return function(constructor: Function) {
-      const { statusCode } = constructor.prototype;
+      const { statusCode, schema } = constructor.prototype;
       if (!constructor.prototype.routeConfigs) {
         constructor.prototype.routeConfigs = [
           {
@@ -20,6 +20,7 @@ const createRouteDecorator = (method: string) =>
             method,
             middlewares,
             statusCode,
+            schema
           },
         ];
       }
