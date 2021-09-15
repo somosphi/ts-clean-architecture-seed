@@ -5,6 +5,7 @@
     "rootDir": "src",
     "module": "commonjs",
     "target": "es2020",
+    "useUnknownInCatchVariables": false,
     "esModuleInterop": true,
     "strict": true,
     "strictPropertyInitialization": false,
